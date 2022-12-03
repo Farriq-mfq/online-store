@@ -37,6 +37,20 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+$routes->get("/private","Home::index");
+$routes->group("/private",["namespace"=>$routes->getDefaultNamespace()."Admin"],function($route){
+    $route->group("product",function($route){
+        $route->get("/","ProductController::index");
+        $route->get("new","ProductController::create");
+        // inventories
+        $route->get("inventories","ProductInventories::index");
+        // images
+        $route->get("images","ProductImages::index");
+        // comments
+        $route->get("comments","ProductComments::index");
+    });
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
