@@ -32,11 +32,11 @@ class ProductsComments extends Migration
         $this->forge->addKey("comment_id",true);
         $this->forge->addForeignKey("user_id","users","user_id","NO ACTION","NO ACTION");
         $this->forge->addForeignKey("product_id","products","product_id","NO ACTION","NO ACTION");
-        $this->forge->createTable("comments");
+        $this->forge->createTable("product_comments");
     }
     
     public function down()
     {
-        $this->forge->dropTable("comments");
+        $this->forge->dropTable("product_comments");
     }
 }

@@ -32,11 +32,11 @@ class ProductReviews extends Migration
         $this->forge->addKey("review_id",true);
         $this->forge->addForeignKey("user_id","users","user_id","NO ACTION","NO ACTION");
         $this->forge->addForeignKey("product_id","products","product_id","NO ACTION","NO ACTION");
-        $this->forge->createTable("reviews");
+        $this->forge->createTable("product_reviews");
     }
     
     public function down()
     {
-        $this->forge->dropTable("reviews");
+        $this->forge->dropTable("product_reviews");
     }
 }

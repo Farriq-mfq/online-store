@@ -20,6 +20,7 @@ class Products extends Migration
             "slug"=>[
                 "type"=>"varchar",
                 "constraint"=>50,
+                "unique"=>true
             ],
             "description"=>[
                 "type"=>"text",
@@ -40,7 +41,7 @@ class Products extends Migration
             "price"=>[
                 "type"=>"bigint",
             ],
-            "stock"=>[
+            "weight"=>[  
                 "type"=>"int",
             ],
             "feature"=>[
@@ -57,11 +58,6 @@ class Products extends Migration
             "status"=>[
                 "type"=>"boolean"
             ],
-            // one to many
-            "product_discount_id"=>[
-                "type"=>"bigint",
-                "null"=>true
-            ],
             "product_brand_id"=>[
                 "type"=>"int",
             ],
@@ -70,8 +66,6 @@ class Products extends Migration
         ]);
 
         $this->forge->addKey('product_id',true);
-        $this->forge->addForeignKey("product_brand_id","brands","brand_id","NO ACTION","NO ACTION");
-        $this->forge->addForeignKey("product_categorie_id","categories","categorie_id","NO ACTION","NO ACTION");
         $this->forge->createTable('products');
     }
 

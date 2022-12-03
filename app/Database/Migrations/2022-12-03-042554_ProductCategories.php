@@ -9,20 +9,19 @@ class ProductCategories extends Migration
     public function up()
     {
         $this->forge->addField([
-            "categorie_id"=>[
+            "category_id"=>[
                 "type"=>"int",
                 "auto_increment"=>true
-
             ],
-            "parent_categorie"=>[
+            "parent_category"=>[
                 "type"=>"int",
             ],
-            "categorie"=>[
-                "type"=>"varhcar",
-                "constraint"=>30
+            "category"=>[
+                "type"=>"varchar",
+                "constraint"=>30,
             ],
         ]);
-        $this->forge->addKey("categorie_id",true);
+        $this->forge->addKey("category_id",true);
         $this->forge->createTable("categories");
     }
     
