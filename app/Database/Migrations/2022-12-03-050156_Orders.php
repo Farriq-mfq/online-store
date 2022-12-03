@@ -65,6 +65,10 @@ class Orders extends Migration
                 "type"=> "double",
                 "null"=>true
             ],
+            "notes"=>[
+                "type"=> "text",
+                "null"=>true
+            ],
             "subtotal"=>[
                 "type"=> "bigint",
             ],

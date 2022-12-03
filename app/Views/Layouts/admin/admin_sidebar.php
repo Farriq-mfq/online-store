@@ -56,7 +56,7 @@
               <li class="nav-item">
                 <a href="pages/layout/top-nav.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View Product</p>
+                  <p>All Product</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -114,7 +114,7 @@
               <li class="nav-item">
                 <a href="pages/layout/top-nav.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View</p>
+                  <p>All</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -138,7 +138,7 @@
               <li class="nav-item">
                 <a href="pages/layout/top-nav.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View</p>
+                  <p>All</p>
                 </a>
               </li>
               <li class="nav-item">
