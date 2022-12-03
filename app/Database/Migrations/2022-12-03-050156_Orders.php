@@ -15,10 +15,13 @@ class Orders extends Migration
             ],
             "midtrans_id"=>[
                 "type"=>"varchar",
+                "constraint"=>100,
+                "unique"=>true
             ],
             "token"=>[
                 "type"=>"varchar",
                 "constraint"=>30,
+                "unique"=>true
             ],
             "user_id"=>[
                 "type"=>"bigint",
@@ -27,7 +30,8 @@ class Orders extends Migration
                 "type"=> "bigint",
             ],
             "shipping_type"=>[
-                "type"=>"bigint",
+                "type"=>"varchar",
+                "constraint"=>20
             ],
             "shipping_tracking"=>[
                 "type"=>"bigint",
@@ -35,13 +39,16 @@ class Orders extends Migration
             ],
             "shipping_service"=>[
                 "type"=>"varchar",
-            ],
-            "destination_origin"=>[
-                "type"=>"varchar",
-                "null"=>true
+                "constraint"=>30,
             ],
             "origin"=>[
                 "type"=>"varchar",
+                "constraint"=>30,
+                "null"=>true
+            ],
+            "destination_origin"=>[
+                "type"=>"varchar",
+                "constraint"=>30,
                 "null"=>true
             ],
             "status"=>[
@@ -49,20 +56,28 @@ class Orders extends Migration
                 "constraint"=>[
                     "PENDING",
                     "PROCESS",
-                    "DONE"
+                    "DONE",
+                    "REJECT"
                 ],
                 "default"=>"PENDING"
+            ],
+            "discount"=>[
+                "type"=> "double",
+                "null"=>true
             ],
             "subtotal"=>[
                 "type"=> "bigint",
             ],
+            'created_date datetime default current_timestamp',
+            'updated_date datetime default current_timestamp on update current_timestamp'
         ]);
         $this->forge->addKey("order_id",true);
-        $this->forge->createTable("order");
+        $this->forge->addForeignKey("user_id","users","user_id","CASCADE","CASCADE");
+        $this->forge->createTable("orders");
     }
-
+    
     public function down()
     {
-        //
+        $this->forge->dropTable("orders");
     }
 }
