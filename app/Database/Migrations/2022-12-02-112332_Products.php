@@ -30,13 +30,12 @@ class Products extends Migration
                 "null"=>true
             ],
             "discount"=>[
-                "type"=>"varchar",
-                "constraint"=>100,
+                "type"=>"double",
                 "null"=>true
             ],
             // one to many
-            "product_categories_id"=>[
-                "type"=>"bigint",
+            "product_categorie_id"=>[
+                "type"=>"int",
             ],
             "price"=>[
                 "type"=>"bigint",
@@ -63,12 +62,17 @@ class Products extends Migration
                 "type"=>"bigint",
                 "null"=>true
             ],
+            "product_brand_id"=>[
+                "type"=>"int",
+            ],
             'created_date datetime default current_timestamp',
             'updated_date datetime default current_timestamp on update current_timestamp'
         ]);
 
-        $this->forge->addKey('product_id');
-        $this->forge->createTable('products',true);
+        $this->forge->addKey('product_id',true);
+        $this->forge->addForeignKey("product_brand_id","brands","brand_id","NO ACTION","NO ACTION");
+        $this->forge->addForeignKey("product_categorie_id","categories","categorie_id","NO ACTION","NO ACTION");
+        $this->forge->createTable('products');
     }
 
     public function down()

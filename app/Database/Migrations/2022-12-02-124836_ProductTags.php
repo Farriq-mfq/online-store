@@ -11,7 +11,9 @@ class ProductTags extends Migration
         $this->forge->addField(
             [
                 "tag_id"=>[
-                    "type"=>"int"
+                    "type"=>"int",
+                    "auto_increment"=>true
+
                 ],
                 "tag"=>[
                     "type"=>"int"

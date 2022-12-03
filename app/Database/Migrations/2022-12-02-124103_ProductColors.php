@@ -11,7 +11,9 @@ class ProductColors extends Migration
         $this->forge->addField(
             [
                 "color_id"=>[
-                    "type"=>"int"
+                    "type"=>"int",
+                    "auto_increment"=>true
+
                 ],
                 "color"=>[
                     "type"=>"int"

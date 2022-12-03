@@ -1,105 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Bootshop online Shopping cart</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-<!-- Bootstrap style --> 
-    <link id="callCss" rel="stylesheet" href="<?= base_url("/client/themes/bootshop/bootstrap.min.css") ?>" media="screen"/>
-    <link href="<?= base_url("/client/themes/css/base.css") ?>" rel="stylesheet" media="screen"/>
-<!-- Bootstrap style responsive -->	
-	<link href="<?= base_url("/client/themes/css/bootstrap-responsive.min.css")?>" rel="stylesheet"/>
-	<link href="<?= base_url("/client/themes/css/font-awesome.css") ?>" rel="stylesheet" type="text/css">
-<!-- Google-code-prettify -->	
-	<link href="<?= base_url("/client/themes/js/google-code-prettify/prettify.css") ?>" rel="stylesheet"/>
-<!-- fav and touch icons -->
-    <link rel="shortcut icon" href="<?= base_url("/client/themes/images/ico/favicon.ico") ?>">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?= base_url("/client/themes/images/ico/apple-touch-icon-144-precomposed.png") ?>">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?= base_url("/client/themes/images/ico/apple-touch-icon-114-precomposed.png") ?>">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?= base_url("/client/themes/images/ico/apple-touch-icon-72-precomposed.png") ?>">
-    <link rel="apple-touch-icon-precomposed" href="<?= base_url("/client/themes/images/ico/apple-touch-icon-57-precomposed.png") ?>">
-	<style type="text/css" id="enject"></style>
-  </head>
+<html lang="zxx" class="no-js">
+
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="img/fav.png">
+	<!-- Author Meta -->
+	<meta name="author" content="CodePixar">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>Karma Shop</title>
+
+	<!--
+            CSS
+            ============================================= -->
+	<link rel="stylesheet" href="<?= base_url("client/css/linearicons.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/font-awesome.min.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/themify-icons.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/bootstrap.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/owl.carousel.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/nice-select.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/nouislider.min.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/ion.rangeSlider.css") ?>" />
+	<link rel="stylesheet" href="<?= base_url("client/css/ion.rangeSlider.skinFlat.css") ?>" />
+	<link rel="stylesheet" href="<?= base_url("client/css/magnific-popup.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/main.css") ?>">
+</head>
+
 <body>
-<?= $this->include("Layouts/client/client_header") ?>
-<div id="mainBody">
-    <div class="container">
-        <div class="row">
-<?= $this->include("Layouts/client/client_sidebar") ?>
-<div class="span9" id="mainCol">
-<?= $this->include("Layouts/client/client_breadcrumb") ?>
-<?= $this->renderSection() ?>
-</div>
-</div></div>
-</div>
-<!-- MainBody End ============================= -->
-<!-- Footer ================================================================== -->
-<?= $this->include("Layouts/client/footer") ?>
 
-<!-- Placed at the end of the document so the pages load faster ============================================= -->
-<script src="<?= base_url("/client/themes/js/jquery.js") ?>" type="text/javascript"></script>
-<script src="<?= base_url("/client/themes/js/bootstrap.min.js") ?>" type="text/javascript"></script>
-<script src="<?= base_url("/client/themes/js/google-code-prettify/prettify.js") ?>"></script>
+	<!-- Start Header Area -->
+	<?= $this->include("Layouts/client/client_header") ?>
+	<!-- End Header Area -->
+	
+	<!-- Start Banner Area -->
+	<?= $this->include("Layouts/client/client_banner") ?>
+	<!-- End Banner Area -->
+	<div class="container">
+		<?= $this->renderSection("content") ?>
+	</div>
+	
+	
+	<!-- Start related-product Area -->
+	<?= $this->renderSection("related_product") ?>
+	<!-- End related-product Area -->
 
-<script src="<?= base_url("/client/themes/js/bootshop.js") ?>"></script>
-<script src="<?= base_url("/client/themes/js/jquery.lightbox-0.5.js") ?>"></script>
+	<!-- start footer Area -->
+	<?= $this->include("Layouts/client/client_footer") ?>
+	<!-- End footer Area -->
 
-	<!-- Themes switcher section ============================================================================================= -->
-<div id="secectionBox">
-<link rel="stylesheet" href="<?= base_url("/client/themes/switch/themeswitch.css")  ?>" type="text/css" media="screen" />
-<script src="<?= base_url("/client/themes/switch/theamswitcher.js")  ?> " type="text/javascript" charset="utf-8"></script>
-	<div id="themeContainer">
-	<div id="hideme" class="themeTitle">Style Selector</div>
-	<div class="themeName">Oregional Skin</div>
-	<div class="images style">
-	<a href="themes/css/#" name="bootshop"><img src="themes/switch/images/clr/bootshop.png" alt="bootstrap business templates" class="active"></a>
-	<a href="themes/css/#" name="businessltd"><img src="themes/switch/images/clr/businessltd.png" alt="bootstrap business templates" class="active"></a>
+	<!-- Modal Quick Product View -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="container relative">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="product-quick-view">
+					<div class="row align-items-center">
+						<div class="col-lg-6">
+							<div class="quick-view-carousel">
+								<div class="item" style="background: url(img/organic-food/q1.jpg);">
+
+								</div>
+								<div class="item" style="background: url(img/organic-food/q1.jpg);">
+
+								</div>
+								<div class="item" style="background: url(img/organic-food/q1.jpg);">
+
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="quick-view-content">
+								<div class="top">
+									<h3 class="head">Mill Oil 1000W Heater, White</h3>
+									<div class="price d-flex align-items-center"><span class="lnr lnr-tag"></span> <span class="ml-10">$149.99</span></div>
+									<div class="category">Category: <span>Household</span></div>
+									<div class="available">Availibility: <span>In Stock</span></div>
+								</div>
+								<div class="middle">
+									<p class="content">Mill Oil is an innovative oil filled radiator with the most modern technology. If you are
+										looking for something that can make your interior look awesome, and at the same time give you the pleasant
+										warm feeling during the winter.</p>
+									<a href="#" class="view-full">View full Details <span class="lnr lnr-arrow-right"></span></a>
+								</div>
+								<div class="bottom">
+									<div class="color-picker d-flex align-items-center">Color:
+										<span class="single-pick"></span>
+										<span class="single-pick"></span>
+										<span class="single-pick"></span>
+										<span class="single-pick"></span>
+										<span class="single-pick"></span>
+									</div>
+									<div class="quantity-container d-flex align-items-center mt-15">
+										Quantity:
+										<input type="text" class="quantity-amount ml-15" value="1" />
+										<div class="arrow-btn d-inline-flex flex-column">
+											<button class="increase arrow" type="button" title="Increase Quantity"><span class="lnr lnr-chevron-up"></span></button>
+											<button class="decrease arrow" type="button" title="Decrease Quantity"><span class="lnr lnr-chevron-down"></span></button>
+										</div>
+
+									</div>
+									<div class="d-flex mt-20">
+										<a href="#" class="view-btn color-2"><span>Add to Cart</span></a>
+										<a href="#" class="like-btn"><span class="lnr lnr-layers"></span></a>
+										<a href="#" class="like-btn"><span class="lnr lnr-heart"></span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="themeName">Bootswatch Skins (11)</div>
-	<div class="images style">
-		<a href="themes/css/#" name="amelia" title="Amelia"><img src="themes/switch/images/clr/amelia.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="spruce" title="Spruce"><img src="themes/switch/images/clr/spruce.png" alt="bootstrap business templates" ></a>
-		<a href="themes/css/#" name="superhero" title="Superhero"><img src="themes/switch/images/clr/superhero.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="cyborg"><img src="themes/switch/images/clr/cyborg.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="cerulean"><img src="themes/switch/images/clr/cerulean.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="journal"><img src="themes/switch/images/clr/journal.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="readable"><img src="themes/switch/images/clr/readable.png" alt="bootstrap business templates"></a>	
-		<a href="themes/css/#" name="simplex"><img src="themes/switch/images/clr/simplex.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="slate"><img src="themes/switch/images/clr/slate.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="spacelab"><img src="themes/switch/images/clr/spacelab.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="united"><img src="themes/switch/images/clr/united.png" alt="bootstrap business templates"></a>
-		<p style="margin:0;line-height:normal;margin-left:-10px;display:none;"><small>These are just examples and you can build your own color scheme in the backend.</small></p>
-	</div>
-	<div class="themeName">Background Patterns </div>
-	<div class="images patterns">
-		<a href="themes/css/#" name="pattern1"><img src="themes/switch/images/pattern/pattern1.png" alt="bootstrap business templates" class="active"></a>
-		<a href="themes/css/#" name="pattern2"><img src="themes/switch/images/pattern/pattern2.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern3"><img src="themes/switch/images/pattern/pattern3.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern4"><img src="themes/switch/images/pattern/pattern4.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern5"><img src="themes/switch/images/pattern/pattern5.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern6"><img src="themes/switch/images/pattern/pattern6.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern7"><img src="themes/switch/images/pattern/pattern7.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern8"><img src="themes/switch/images/pattern/pattern8.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern9"><img src="themes/switch/images/pattern/pattern9.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern10"><img src="themes/switch/images/pattern/pattern10.png" alt="bootstrap business templates"></a>
-		
-		<a href="themes/css/#" name="pattern11"><img src="themes/switch/images/pattern/pattern11.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern12"><img src="themes/switch/images/pattern/pattern12.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern13"><img src="themes/switch/images/pattern/pattern13.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern14"><img src="themes/switch/images/pattern/pattern14.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern15"><img src="themes/switch/images/pattern/pattern15.png" alt="bootstrap business templates"></a>
-		
-		<a href="themes/css/#" name="pattern16"><img src="themes/switch/images/pattern/pattern16.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern17"><img src="themes/switch/images/pattern/pattern17.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern18"><img src="themes/switch/images/pattern/pattern18.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern19"><img src="themes/switch/images/pattern/pattern19.png" alt="bootstrap business templates"></a>
-		<a href="themes/css/#" name="pattern20"><img src="themes/switch/images/pattern/pattern20.png" alt="bootstrap business templates"></a>
-		 
-	</div>
-	</div>
-</div>
-<span id="themesBtn"></span>
+
+
+
+	<script src="<?= base_url("/client/js/vendor/jquery-2.2.4.min.js") ?>"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+	 crossorigin="anonymous"></script>
+	<script src="<?= base_url("/client/js/vendor/bootstrap.min.js") ?>"></script>
+	<script src="<?= base_url("/client/js/jquery.ajaxchimp.min.js") ?>"></script>
+	<script src="<?= base_url("/client/js/jquery.nice-select.min.js") ?>"></script>
+	<script src="<?= base_url("/client/js/jquery.sticky.js") ?>"></script>
+	<script src="<?= base_url("/client/js/nouislider.min.js") ?>"></script>
+	<script src="<?= base_url("/client/js/countdown.js") ?>"></script>
+	<script src="<?= base_url("/client/js/jquery.magnific-popup.min.js") ?>"></script>
+	<script src="<?= base_url("/client/js/owl.carousel.min.js") ?>"></script>
+	<!--gmaps Js-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+	<script src="<?= base_url("/client/js/gmaps.min.js") ?>"></script>
+	<script src="<?= base_url("/client/js/main.js") ?>"></script>
 </body>
+
 </html>

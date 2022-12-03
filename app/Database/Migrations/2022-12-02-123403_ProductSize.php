@@ -11,7 +11,8 @@ class ProductSize extends Migration
         $this->forge->addField(
             [
                 "size_id"=>[
-                    "type"=>"int"
+                    "type"=>"int",
+                    "auto_increment"=>true
                 ],
                 "size"=>[
                     "type"=>"int"

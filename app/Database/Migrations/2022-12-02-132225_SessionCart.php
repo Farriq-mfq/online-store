@@ -11,7 +11,8 @@ class SessionCart extends Migration
         $this->forge->addField(
             [
                 "session_cart_id"=>[
-                    "type"=>"int"
+                    "type"=>"int",
+                    "auto_increment"=>true
                 ],
                 "user_id"=>[
                     "type"=>"bigint"
@@ -23,12 +24,13 @@ class SessionCart extends Migration
                     "type"=>"text"
                 ],
                 "discount"=>[
-                    "type"=>"bigint"
+                    "type"=>"double",
+                    "null"=>true
+                ],
+                "quantity"=>[
+                    "type"=>"int"
                 ],
                 "price"=>[
-                    "type"=>"bigint"
-                ],
-                "tax"=>[
                     "type"=>"bigint"
                 ],
                 "total"=>[

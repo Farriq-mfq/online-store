@@ -11,7 +11,7 @@ class Slider extends Migration
         $this->forge->addField([
             "slider_id"=>[
                 "type"=>"bigint",
-                "auto_increment"=>true
+                "auto_increment"=>true,
             ],
             "image"=>[
                 "type"=>"varchar",
