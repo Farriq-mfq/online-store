@@ -65,6 +65,10 @@ class Orders extends Migration
                 "type"=> "double",
                 "null"=>true
             ],
+            "is_cencel"=>[
+                "type"=> "boolean",
+                "default"=>false
+            ],
             "notes"=>[
                 "type"=> "text",
                 "null"=>true
