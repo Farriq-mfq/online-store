@@ -15,8 +15,9 @@ class ProductTags extends Migration
                     "auto_increment"=>true
 
                 ],
-                "tag"=>[
-                    "type"=>"int"
+                "tags"=>[
+                    "type"=>"varchar",
+                    "constraint"=>30
                 ],
                 "product_id"=>[
                     "type"=>"bigint"

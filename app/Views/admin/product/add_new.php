@@ -4,6 +4,7 @@
 <?= $this->endSection() ?>
 <?= $this->section("content") ?>
 <form action="<?= base_url("/private/product/new") ?>" method="POST">
+<?= csrf_field() ?>
     <div class="row">
         <div class="col-md-7">
             <div class="row">
@@ -12,7 +13,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="title" required>Title Product</label>
-                            <input type="text" class="form-control" id="title" name="title">
+                            <input type="text" class="form-control <?= show_class_error("title") ?>" id="title" name="title">
+                            <?= show_error("title") ?>
                         </div>
                         <div class="form-group">
                             <label for="short_description">Short description</label>
@@ -20,14 +22,16 @@
                         </div>
                         <div class="form-group">
                             <label for="description" required>Description <span class="text-danger">*</span></label>
-                            <textarea name="description" rows="10" id="description" class="form-control"></textarea>
+                            <textarea name="description" rows="10" id="description" class="form-control <?= show_class_error("description") ?>"></textarea>
+                            <?= show_error("description") ?>
                         </div>
                         <div class="form-group">
                             <label required>Category</label>
-                            <select class="form-control select2bs4" style="width: 100%;" name="category">
+                            <select class="form-control <?= show_class_error("description") ?> select2bs4" style="width: 100%;" name="category">
                                 <option selected="selected" value="">Select Category</option>
                                 <option>Alaska</option>
                             </select>
+                            <?= show_error("description") ?>
                         </div>
                         <div class="form-group">
                             <label required>Product Content</label>
@@ -56,6 +60,12 @@
                                         <div class="form-group">
                                             <label for="inventories_color" required>Color</label>
                                             <input type="text" class="form-control" name="inventories_color[]" id="inventories_color">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="inventories_stock" required>Stock</label>
+                                            <input type="text" class="form-control" name="inventories_stock[]" id="inventories_color">
                                         </div>
                                     </td>
                                     <td>
@@ -144,7 +154,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Meta description</label>
-                                <textarea class="form-control">
+                                <textarea class="form-control" name="meta_description">
                                 </textarea>
                             </div>
                         </div>
@@ -162,7 +172,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="tags">Tags ex : #product1,#product2</label>
-                                <input type="text" class="form-control" id="tags">                                
+                                <input type="text" class="form-control" id="tags" name="tags">                                
                             </div>
                         </div>
                     </div>
@@ -194,6 +204,12 @@
                                         <div class="form-group">
                                             <label for="inventories_color" required>Color</label>
                                             <input type="text" class="form-control" name="inventories_color[]" id="inventories_color">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="inventories_stock" required>Stock</label>
+                                            <input type="text" class="form-control" name="inventories_stock[]" id="inventories_color">
                                         </div>
                                     </td>
                                     <td>

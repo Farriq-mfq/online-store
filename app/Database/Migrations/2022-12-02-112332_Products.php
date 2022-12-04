@@ -35,7 +35,7 @@ class Products extends Migration
                 "null"=>true
             ],
             // one to many
-            "product_categorie_id"=>[
+            "product_category_id"=>[
                 "type"=>"int",
             ],
             "price"=>[
@@ -44,7 +44,7 @@ class Products extends Migration
             "weight"=>[  
                 "type"=>"int",
             ],
-            "feature"=>[
+            "featured"=>[
                 "type"=>"boolean",
                 "default"=>false
             ],
