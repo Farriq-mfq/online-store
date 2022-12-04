@@ -121,6 +121,10 @@
   })
   $('.select2').select2()
   $("#summernote").summernote();
+  $(document).on("click",".submit_btn",function(){
+    $(this).html("Processing...");
+    $(this).prop("disabled",true)
+  })
 </script>
 <?php if(session()->getFlashdata("alert")!=null): ?>
   <?php if(session()->getFlashdata("alert")['type']!=null): ?>

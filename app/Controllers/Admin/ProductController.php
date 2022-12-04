@@ -31,9 +31,10 @@ class ProductController extends BaseController
                 "rules"=>"required"
             ],
             "inventories_size.*"=>[
-                "rules"=>"required|min_length[0]",
+                "rules"=>"required|numeric",
                 "errors"=>[
-                    "required"=>"Field size empty"
+                    "required"=>"Field size empty",
+                    "numeric"=>"Field only numeric"
                 ]
             ],
             "inventories_color.*"=>[
@@ -43,33 +44,36 @@ class ProductController extends BaseController
                 ]
             ],
             "inventories_stock.*"=>[
-                "rules"=>"required",
+                "rules"=>"required|numeric",
                 "errors"=>[
-                    "required"=>"Field stock empty"
+                    "required"=>"Field stock empty",
+                    "numeric"=>"Field only numeric"
                 ]
             ],
             "inventories_sku.*"=>[
-                "rules"=>"required|min_length[0]",
+                "rules"=>"required|numeric",
                 "errors"=>[
-                    "required"=>"Field sku empty"
+                    "required"=>"Field sku empty",
+                    "numeric"=>"Field only numeric"
                 ]
             ],
             "inventories_price.*"=>[
-                "rules"=>"required|min_length[0]",
+                "rules"=>"required|numeric",
                 "errors"=>[
-                    "required"=>"Field price empty"
+                    "required"=>"Field price empty",
+                    "numeric"=>"Field only numeric"
                 ]
             ],
             "price"=> [
-                "rules"=>"required|min_length[0]"
+                "rules"=>"required|numeric"
             ],
             "weight"=> [
-                "rules"=>"required|min_length[0]"
+                "rules"=>"required|numeric"
             ],
             "brand"=> [
                 "rules"=>"required"
             ],
-            "tags"=>"required"
+            "tags"=>"required",
         ]);
         if(!$validate){
             session()->setFlashdata('input_inventories',$this->request->getVar("send_input_inventories"));
@@ -80,6 +84,7 @@ class ProductController extends BaseController
         $product = new Product();
         $title = $this->request->getVar("title");
         $description = $this->request->getVar('description');
+        $short_description = $this->request->getVar('short_description');
         $category = $this->request->getVar('category');
         $content = $this->request->getVar('content');
         $inventories_size = $this->request->getVar('inventories_size');
@@ -93,12 +98,11 @@ class ProductController extends BaseController
         $new_label = $this->request->getVar('new_label');
         $status = $this->request->getVar('status');
         $brand = $this->request->getVar('brand');
-        $meta_title = $this->request->getVar('meta_title');
-        $meta_description = $this->request->getVar('meta_description');
         $tags = $this->request->getVar('tags');
         $data = [
             "title"=>$title,
             "slug"=>url_title($title,"-"),
+            "short_description"=>$short_description,
             "description"=>$description,
             "product_categorie_id"=>$category,
             "content"=>$content,
@@ -115,10 +119,10 @@ class ProductController extends BaseController
             "new_label"=>$new_label== NULL ? false:true,
             "status"=>$status== NULL ? false:true,
             "product_brand_id"=>$brand,
-            "meta_title"=>$meta_title,
-            "meta_description"=>$meta_description,
             "tags"=>explode(",",$tags)
         ];
         $product->addNew($data);
+        alert("Publish Product Success","success");
+        return redirect()->back();
     }
 }

@@ -46,7 +46,8 @@ class Product extends Model
         $productBuilder = $this->db->table($this->table);
         $productInventoriesBuilder = $this->db->table("product_inventories");
         $productTagsBuilder = $this->db->table("product_tags");
-        $productData = pick($data,["title","slug","description","product_category_id","content","price","weight","featured","new_label","status","product_brand_id"]);
+        $productMetaBuilder = $this->db->table("product_meta");
+        $productData = pick($data,["title","slug","short_description","description","product_category_id","content","price","weight","featured","new_label","status","product_brand_id"]);
         $productBuilder->insert($productData);
         $productInventories =batch_convert(pick($data,['inventories'])['inventories'],["product_id"=>$this->db->insertID()]);
         $productTags = batch_convert(pick($data,['tags']),["product_id"=>1]);

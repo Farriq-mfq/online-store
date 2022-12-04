@@ -36,8 +36,9 @@
                         <div class="form-group">
                             <label required>Product Content</label>
                             <textarea id="summernote" name="content">
-                                Place <em>some</em> <u>content</u> <strong>here</strong>
+                                <?= set_value("content") ?set_value("content"): "Place <em>some</em> <u>content</u> <strong>here</strong>" ?>
                             </textarea>
+                            <?= show_error("content") ?>
                         </div>
                     </div>
                 </div>
@@ -157,7 +158,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" name="featured" id="featured">
+                                    <input type="checkbox" class="custom-control-input" name="featured" id="featured" <?= set_value("featured") ? "checked":"" ?>>
                                     <label class="custom-control-label" for="featured">
                                         Featured
                                     </label>
@@ -165,7 +166,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" name="new_label" id="new_label">
+                                    <input type="checkbox" class="custom-control-input" name="new_label" id="new_label" <?= set_value("new_label") ? "checked":"" ?>>
                                     <label class="custom-control-label" for="new_label">
                                         New label
                                     </label>
@@ -173,7 +174,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" name="status" id="status">
+                                    <input type="checkbox" class="custom-control-input" name="status" id="status" <?= set_value("status") ? "checked":"" ?>>
                                     <label class="custom-control-label" for="status">
                                         Status
                                     </label>
@@ -196,35 +197,13 @@
                     <div class="card">
                         <div class="card-header">
                             <label>
-                                Product Meta & SEO
-                            </label>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="meta_title">Meta title</label>
-                                <input type="text" class="form-control" id="meta_title">                                
-                            </div>
-                            <div class="form-group">
-                                <label>Meta description</label>
-                                <textarea class="form-control" name="meta_description">
-                                </textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <label>
                                 Product Tags
                             </label>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="tags">Tags ex : #product1,#product2</label>
-                                <input type="text" class="form-control <?= show_class_error("tags") ?>" id="tags" name="tags">                                
+                                <input type="text" class="form-control <?= show_class_error("tags") ?>" id="tags" name="tags" value="<?= set_value("tags") ?>">                                
                                 <?= show_error("tags") ?>
                             </div>
                         </div>
@@ -232,7 +211,7 @@
                 </div>
             </div>
             <div class="row justify-content-end">
-                <button class="btn bg-gradient-primary" type="submit">Publish</button>
+                <button class="btn bg-gradient-primary submit_btn" type="submit">Publish</button>
             </div>
         </div>
     </div>
