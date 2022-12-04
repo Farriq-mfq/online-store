@@ -55,7 +55,10 @@ class ProductController extends BaseController
                 ]
             ],
             "inventories_price.*"=>[
-                "rules"=>"required|min_length[0]"
+                "rules"=>"required|min_length[0]",
+                "errors"=>[
+                    "required"=>"Field price empty"
+                ]
             ],
             "price"=> [
                 "rules"=>"required|min_length[0]"
@@ -69,6 +72,7 @@ class ProductController extends BaseController
             "tags"=>"required"
         ]);
         if(!$validate){
+            session()->setFlashdata('input_inventories',$this->request->getVar("send_input_inventories"));
             session()->setFlashdata('validation',$this->validator->getErrors());
             return redirect()->back()->withInput();
         }
