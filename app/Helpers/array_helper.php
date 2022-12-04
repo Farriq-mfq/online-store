@@ -22,3 +22,13 @@
         }
         return $batch;
     }
+
+    function show_array_contains(array $array,$contains):array{
+        $result = [];
+        foreach (array_keys($array) as $val) {
+            if(str_contains($val,$contains)){
+                $result[] = $val;
+            }
+        }
+        return $result;
+    }

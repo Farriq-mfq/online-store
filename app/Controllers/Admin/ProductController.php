@@ -31,16 +31,28 @@ class ProductController extends BaseController
                 "rules"=>"required"
             ],
             "inventories_size.*"=>[
-                "rules"=>"required|min_length[0]"
+                "rules"=>"required|min_length[0]",
+                "errors"=>[
+                    "required"=>"Field size empty"
+                ]
             ],
             "inventories_color.*"=>[
-                "rules"=>"required"
+                "rules"=>"required",
+                "errors"=>[
+                    "required"=>"Field color empty"
+                ]
             ],
             "inventories_stock.*"=>[
-                "rules"=>"required"
+                "rules"=>"required",
+                "errors"=>[
+                    "required"=>"Field stock empty"
+                ]
             ],
             "inventories_sku.*"=>[
-                "rules"=>"required|min_length[0]"
+                "rules"=>"required|min_length[0]",
+                "errors"=>[
+                    "required"=>"Field sku empty"
+                ]
             ],
             "inventories_price.*"=>[
                 "rules"=>"required|min_length[0]"
@@ -58,7 +70,7 @@ class ProductController extends BaseController
         ]);
         if(!$validate){
             session()->setFlashdata('validation',$this->validator->getErrors());
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
 
         $product = new Product();
