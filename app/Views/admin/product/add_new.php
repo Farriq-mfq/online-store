@@ -1,7 +1,9 @@
 <?= $this->extend("Layouts/admin_layout") ?>
-
+<?= $this->section("css") ?>
+<!-- css -->
+<?= $this->endSection() ?>
 <?= $this->section("content") ?>
-<form action="#" method="POST">
+<form action="<?= base_url("/private/product/new") ?>" method="POST">
     <div class="row">
         <div class="col-md-7">
             <div class="row">
@@ -10,7 +12,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="title" required>Title Product</label>
-                            <input type="text" class="form-control" id="title">
+                            <input type="text" class="form-control" id="title" name="title">
                         </div>
                         <div class="form-group">
                             <label for="short_description">Short description</label>
@@ -29,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             <label required>Product Content</label>
-                            <textarea id="summernote">
+                            <textarea id="summernote" name="content">
                                 Place <em>some</em> <u>content</u> <strong>here</strong>
                             </textarea>
                         </div>
@@ -43,11 +45,6 @@
                         </div>
                         <div class="card-body">
                            <table class="table" id="table_inventories_add">
-                            <tr>
-                                <td>
-                                    <button class="btn btn-primary mt-4" type="button" id="inventory_btn_plus">Add New <i class="fa fa-plus"></i></button>
-                                </td>
-                            </tr>
                                 <tr>
                                     <td>
                                         <div class="form-group">
@@ -73,6 +70,10 @@
                                             <input type="number" min="0" class="form-control" name="inventories_price[]" id="inventories_price">
                                         </div>
                                     </td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm mt-4" type="button" id="inventory_btn_plus"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="btn btn-sm btn-secondary mt-4" id="btn_remove_inventories_add"><i class="fa fa-minus"></i></button>
+                                    </td>
                                 </tr>
                            </table>
                         </div>
@@ -96,7 +97,7 @@
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" name="featured" id="featured">
-                                    <label class="custom-control-label" required for="featured">
+                                    <label class="custom-control-label" for="featured">
                                         Featured
                                     </label>
                                 </div>
@@ -104,7 +105,7 @@
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" name="new_label" id="new_label">
-                                    <label class="custom-control-label" required for="new_label">
+                                    <label class="custom-control-label" for="new_label">
                                         New label
                                     </label>
                                 </div>
@@ -112,7 +113,7 @@
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" name="status" id="status">
-                                    <label class="custom-control-label" required for="status">
+                                    <label class="custom-control-label" for="status">
                                         Status
                                     </label>
                                 </div>
@@ -128,6 +129,48 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <label>
+                                Product Meta & SEO
+                            </label>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="meta_title">Meta title</label>
+                                <input type="text" class="form-control" id="meta_title">                                
+                            </div>
+                            <div class="form-group">
+                                <label>Meta description</label>
+                                <textarea class="form-control">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <label>
+                                Product Tags
+                            </label>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="tags">Tags ex : #product1,#product2</label>
+                                <input type="text" class="form-control" id="tags">                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <button class="btn bg-gradient-primary" type="submit">Publish</button>
+            </div>
         </div>
     </div>
 </form>
@@ -137,10 +180,8 @@
 <?= $this->endSection() ?>
 <?= $this->section("script") ?>
 <script>
-    $("#inventory_btn_plus").bind("click",function(e){
-        console.log($(this))
-    })
-    $("#inventory_btn_plus").on("click",function(e){
+
+    $(document).on("click","#inventory_btn_plus",function(e){
         e.preventDefault();
          $("#table_inventories_add").append(`<tr>
                                     <td>
@@ -167,7 +208,19 @@
                                             <input type="number" min="0" class="form-control" name="inventories_price[]" id="inventories_price">
                                         </div>
                                     </td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm mt-4" type="button" id="inventory_btn_plus"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="btn btn-sm btn-secondary mt-4" id="btn_remove_inventories_add"><i class="fa fa-minus"></i></button>
+                                    </td>
                                 </tr>`);
     })
+    $(document).on("click","#btn_remove_inventories_add",function(e){
+        e.preventDefault();
+        if($(this).parent().parent().parent().children().length!=1){
+            $(this).parent().parent().remove()
+        }
+    })
+    
 </script>
+
 <?= $this->endSection() ?> 

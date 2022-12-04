@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use PhpParser\Node\Stmt\Return_;
 
 class ProductController extends BaseController
 {
@@ -13,5 +14,10 @@ class ProductController extends BaseController
     public function create()
     {
         return view("admin/product/add_new",add_data("Add New Product","product/new"));
+    }
+    public function add()
+    {
+        alert("hallo test","success");
+        return redirect()->back();
     }
 }

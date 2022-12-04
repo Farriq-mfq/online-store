@@ -28,7 +28,8 @@
   <link rel="stylesheet" href="<?= base_url("/admin/plugins/select2/css/select2.min.css") ?>">
   <link rel="stylesheet" href="<?= base_url("/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") ?>">
   <link rel="stylesheet" href="<?= base_url("/admin/plugins/summernote/summernote-bs4.min.css") ?>">
-
+  <link rel="stylesheet" href="<?= base_url("/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css") ?>">
+  <?= $this->renderSection("css") ?>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -108,10 +109,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url("/admin/dist/js/demo.js") ?>"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="<?= base_url("/admin/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
 <script src="<?= base_url("/admin/dist/js/pages/dashboard.js") ?>"></script>
 <script src="<?= base_url("/admin/plugins/select2/js/select2.full.min.js") ?>"></script>
 <script src="<?= base_url("/admin/plugins/summernote/summernote-bs4.min.js") ?>"></script>
-
 <script>
   // custom label
   $("label[required]").each((index)=>{
@@ -119,8 +120,26 @@
     label.innerHTML = label.innerText +" <span class='text-danger'>*</span>"
   })
   $('.select2').select2()
-  $('#summernote').summernote()
+  $("#summernote").summernote();
 </script>
+<?php if(session()->getFlashdata("alert")!=null): ?>
+  <?php if(session()->getFlashdata("alert")['type']!=null): ?>
+      <script>
+        swal.fire({
+          icon:"<?= session()->getFlashdata("alert")['type'] ?>",
+          title: 'Alert',
+          text:"<?= session()->getFlashdata("alert")["message"]!= null ? session()->getFlashdata("alert")["message"]:"" ?>",
+        })
+        </script>
+      <?php else: ?>
+      <script>
+        swal.fire({
+          title: 'Alert',
+          text:"<?= session()->getFlashdata("alert")["message"]!= null ? session()->getFlashdata("alert")["message"]:"" ?>",
+        })
+        </script>
+  <?php endif ?>
+<?php endif ?>
 <?= $this->renderSection("script") ?>
 </body>
 </html>
