@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-
 class Product extends Model
 {
+    use \Tatter\Relations\Traits\ModelTrait;
     protected $DBGroup          = 'default';
     protected $table            = 'products';
     protected $primaryKey       = 'product_id';
@@ -15,6 +15,7 @@ class Product extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [];
+    // protected $with = ['groups', 'permissions'];
 
     // Dates
     protected $useTimestamps = true;

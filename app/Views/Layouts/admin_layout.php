@@ -29,6 +29,9 @@
   <link rel="stylesheet" href="<?= base_url("/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") ?>">
   <link rel="stylesheet" href="<?= base_url("/admin/plugins/summernote/summernote-bs4.min.css") ?>">
   <link rel="stylesheet" href="<?= base_url("/admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css") ?>">
+  <link rel="stylesheet" href="<?= base_url("/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css") ?>">
+  <link rel="stylesheet" href="<?= base_url("/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css") ?>">
+  <link rel="stylesheet" href="<?= base_url("/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css") ?>">
   <?= $this->renderSection("css") ?>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -113,6 +116,12 @@
 <script src="<?= base_url("/admin/dist/js/pages/dashboard.js") ?>"></script>
 <script src="<?= base_url("/admin/plugins/select2/js/select2.full.min.js") ?>"></script>
 <script src="<?= base_url("/admin/plugins/summernote/summernote-bs4.min.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/datatables/jquery.dataTables.min.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/datatables-buttons/js/dataTables.buttons.min.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js") ?>"></script>
 <script>
   // custom label
   $("label[required]").each((index)=>{
@@ -121,10 +130,7 @@
   })
   $('.select2').select2()
   $("#summernote").summernote();
-  $(document).on("click",".submit_btn",function(){
-    $(this).html("Processing...");
-    $(this).prop("disabled",true)
-  })
+  $('#example1').DataTable();
 </script>
 <?php if(session()->getFlashdata("alert")!=null): ?>
   <?php if(session()->getFlashdata("alert")['type']!=null): ?>
