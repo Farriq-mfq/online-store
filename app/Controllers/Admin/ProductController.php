@@ -9,7 +9,9 @@ class ProductController extends BaseController
 {
     public function index()
     {
-        return view("admin/product/index",add_data("All Product","product/index"));
+        $products = new Product();
+        $data['products'] =  $products->find();
+        return view("admin/product/index",add_data("All Product","product/index",$data));
     }
     public function create()
     {
@@ -123,6 +125,13 @@ class ProductController extends BaseController
         ];
         $product->addNew($data);
         alert("Publish Product Success","success");
+        return redirect()->back();
+    }
+    public function remove($id)
+    {
+        $products = new Product();
+        $products->delete($id);
+        alert("Success delete product","success");
         return redirect()->back();
     }
 }

@@ -61,8 +61,9 @@ class Products extends Migration
             "product_brand_id"=>[
                 "type"=>"int",
             ],
-            'created_date datetime default current_timestamp',
-            'updated_date datetime default current_timestamp on update current_timestamp'
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ]);
 
         $this->forge->addKey('product_id',true);

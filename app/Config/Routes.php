@@ -43,6 +43,7 @@ $routes->group("/private",["namespace"=>$routes->getDefaultNamespace()."Admin"],
         $route->get("/","ProductController::index");
         $route->get("new","ProductController::create");
         $route->post("new","ProductController::add");
+        $route->delete("(:num)","ProductController::remove/$1");
         // inventories
         $route->get("inventories","ProductInventories::index");
         // images

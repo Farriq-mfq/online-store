@@ -26,8 +26,8 @@ class ProductReviews extends Migration
             "product_id"=>[
                 "type"=>"bigint",
             ],
-            'created_date datetime default current_timestamp',
-            'updated_date datetime default current_timestamp on update current_timestamp'
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp'
         ]);
         $this->forge->addKey("review_id",true);
         $this->forge->addForeignKey("user_id","users","user_id","NO ACTION","NO ACTION");

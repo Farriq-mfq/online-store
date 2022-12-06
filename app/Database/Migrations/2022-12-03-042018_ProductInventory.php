@@ -34,8 +34,8 @@ class ProductInventory extends Migration
                 "product_id"=>[
                     "type"=>"bigint"
                 ],
-                'created_date datetime default current_timestamp',
-                'updated_date datetime default current_timestamp on update current_timestamp'
+                'created_at datetime default current_timestamp',
+                'updated_at datetime default current_timestamp on update current_timestamp'
             ]
         );
 

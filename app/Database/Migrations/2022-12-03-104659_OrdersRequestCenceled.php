@@ -19,8 +19,8 @@ class OrdersRequestCenceled extends Migration
             "order_id"=>[
                 "type"=>"bigint"
             ],
-            'created_date datetime default current_timestamp',
-            'updated_date datetime default current_timestamp on update current_timestamp'
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp'
         ]);
         $this->forge->addKey("order_cencel_request_id",true);
         $this->forge->addForeignKey("order_id","orders","order_id","CASCADE","CASCADE");

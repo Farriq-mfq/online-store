@@ -59,6 +59,37 @@
       <div class="container-fluid">
         <?= $this->renderSection("content") ?>
       </div><!-- /.container-fluid -->
+      <!-- modal global -->
+      <div class="modal fade" id="global_confirm">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Confirm Your Action</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form id="form_modal_global" method="POST">
+              <?= csrf_field() ?>
+              <input type="hidden" name="_method" value="DELETE" />
+              <div class="modal-body">
+                <p>Please type <b id="bold_slug_global"></b> to confirm</p>
+                <div class="form-group">
+                  <input type="hidden" name="confirm_field">
+                  <input type="text" class="form-control" name="confirm_input">
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger" id="btn_global_confirm" disabled>Delete</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
     </section>
     <!-- /.content -->
   </div>
@@ -122,6 +153,8 @@
 <script src="<?= base_url("/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js") ?>"></script>
 <script src="<?= base_url("/admin/plugins/datatables-buttons/js/dataTables.buttons.min.js") ?>"></script>
 <script src="<?= base_url("/admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/jquery-validation/jquery.validate.min.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/jquery-validation/additional-methods.min.js") ?>"></script>
 <script>
   // custom label
   $("label[required]").each((index)=>{
@@ -131,13 +164,58 @@
   $('.select2').select2()
   $("#summernote").summernote();
   $('#example1').DataTable();
+  $(document).on("click","button[confirm]",function(e){
+    $slug = $(this).data("slug");
+    $action = $(this).data("action");
+    $("#form_modal_global").attr("action",$action);
+    $("#bold_slug_global").text($(this).data("slug"));
+    $("input[name='confirm_field']").val($(this).data("slug"));
+    $("#global_confirm").modal({show:true})
+  })
+  $("#global_confirm").on("hidden.bs.modal",function(){
+    $("input[name='confirm_input']").val("");
+    $("input[name='confirm_input']").removeClass("is-invalid");
+    $("input[name='confirm_input']").removeAttr("aria-describedby");
+    $("#confirm_input-error").remove();
+  })
+
+  // validate
+  $.validator.addMethod("checkLabel",function(value,element){
+    if(value ==  $("input[name='confirm_field']").val()){
+      return true;
+    }
+    return false;
+  },"Confirm invalid")
+
+  $("#form_modal_global").validate({
+    rules:{
+      confirm_input:{
+        required:true,
+        checkLabel:true
+      }
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    },
+    success: function() {
+      $("#btn_global_confirm").attr("disabled",false);
+    }
+  })
 </script>
 <?php if(session()->getFlashdata("alert")!=null): ?>
   <?php if(session()->getFlashdata("alert")['type']!=null): ?>
       <script>
         swal.fire({
           icon:"<?= session()->getFlashdata("alert")['type'] ?>",
-          title: 'Alert',
+          title: 'Info',
           text:"<?= session()->getFlashdata("alert")["message"]!= null ? session()->getFlashdata("alert")["message"]:"" ?>",
         })
         </script>
