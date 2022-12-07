@@ -3,7 +3,7 @@
 <!-- css -->
 <?= $this->endSection() ?>
 <?= $this->section("content") ?>
-<?= form_open(base_url("/private/product/new")) ?>
+<?= form_open_multipart(base_url("/private/product/new")) ?>
 <?= csrf_field() ?>
     <div class="row">
         <div class="col-md-7">
@@ -196,7 +196,32 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <label>
+                            <label required>
+                                Product Images
+                            </label>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="product_image">Place Images here</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input <?= show_class_error("product_image") ?>" name="product_image" id="product_image">
+                                        <label class="custom-file-label" for="product_images">Choose file</label>
+                                    </div>
+                                </div>
+                                <div class="text-danger">
+                                    <?= isset(session()->getFlashdata("validation")["product_image"]) ? session()->getFlashdata("validation")["product_image"]:""  ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <label required>
                                 Product Tags
                             </label>
                         </div>

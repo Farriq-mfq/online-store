@@ -177,6 +177,7 @@
     $("input[name='confirm_input']").removeClass("is-invalid");
     $("input[name='confirm_input']").removeAttr("aria-describedby");
     $("#confirm_input-error").remove();
+    $("#btn_global_confirm").attr("disabled",true);
   })
 
   // validate

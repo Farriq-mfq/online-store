@@ -75,6 +75,15 @@ class ProductController extends BaseController
             "brand"=> [
                 "rules"=>"required"
             ],
+            "product_image"=>[
+                'rules' => 'uploaded[product_image]|is_image[product_image]|mime_in[product_image,image/jpg,image/jpeg,image/gif,image/png]|max_size[product_image,2048]',
+                "errors"=>[
+                    "uploaded"=>"Please Put Image",
+                    "is_image"=>"Your File is not an image",
+                    "mime_in"=>"Invalid extension with image/jpg,image/jpeg,image/gif,image/png",
+                    "max_size"=>"File size is only 2mb"
+                ]
+            ],
             "tags"=>"required",
         ]);
         if(!$validate){
@@ -100,6 +109,7 @@ class ProductController extends BaseController
         $new_label = $this->request->getVar('new_label');
         $status = $this->request->getVar('status');
         $brand = $this->request->getVar('brand');
+        $product_image = $this->request->getFile("product_image")->getRandomName();
         $tags = $this->request->getVar('tags');
         $data = [
             "title"=>$title,
@@ -121,11 +131,22 @@ class ProductController extends BaseController
             "new_label"=>$new_label== NULL ? false:true,
             "status"=>$status== NULL ? false:true,
             "product_brand_id"=>$brand,
+            "product_image"=>[
+                "image"=>base_url("/uploads/products/".$product_image),
+                "mime"=>$this->request->getFile("product_image")->getMimeType(),
+                "is_primary"=>true
+            ],
             "tags"=>explode(",",$tags)
         ];
-        $product->addNew($data);
-        alert("Publish Product Success","success");
+
+        if($product->addNew($data)){
+            alert("Publish Product Success","success");
+            $this->request->getFile("product_image")->move("uploads/products",$product_image);
+        }else{
+            alert("Internal Server Error","error");
+        }
         return redirect()->back();
+        
     }
     public function remove($id)
     {

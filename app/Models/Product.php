@@ -44,15 +44,22 @@ class Product extends Model
 
     public function addNew(array $data)
     {   
-        $productBuilder = $this->db->table($this->table);
-        $productInventoriesBuilder = $this->db->table("product_inventories");
-        $productTagsBuilder = $this->db->table("product_tags");
-        $productMetaBuilder = $this->db->table("product_meta");
-        $productData = pick($data,["title","slug","short_description","description","product_category_id","content","price","weight","featured","new_label","status","product_brand_id"]);
-        $productBuilder->insert($productData);
-        $productInventories =batch_convert(pick($data,['inventories'])['inventories'],["product_id"=>$this->db->insertID()]);
-        $productTags = batch_convert(pick($data,['tags']),["product_id"=>1]);
-        $productInventoriesBuilder->insertBatch($productInventories);
-        $productTagsBuilder->insertBatch($productTags);
+        try{
+            $productBuilder = $this->db->table($this->table);
+            $productInventoriesBuilder = $this->db->table("product_inventories");
+            $productImagesBuilder = $this->db->table("product_images");
+            $productTagsBuilder = $this->db->table("product_tags");
+            $productData = pick($data,["title","slug","short_description","description","product_category_id","content","price","weight","featured","new_label","status","product_brand_id"]);
+            $productBuilder->insert($productData);
+            $productInventories =batch_convert(pick($data,['inventories'])['inventories'],["product_id"=>$this->db->insertID()]);
+            $productImage = array_merge(pick($data,["product_image"])["product_image"],["product_id"=>1]);
+            $productTags = batch_convert(pick($data,['tags']),["product_id"=>$this->db->insertID()]);
+            $productInventoriesBuilder->insertBatch($productInventories);
+            $productImagesBuilder->insert($productImage);
+            $productTagsBuilder->insertBatch($productTags);
+            return true;
+        }catch(\Exception $e){
+            return false;
+        }
     }
 }

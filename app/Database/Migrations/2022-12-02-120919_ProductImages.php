@@ -15,7 +15,11 @@ class ProductImages extends Migration
             ],
             "image"=>[
                 "type"=>"varchar",
-                "constraint"=>50,
+                "constraint"=>150,
+            ],
+            "mime"=>[
+                "type"=>"varchar",
+                "constraint"=>20,
             ],
             "is_primary"=>[
                 "type"=>"boolean",
