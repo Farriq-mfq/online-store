@@ -37,8 +37,8 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get("/private","Home::index");
 $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admin"],function($route){
+    $route->get("/","Home::index");
     $route->group("product",function($route){
         $route->get("/","ProductController::index");
         // product add new
@@ -56,6 +56,11 @@ $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admi
         $route->get("images","ProductImages::index");
         // comments
         $route->get("comments","ProductComments::index");
+    });
+    $route->group("brands",function($brandRoute){
+        $brandRoute->get("/","BrandController::index");
+        $brandRoute->post("/","BrandController::store");
+        $brandRoute->delete("(:num)","BrandController::remove/$1");
     });
 });
 

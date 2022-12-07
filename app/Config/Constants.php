@@ -95,6 +95,9 @@ define('EVENT_PRIORITY_HIGH', 10);
 
 
 // custom constant
+if(!defined("TITLE_ADMIN_LEFT")){
+    define("TITLE_ADMIN_LEFT","DEV");
+}
 // setting here for admin path
 if(!defined("ADMIN_PATH")){
     define("ADMIN_PATH","DEV_ADMIN");

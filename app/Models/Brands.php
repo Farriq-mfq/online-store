@@ -14,7 +14,7 @@ class Brands extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["brand"];
 
     // Dates
     protected $useTimestamps = false;

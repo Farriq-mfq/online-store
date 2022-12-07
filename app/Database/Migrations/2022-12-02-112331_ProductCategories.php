@@ -15,6 +15,7 @@ class ProductCategories extends Migration
             ],
             "parent_category"=>[
                 "type"=>"int",
+                "null"=>true
             ],
             "category"=>[
                 "type"=>"varchar",
