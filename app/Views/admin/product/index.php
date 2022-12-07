@@ -14,6 +14,7 @@
                       <th>Title Product</th>
                       <th>Price</th>
                       <th>Weight</th>
+                      <th>Brand</th>
                       <th>Discount</th>
                       <th>Actions</th>
                     </tr>
@@ -51,10 +52,12 @@
                     </td>
                     <td><?= $product->price ?></td>
                     <td><?= $product->weight ?></td>
+                    <td><?= $product->brand == NULL ? "No Brand":$product->brand->brand ?></td>
                     <td><?= $product->discount == NULL ? "No discount":$product->discount ?></td>
                     <td>
                       <a href="<?= admin_url("/product/".esc($product->product_id)."/edit") ?>" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
                       <button class=" btn btn-danger btn-sm" confirm  data-slug="<?= $product->slug ?>" data-action="<?= admin_url("/product/".esc($product->product_id)) ?>"><i class="fas fa-trash"></i></button>
+                      <a href="<?= admin_url("/product/".esc($product->product_id)."/edit") ?>" class="btn btn bg-gradient-info btn-sm"><i class="fas fa-arrow-right"></i></a>
                       <div class="btn-group">
                     <button type="button" class="btn btn-info btn-sm">Action</button>
                       <button type="button" class="btn btn-info btn-sm dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown">

@@ -34,9 +34,9 @@ class Products extends Migration
                 "type"=>"double",
                 "null"=>true
             ],
-            // one to many
-            "product_category_id"=>[
+            "category_id"=>[
                 "type"=>"int",
+                "null"=>true
             ],
             "price"=>[
                 "type"=>"bigint",
@@ -58,8 +58,9 @@ class Products extends Migration
             "status"=>[
                 "type"=>"boolean"
             ],
-            "product_brand_id"=>[
+            "brand_id"=>[
                 "type"=>"int",
+                "null"=>true
             ],
             'created_at datetime default current_timestamp',
             'updated_at datetime default current_timestamp on update current_timestamp',
@@ -67,6 +68,8 @@ class Products extends Migration
         ]);
 
         $this->forge->addKey('product_id',true);
+        $this->forge->addForeignKey("brand_id","brands","brand_id","SET NULL","SET NULL");
+        $this->forge->addForeignKey("category_id","categories","category_id","SET NULL","SET NULL");
         $this->forge->createTable('products');
     }
 

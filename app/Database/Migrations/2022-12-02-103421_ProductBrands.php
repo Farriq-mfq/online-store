@@ -20,7 +20,6 @@ class ProductBrands extends Migration
                 ],
             ]
         );
-
         $this->forge->addKey("brand_id",true);
         $this->forge->createTable("brands");
     }

@@ -184,7 +184,7 @@
                                 <label required>Product Brand</label>
                                 <select class="form-control select2bs4 <?= show_class_error("weight") ?>" style="width: 100%;" name="brand">
                                     <option selected="selected" value="">Select Brand</option>
-                                    <option value="alaska">Alaska</option>
+                                    <option >Alaska</option>
                                 </select>
                                 <?= show_error("brand") ?>
                             </div>

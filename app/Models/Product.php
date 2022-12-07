@@ -14,8 +14,8 @@ class Product extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["title","slug","short_description","description","product_category_id","content","price","weight","featured","new_label","status","product_brand_id"];
-    // protected $with = ['groups', 'permissions'];
+    protected $allowedFields    = ["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id"];
+    protected $with = ['brands'];
 
     // Dates
     protected $useTimestamps = true;
@@ -49,7 +49,7 @@ class Product extends Model
             $productInventoriesBuilder = $this->db->table("product_inventories");
             $productImagesBuilder = $this->db->table("product_images");
             $productTagsBuilder = $this->db->table("product_tags");
-            $productData = pick($data,["title","slug","short_description","description","product_category_id","content","price","weight","featured","new_label","status","product_brand_id"]);
+            $productData = pick($data,["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id"]);
             $productBuilder->insert($productData);
             $productInventories =batch_convert(pick($data,['inventories'])['inventories'],["product_id"=>$this->db->insertID()]);
             $productImage = array_merge(pick($data,["product_image"])["product_image"],["product_id"=>1]);
