@@ -26,8 +26,8 @@
                     <td><?= $product->weight ?></td>
                     <td><?= $product->discount == NULL ? "No discount":$product->discount ?></td>
                     <td>
-                      <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
-                      <button class=" btn btn-danger btn-sm" confirm  data-slug="<?= $product->slug ?>" data-action="<?= base_url("/private/product/".esc($product->product_id)) ?>"><i class="fas fa-trash"></i></button>
+                      <a href="<?= admin_url("/product/".esc($product->product_id)."/edit") ?>" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                      <button class=" btn btn-danger btn-sm" confirm  data-slug="<?= $product->slug ?>" data-action="<?= admin_url("/product/".esc($product->product_id)) ?>"><i class="fas fa-trash"></i></button>
                       <div class="btn-group">
                     <button type="button" class="btn btn-info btn-sm">Action</button>
                       <button type="button" class="btn btn-info btn-sm dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown">

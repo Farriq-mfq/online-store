@@ -92,3 +92,10 @@ define('EVENT_PRIORITY_NORMAL', 100);
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
 define('EVENT_PRIORITY_HIGH', 10);
+
+
+// custom constant
+// setting here for admin path
+if(!defined("ADMIN_PATH")){
+    define("ADMIN_PATH","DEV_ADMIN");
+}

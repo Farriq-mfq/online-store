@@ -155,4 +155,8 @@ class ProductController extends BaseController
         alert("Success delete product","success");
         return redirect()->back();
     }
+    public function edit($id)
+    {
+        print_r($id);
+    }
 }

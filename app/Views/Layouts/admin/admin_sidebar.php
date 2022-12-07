@@ -36,7 +36,7 @@
           <!-- Add icons to the links using the .nav-icon class
           with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?= base_url("/private") ?>" class="nav-link <?= $active_page == "/index" ? "active":"" ?>">
+            <a href="<?= admin_url("") ?>" class="nav-link <?= $active_page == "/index" ? "active":"" ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -54,31 +54,31 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url("/private/product") ?>" class="nav-link <?= $active_page == "product/index" ? "active":"" ?>">
+                <a href="<?= admin_url("/product") ?>" class="nav-link <?= $active_page == "product/index" ? "active":"" ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Product</p>
                 </a>
               </li>
               <li class="nav-item">
-              <a href="<?= base_url("/private/product/new") ?>" class="nav-link <?= $active_page == "product/new" ? "active":"" ?>">
+              <a href="<?= admin_url("/product/new") ?>" class="nav-link <?= $active_page == "product/new" ? "active":"" ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add New Product</p>
                 </a>
               </li>
               <li class="nav-item">
-              <a href="<?= base_url("/private/product/inventories") ?>" class="nav-link <?= $active_page == "product/inventories" ? "active":"" ?>">
+              <a href="<?= admin_url("/product/inventories") ?>" class="nav-link <?= $active_page == "product/inventories" ? "active":"" ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Product Inventories</p>
                 </a>
               </li>
               <li class="nav-item">
-              <a href="<?= base_url("/private/product/images") ?>" class="nav-link <?= $active_page == "product/images" ? "active":"" ?>">
+              <a href="<?= admin_url("/product/images") ?>" class="nav-link <?= $active_page == "product/images" ? "active":"" ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Product Images</p>
                 </a>
               </li>
               <li class="nav-item">
-              <a href="<?= base_url("/private/product/comments") ?>" class="nav-link <?= $active_page == "product/comments" ? "active":"" ?>">
+              <a href="<?= admin_url("/product/comments") ?>" class="nav-link <?= $active_page == "product/comments" ? "active":"" ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Product Comments</p>
                 </a>

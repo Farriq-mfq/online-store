@@ -38,12 +38,15 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 $routes->get("/private","Home::index");
-$routes->group("/private",["namespace"=>$routes->getDefaultNamespace()."Admin"],function($route){
+$routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admin"],function($route){
     $route->group("product",function($route){
         $route->get("/","ProductController::index");
+        // product add new
         $route->get("new","ProductController::create");
         $route->post("new","ProductController::add");
+        // product delete
         $route->delete("(:num)","ProductController::remove/$1");
+        $route->get("(:num)/edit","ProductController::edit/$1");
         // inventories
         $route->get("inventories","ProductInventories::index");
         // images

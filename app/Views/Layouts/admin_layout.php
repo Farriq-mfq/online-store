@@ -216,7 +216,7 @@
       <script>
         swal.fire({
           icon:"<?= session()->getFlashdata("alert")['type'] ?>",
-          title: 'Info',
+          title: 'Information',
           text:"<?= session()->getFlashdata("alert")["message"]!= null ? session()->getFlashdata("alert")["message"]:"" ?>",
         })
         </script>
