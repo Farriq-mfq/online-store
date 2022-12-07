@@ -47,6 +47,9 @@ $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admi
         // product delete
         $route->delete("(:num)","ProductController::remove/$1");
         $route->get("(:num)/edit","ProductController::edit/$1");
+        $route->put("(:num)/status","ProductController::status/$1");
+        $route->put("(:num)/featured","ProductController::featured/$1");
+        $route->put("(:num)/new_label","ProductController::new_label/$1");
         // inventories
         $route->get("inventories","ProductInventories::index");
         // images

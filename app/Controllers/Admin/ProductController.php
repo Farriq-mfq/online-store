@@ -7,10 +7,15 @@ use App\Models\Product;
 
 class ProductController extends BaseController
 {
+    private Product $products;
+
+    public function __construct()
+    {
+        $this->products = new Product();
+    }
     public function index()
     {
-        $products = new Product();
-        $data['products'] =  $products->find();
+        $data['products'] =  $this->products->find();
         return view("admin/product/index",add_data("All Product","product/index",$data));
     }
     public function create()
@@ -91,8 +96,6 @@ class ProductController extends BaseController
             session()->setFlashdata('validation',$this->validator->getErrors());
             return redirect()->back()->withInput();
         }
-
-        $product = new Product();
         $title = $this->request->getVar("title");
         $description = $this->request->getVar('description');
         $short_description = $this->request->getVar('short_description');
@@ -139,7 +142,7 @@ class ProductController extends BaseController
             "tags"=>explode(",",$tags)
         ];
 
-        if($product->addNew($data)){
+        if($this->products->addNew($data)){
             alert("Publish Product Success","success");
             $this->request->getFile("product_image")->move("uploads/products",$product_image);
         }else{
@@ -150,13 +153,39 @@ class ProductController extends BaseController
     }
     public function remove($id)
     {
-        $products = new Product();
-        $products->delete($id);
+        $this->products->delete($id);
         alert("Success delete product","success");
         return redirect()->back();
     }
     public function edit($id)
     {
         print_r($id);
+    }
+    public function status($id)
+    {
+        if($this->products->active_inactive($id)){
+            alert("Success Update Status","success");
+        }else{
+            alert("Internal server error","danger");
+        }
+        return redirect()->back();
+    }
+    public function featured($id)
+    {
+        if($this->products->featured_unfeatured($id)){
+            alert("Success Update Featured","success");
+        }else{
+            alert("Internal server error","danger");
+        }
+        return redirect()->back();
+    }
+    public function new_label($id)
+    {
+        if($this->products->new_label_remove_label($id)){
+            alert("Success Update New Label","success");
+        }else{
+            alert("Internal server error","danger");
+        }
+        return redirect()->back();
     }
 }

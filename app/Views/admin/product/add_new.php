@@ -3,7 +3,7 @@
 <!-- css -->
 <?= $this->endSection() ?>
 <?= $this->section("content") ?>
-<?= form_open_multipart(base_url("/private/product/new")) ?>
+<?= form_open_multipart(admin_url("/product/new")) ?>
 <?= csrf_field() ?>
     <div class="row">
         <div class="col-md-7">

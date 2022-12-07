@@ -14,7 +14,7 @@ class Product extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["title","slug","short_description","description","product_category_id","content","price","weight","featured","new_label","status","product_brand_id"];
     // protected $with = ['groups', 'permissions'];
 
     // Dates
@@ -57,6 +57,45 @@ class Product extends Model
             $productInventoriesBuilder->insertBatch($productInventories);
             $productImagesBuilder->insert($productImage);
             $productTagsBuilder->insertBatch($productTags);
+            return true;
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+    public function active_inactive($id):bool
+    {   
+        try{
+            if($this->find($id)->status){
+                $this->update($id,['status'=>false]);
+            }else{
+                $this->update($id,['status'=>true]);
+            }
+            return true;
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+    public function featured_unfeatured($id):bool
+    {
+        try{
+            if($this->find($id)->featured){
+                $this->update($id,['featured'=>false]);
+            }else{
+                $this->update($id,['featured'=>true]);
+            }
+            return true;
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+    public function new_label_remove_label($id):bool
+    {
+        try{
+            if($this->find($id)->new_label){
+                $this->update($id,['new_label'=>false]);
+            }else{
+                $this->update($id,['new_label'=>true]);
+            }
             return true;
         }catch(\Exception $e){
             return false;
