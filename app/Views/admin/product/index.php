@@ -15,12 +15,13 @@
                       <th>Price</th>
                       <th>Weight</th>
                       <th>Brand</th>
+                      <th>Category</th>
                       <th>Discount</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach($products as $product): ?>
+                  <?php foreach($products as $product): ?>
                   <tr>
                     <td>
                       <p>
@@ -53,6 +54,7 @@
                     <td><?= $product->price ?></td>
                     <td><?= $product->weight ?></td>
                     <td><?= $product->brand == NULL ? "No Brand":$product->brand->brand ?></td>
+                    <td><?= $product->brand == NULL ? "No Category":$product->category->category ?></td>
                     <td><?= $product->discount == NULL ? "No discount":$product->discount ?></td>
                     <td>
                       <a href="<?= admin_url("/product/".esc($product->product_id)."/edit") ?>" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>

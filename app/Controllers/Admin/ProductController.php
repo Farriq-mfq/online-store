@@ -3,6 +3,8 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\Brands;
+use App\Models\Categories;
 use App\Models\Product;
 
 class ProductController extends BaseController
@@ -20,7 +22,11 @@ class ProductController extends BaseController
     }
     public function create()
     {
-        return view("admin/product/add_new",add_data("Add New Product","product/new"));
+        $category = new Categories();
+        $brand = new Brands();
+        $data['categories'] = $category->find();
+        $data['brands'] = $brand->find();
+        return view("admin/product/add_new",add_data("Add New Product","product/new",$data));
     }
     public function add()
     {

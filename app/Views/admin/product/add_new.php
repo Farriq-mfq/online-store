@@ -28,8 +28,10 @@
                         <div class="form-group">
                             <label required>Category</label>
                             <select class="form-control <?= show_class_error("category") ?> select2bs4" style="width: 100%;" name="category">
-                                <option selected="selected" value="<?= set_value("category") ?>"><?= set_value("category") ? set_value("category"):"Select Category" ?></option>
-                                <option>Alaska</option>
+                                <option <?php if(!set_value("category")): ?>selected="selected" <?php endif ?> value="">Select Category</option>
+                                <?php foreach($categories as $category): ?>
+                                        <option <?php if(set_value("category") == $category->category_id): ?> selected="selected" <?php endif ?> value="<?= $category->category_id ?>"><?= $category->category ?></option>
+                                    <?php endforeach ?>
                             </select>
                             <?= show_error("category") ?>
                         </div>
@@ -181,10 +183,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label required>Product Brand</label>
-                                <select class="form-control select2bs4 <?= show_class_error("weight") ?>" style="width: 100%;" name="brand">
-                                    <option selected="selected" value="">Select Brand</option>
-                                    <option >Alaska</option>
+                                <label required>Product Brand<?php echo set_value("brand") ?></label>
+                                <select class="form-control select2bs4 <?= show_class_error("brand") ?>" style="width: 100%;" name="brand">
+                                    <option <?php if(!set_value("brand")): ?>selected="selected" <?php endif ?> value="">Select Brand</option>
+                                    <?php foreach($brands as $brand): ?>
+                                        <option <?php if(set_value("brand") == $brand->brand_id): ?> selected="selected" <?php endif ?> value="<?= $brand->brand_id ?>"><?= $brand->brand ?></option>
+                                    <?php endforeach ?>
                                 </select>
                                 <?= show_error("brand") ?>
                             </div>
