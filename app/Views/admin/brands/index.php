@@ -77,7 +77,7 @@
            data:{id:id},
            url:"<?= admin_url("/brands/get") ?>",
            success:(data)=>{
-            const input_method = $(document.createElement("input")).attr("type","hidden").attr("name","_method").attr("value","PUT")
+            const input_method = $(document.createElement("input")).attr("type","hidden").attr("name","_method").attr("id","BRAND_METHOD").attr("value","PUT")
             const input_id = $(document.createElement("input")).attr("type","hidden").attr("name","brand_id").attr("value",id)
               $("#brand_form").append(input_method)
               $("#brand_form").append(input_id)
@@ -89,7 +89,7 @@
         })
         // hide
 $("#modal-brand").on("hidden.bs.modal",function(){
-          $("input[name='_method']").remove()
+          $("#BRAND_METHOD").remove()
           $("input[name='brand_id']").remove()
           $("#brand").val("")
           $(".modal-title").text("Add new Brand")

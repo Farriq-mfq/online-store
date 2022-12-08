@@ -20,7 +20,6 @@ class Products extends Migration
             "slug"=>[
                 "type"=>"varchar",
                 "constraint"=>50,
-                "unique"=>true
             ],
             "description"=>[
                 "type"=>"text",

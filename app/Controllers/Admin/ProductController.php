@@ -32,7 +32,7 @@ class ProductController extends BaseController
     {
         $validate = $this->validate([
             "title"=> [
-                "rules"=>"required|is_unique[products.title,product_id,{products.product_id}]"
+                "rules"=>"required|is_unique[products.title]"
             ],
             "description"=> [
                 "rules"=>"required"
@@ -159,13 +159,23 @@ class ProductController extends BaseController
     }
     public function remove($id)
     {
-        $this->products->delete($id);
-        alert("Success delete product","success");
+        try{
+            $this->products->delete($id);
+            alert("Success delete product","success");
+        }catch(\Exception $e){
+            alert("Internal server error","error");
+        }
         return redirect()->back();
     }
     public function edit($id)
     {
-        print_r($id);
+        $category = new Categories();
+        $brand = new Brands();
+        $product = new Product();
+        $data['categories'] = $category->find();
+        $data['brands'] = $brand->find();
+        $data['product'] = $product->find($id);
+        return view("admin/product/edit",add_data("Edit Product","product/edit",$data));
     }
     public function status($id)
     {
@@ -191,6 +201,74 @@ class ProductController extends BaseController
             alert("Success Update New Label","success");
         }else{
             alert("Internal server error","danger");
+        }
+        return redirect()->back();
+    }
+    public function update($id)
+    {
+        $validate = $this->validate([
+            "title"=> [
+                "rules"=>"required|is_unique[products.title,product_id,".$id."]"
+            ],
+            "description"=> [
+                "rules"=>"required"
+            ],
+            "category"=> [
+                "rules"=>"required"
+            ],
+            "content"=> [
+                "rules"=>"required"
+            ],
+            "price"=> [
+                "rules"=>"required|numeric"
+            ],
+            "weight"=> [
+                "rules"=>"required|numeric"
+            ],
+            "brand"=> [
+                "rules"=>"required"
+            ],
+        ]);
+        if(!$validate){
+            session()->setFlashdata('input_inventories',$this->request->getVar("send_input_inventories"));
+            session()->setFlashdata('validation',$this->validator->getErrors());
+            return redirect()->back()->withInput();
+        }
+        $title = $this->request->getVar("title");
+        $description = $this->request->getVar('description');
+        $short_description = $this->request->getVar('short_description');
+        $category = $this->request->getVar('category');
+        $content = $this->request->getVar('content');
+        $inventories_size = $this->request->getVar('inventories_size');
+        $inventories_color = $this->request->getVar('inventories_color');
+        $inventories_stock = $this->request->getVar('inventories_stock');
+        $inventories_sku = $this->request->getVar('inventories_sku');
+        $inventories_price = $this->request->getVar('inventories_price');
+        $price = $this->request->getVar('price');
+        $weight = $this->request->getVar('weight');
+        $featured = $this->request->getVar('featured');
+        $new_label = $this->request->getVar('new_label');
+        $status = $this->request->getVar('status');
+        $brand = $this->request->getVar('brand');
+        $tags = $this->request->getVar('tags');
+        $data = [
+            "title"=>$title,
+            "slug"=>url_title($title,"-"),
+            "short_description"=>$short_description,
+            "description"=>$description,
+            "category_id"=>$category,
+            "content"=>$content,
+            "price"=>$price,
+            "weight"=>$weight,
+            "featured"=>$featured == NULL ? false:true,
+            "new_label"=>$new_label== NULL ? false:true,
+            "status"=>$status== NULL ? false:true,
+            "brand_id"=>$brand,
+        ];
+        if($this->products->update_product((int)esc($id),$data)){
+            alert("Update Product Success","success");
+        }else{
+            alert("Internal Server Error","error");
         }
         return redirect()->back();
     }
