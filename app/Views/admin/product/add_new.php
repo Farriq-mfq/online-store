@@ -21,13 +21,13 @@
                             <textarea name="short_description" id="short_description" class="form-control"><?= set_value("short_description") ?></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description" required>Description <span class="text-danger">*</span></label>
+                            <label for="description" required>Description</label>
                             <textarea name="description" rows="10" id="description" class="form-control <?= show_class_error("description") ?>"><?= set_value("description") ?></textarea>
                             <?= show_error("description") ?>
                         </div>
                         <div class="form-group">
                             <label required>Category</label>
-                            <select class="form-control <?= show_class_error("category") ?> select2bs4" style="width: 100%;" name="category">
+                            <select class="form-control select2 <?= show_class_error("category") ?> select2bs4" style="width: 100%;" name="category">
                                 <option <?php if(!set_value("category")): ?>selected="selected" <?php endif ?> value="">Select Category</option>
                                 <?php foreach($categories as $category): ?>
                                         <option <?php if(set_value("category") == $category->category_id): ?> selected="selected" <?php endif ?> value="<?= $category->category_id ?>"><?= $category->category ?></option>
@@ -184,7 +184,7 @@
                             </div>
                             <div class="form-group">
                                 <label required>Product Brand<?php echo set_value("brand") ?></label>
-                                <select class="form-control select2bs4 <?= show_class_error("brand") ?>" style="width: 100%;" name="brand">
+                                <select class="form-control select2 <?= show_class_error("brand") ?>" style="width: 100%;" name="brand">
                                     <option <?php if(!set_value("brand")): ?>selected="selected" <?php endif ?> value="">Select Brand</option>
                                     <?php foreach($brands as $brand): ?>
                                         <option <?php if(set_value("brand") == $brand->brand_id): ?> selected="selected" <?php endif ?> value="<?= $brand->brand_id ?>"><?= $brand->brand ?></option>

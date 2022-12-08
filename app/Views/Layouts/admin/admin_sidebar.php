@@ -112,27 +112,12 @@
           </li>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?= admin_url("/categories") ?>" class="nav-link <?= $active_page == "categories/index" ? "active":"" ?>">
               <i class="nav-icon fas fa-list"></i>
               <p>
                 Product Categories
               </p>
-              <i class="fas fa-angle-left right"></i>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>All</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add New</p>
-                </a>
-              </li>
-            </ul>
           </li>
           </li>
           <li class="nav-header">MANAGEMENT ORDER</li>

@@ -210,6 +210,10 @@
       $("#btn_global_confirm").attr("disabled",false);
     }
   })
+
+  $("#form_modal_global").on("submit",function(){
+    $("#btn_global_confirm").attr("disabled",true)
+  })
 </script>
 <?php if(session()->getFlashdata("alert")!=null): ?>
   <?php if(session()->getFlashdata("alert")['type']!=null): ?>

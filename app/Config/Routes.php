@@ -39,6 +39,7 @@ $routes->get('/', 'Home::index');
 
 $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admin"],function($route){
     $route->get("/","Home::index");
+    /* PRODUCT ROUTES */
     $route->group("product",function($route){
         $route->get("/","ProductController::index");
         // product add new
@@ -52,15 +53,26 @@ $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admi
         $route->put("(:num)/new_label","ProductController::new_label/$1");
         // inventories
         $route->get("inventories","ProductInventories::index");
-        // images
+        /* product inventories ROUTES */
         $route->get("images","ProductImages::index");
-        // comments
+        /* product comments ROUTES */
         $route->get("comments","ProductComments::index");
     });
+    /* brands routes */
     $route->group("brands",function($brandRoute){
         $brandRoute->get("/","BrandController::index");
         $brandRoute->post("/","BrandController::store");
         $brandRoute->delete("(:num)","BrandController::remove/$1");
+        $brandRoute->put("/","BrandController::update");
+        $brandRoute->get("get","BrandController::get_update_brand");
+    });
+    /* categoris routes */
+    $route->group("categories",function($categories_route){
+        $categories_route->get("/","CategoryController::index");
+        $categories_route->delete("(:num)","CategoryController::remove/$1");
+        $categories_route->post("/","CategoryController::store");
+        $categories_route->put("/","CategoryController::update");
+        $categories_route->get("get","CategoryController::get_update_category");
     });
 });
 

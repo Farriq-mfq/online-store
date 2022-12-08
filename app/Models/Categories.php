@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class Categories extends Model
 {
+    use \Tatter\Relations\Traits\ModelTrait;
     protected $DBGroup          = 'default';
     protected $table            = 'categories';
     protected $primaryKey       = 'category_id';
@@ -14,7 +15,8 @@ class Categories extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["parent_category","category"];
+    protected $with = ["categories"];
 
     // Dates
     protected $useTimestamps = false;

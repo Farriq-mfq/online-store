@@ -23,6 +23,7 @@ class ProductCategories extends Migration
             ],
         ]);
         $this->forge->addKey("category_id",true);
+        $this->forge->addForeignKey("parent_category","categories","category_id","SET NULL","SET NULL");
         $this->forge->createTable("categories");
     }
     

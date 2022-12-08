@@ -37,7 +37,24 @@ class BrandController extends BaseController
     }
     public function update()
     {
-        return "ok";
+        $validate =$this->validate(
+            [
+                "brand"=>'required'
+            ]
+        );
+        if(!$validate){
+            session()->setFlashdata('update_id',(int)esc($this->request->getVar("brand_id")));
+            session()->setFlashdata("validation",$this->validator->getErrors());
+        }else{
+            try{
+                $this->brands->update((int)esc($this->request->getVar("brand_id")),["brand"=>$this->request->getVar("brand")]);
+                alert("Success update brand","success");
+            }catch(\Exception $e){
+                alert("Internal Server error","error");
+            }
+        }
+        return redirect()->back();
+
     }
     public function remove($id)
     {
@@ -48,5 +65,13 @@ class BrandController extends BaseController
             alert("Failed delete Brands","error");
         }
         return redirect()->back();
+    }
+    public function get_update_brand()
+    {
+        if($this->request->isAJAX()){
+            header('Content-Type: application/json');
+            $brand = $this->brands->find((int)esc($this->request->getVar("id")));
+            return json_encode($brand);
+        }
     }
 }

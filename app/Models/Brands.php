@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class Brands extends Model
 {
+    use \Tatter\Relations\Traits\ModelTrait;
     protected $DBGroup          = 'default';
     protected $table            = 'brands';
     protected $primaryKey       = 'brand_id';
@@ -15,7 +16,7 @@ class Brands extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ["brand"];
-
+    protected $with = ['products'];
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';

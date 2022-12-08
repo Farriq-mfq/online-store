@@ -125,7 +125,7 @@ class ProductController extends BaseController
             "slug"=>url_title($title,"-"),
             "short_description"=>$short_description,
             "description"=>$description,
-            "product_categorie_id"=>$category,
+            "category_id"=>$category,
             "content"=>$content,
             "inventories"=>[
                 'size'=>$inventories_size,
@@ -139,7 +139,7 @@ class ProductController extends BaseController
             "featured"=>$featured == NULL ? false:true,
             "new_label"=>$new_label== NULL ? false:true,
             "status"=>$status== NULL ? false:true,
-            "product_brand_id"=>$brand,
+            "brand_id"=>$brand,
             "product_image"=>[
                 "image"=>base_url("/uploads/products/".$product_image),
                 "mime"=>$this->request->getFile("product_image")->getMimeType(),
