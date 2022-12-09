@@ -55,6 +55,8 @@ $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admi
         // inventories
         $route->get("inventories","ProductInventoriesController::index");
         $route->post("inventories/(:num)","ProductInventoriesController::store/$1");
+        $route->get("inventories/edit","ProductInventoriesController::edit");
+        $route->put("inventories/(:num)","ProductInventoriesController::update/$1");
         $route->delete("inventories/(:num)","ProductInventoriesController::remove/$1");
         /* product inventories ROUTES */
         $route->get("images","ProductImages::index");

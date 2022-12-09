@@ -93,6 +93,8 @@ $("#modal-brand").on("hidden.bs.modal",function(){
           $("input[name='brand_id']").remove()
           $("#brand_form")[0].reset()
           $(".modal-title").text("Add new Brand")
+          $("#brand_form").children().find(".invalid-feedback").remove()
+        $("#brand_form").children().find(".is-invalid").removeClass("is-invalid")
   })
 </script>
 <?php if(session()->getFlashdata("validation")): ?>

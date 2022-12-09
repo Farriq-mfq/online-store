@@ -40,7 +40,7 @@
                                                 <td><?= $inventory->stock ?></td>
                                                 <td><?= $inventory->price ?></td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></button> 
+                                                    <button class="btn btn-sm btn-primary" type="button" data-id="<?= $inventory->inventory_id ?>"  data-action="<?= admin_url("/product/inventories/".$inventory->inventory_id) ?>" id="BTN_EDIT_INVENTORIES"><i class="fas fa-edit"></i></button> 
                                 <button class="btn btn-danger btn-sm" confirm  data-slug="<?= $inventory->color ?>" data-action="<?= admin_url("/product/inventories/".esc($inventory->inventory_id)) ?>"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
@@ -65,7 +65,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form id="FORM_INVENTORIES" action="<?= session()->getFlashdata("action_session_inventories")?session()->getFlashdata("action_session_inventories"):"" ?>" method="POST">
+            <form id="FORM_INVENTORIES" action="<?= session()->getFlashdata("action_session_inventories")?session()->getFlashdata("action_session_inventories"):""?>" method="POST">
                 <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="form-group">
@@ -112,12 +112,40 @@
         e.preventDefault();
         $("#modal-inventories").modal({show:true})
         $("#FORM_INVENTORIES").attr("action",$(this).data('action'))
-        console.log($(this).data("id"))
     })
     
     $("#modal-inventories").on("hidden.bs.modal",function(){
         $("#FORM_INVENTORIES")[0].reset()
+        $("#INVENTORY_METHOD_SPOFF").remove()
+        $("#FORM_INVENTORIES").children().find(".invalid-feedback").remove()
+        $("#FORM_INVENTORIES").children().find(".is-invalid").removeClass("is-invalid")
     })
+
+    $(document).on("click","#BTN_EDIT_INVENTORIES",function(e){
+        e.preventDefault();
+        const id = $(this).data("id");
+        const action = $(this).data("action");
+        $.ajax({
+           method:"GET",
+           data:{id:id},
+           url:"<?= admin_url("/product/inventories/edit") ?>",
+           success:(data)=>{
+            const input_method = $(document.createElement("input")).attr("type","hidden").attr("name","_method").attr("id","INVENTORY_METHOD_SPOFF").attr("value","PUT")
+            $("#FORM_INVENTORIES").append(input_method)
+            $("#FORM_INVENTORIES").attr("action",action)
+            $("input[name='size']").val(data.size);
+            $("input[name='color']").val(data.color);
+            $("input[name='stock']").val(data.stock);
+            $("input[name='price']").val(data.price);
+            $("input[name='sku']").val(data.sku);
+            $("#modal-inventories").modal({show:true})
+           }
+        })
+    })
+    <?php if(session()->getFlashdata("METHOD_UPDATE_SESSION")): ?>
+        const input_method = $(document.createElement("input")).attr("type","hidden").attr("name","_method").attr("id","INVENTORY_METHOD_SPOFF").attr("value","PUT")
+        $("#FORM_INVENTORIES").append(input_method)
+    <?php endif ?>
     
     <?php if(session()->getFlashdata("validation")): ?>
         $("#modal-inventories").modal({show:true})

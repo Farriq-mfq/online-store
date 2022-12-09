@@ -128,6 +128,8 @@ $("#modal-category").on("hidden.bs.modal",function(){
       $("#category_form")[0].reset()
       $("#parent_category").val("").change()
       $(".modal-title").text("Add new Category")
+      $("#category_form").children().find(".invalid-feedback").remove()
+        $("#category_form").children().find(".is-invalid").removeClass("is-invalid")
   })
 </script>
 <?php if(session()->getFlashdata("validation")): ?>
