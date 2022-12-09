@@ -125,7 +125,7 @@
 $("#modal-category").on("hidden.bs.modal",function(){
         $("#ID_METHOD").remove()
       $("input[name='category_id']").remove()
-      $("#category").val("")
+      $("#category_form")[0].reset()
       $("#parent_category").val("").change()
       $(".modal-title").text("Add new Category")
   })

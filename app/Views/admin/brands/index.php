@@ -91,7 +91,7 @@
 $("#modal-brand").on("hidden.bs.modal",function(){
           $("#BRAND_METHOD").remove()
           $("input[name='brand_id']").remove()
-          $("#brand").val("")
+          $("#brand_form")[0].reset()
           $(".modal-title").text("Add new Brand")
   })
 </script>
