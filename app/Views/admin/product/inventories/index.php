@@ -59,12 +59,6 @@
     <div class="modal fade" id="modal-inventories">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Default Modal</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
             <form id="FORM_INVENTORIES" action="<?= session()->getFlashdata("action_session_inventories")?session()->getFlashdata("action_session_inventories"):""?>" method="POST">
                 <?= csrf_field() ?>
                 <div class="modal-body">

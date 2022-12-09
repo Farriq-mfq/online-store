@@ -31,7 +31,7 @@ class CategoryController extends BaseController
     {
         if($this->request->isAJAX()){
             header('Content-Type: application/json');
-            $category = $this->categories->find((int)esc($this->request->getVar("id")));
+            $category = $this->categories->without("products")->find((int)esc($this->request->getVar("id")));
             return json_encode($category);
         }
     }

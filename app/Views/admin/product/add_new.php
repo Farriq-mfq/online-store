@@ -213,6 +213,9 @@
                                         <label class="custom-file-label" for="product_images">Choose file</label>
                                     </div>
                                 </div>
+                                <div class="mt-2">
+                                    <img src="#" class="img-thumbnail" alt="No Preview" id="IMAGE_PREVIEW_PRODUCT">
+                                </div>
                                 <div class="text-danger">
                                     <?= isset(session()->getFlashdata("validation")["product_image"]) ? session()->getFlashdata("validation")["product_image"]:""  ?>
                                 </div>
@@ -303,6 +306,15 @@
                     console.log($(this).parent().parent().parent().children().length)
                     $("input[name='send_input_inventories']").val($(this).parent().parent().parent().children().length)
                 }
+    })
+
+    $("#product_image").on("change",function(e){
+        const reader = new FileReader();
+        reader.onload = ()=>{
+            $("#IMAGE_PREVIEW_PRODUCT").attr("src",reader.result)
+        }
+
+        reader.readAsDataURL(e.target.files[0])
     })
     
 </script>

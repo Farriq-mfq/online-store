@@ -70,7 +70,7 @@ class BrandController extends BaseController
     {
         if($this->request->isAJAX()){
             header('Content-Type: application/json');
-            $brand = $this->brands->find((int)esc($this->request->getVar("id")));
+            $brand = $this->brands->without("products")->find((int)esc($this->request->getVar("id")));
             return json_encode($brand);
         }
     }
