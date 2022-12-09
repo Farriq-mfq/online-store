@@ -59,7 +59,12 @@ $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admi
         $route->put("inventories/(:num)","ProductInventoriesController::update/$1");
         $route->delete("inventories/(:num)","ProductInventoriesController::remove/$1");
         /* product inventories ROUTES */
-        $route->get("images","ProductImages::index");
+        $route->get("images","ProductImagesController::index");
+        $route->delete("images/(:num)","ProductImagesController::remove/$1");
+        $route->post("images/(:num)","ProductImagesController::store/$1");
+        $route->get("images/edit","ProductImagesController::edit");
+        $route->put("images/(:num)","ProductImagesController::update/$1");
+        $route->post("images/(:num)/primary","ProductImagesController::is_primary/$1");
         /* product comments ROUTES */
         $route->get("comments","ProductComments::index");
     });

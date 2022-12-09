@@ -143,6 +143,7 @@ class ProductController extends BaseController
             "product_image"=>[
                 "image"=>base_url("/uploads/products/".$product_image),
                 "mime"=>$this->request->getFile("product_image")->getMimeType(),
+                "name"=>$product_image,
                 "is_primary"=>true
             ],
             "tags"=>explode(",",$tags)

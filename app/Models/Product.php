@@ -15,7 +15,7 @@ class Product extends Model
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id"];
-    protected $with = ["brands","categories","product_inventories","product_tags"];
+    protected $with = ["brands","categories"];
 
     // Dates
     protected $useTimestamps = true;
@@ -52,7 +52,7 @@ class Product extends Model
             $productData = pick($data,["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id"]);
             $productBuilder->insert($productData);
             $productInventories =batch_convert(pick($data,['inventories'])['inventories'],["product_id"=>$this->db->insertID()]);
-            $productImage = array_merge(pick($data,["product_image"])["product_image"],["product_id"=>1]);
+            $productImage = array_merge(pick($data,["product_image"])["product_image"],["product_id"=>$this->db->insertID()]);
             $productTags = batch_convert(pick($data,['tags']),["product_id"=>$this->db->insertID()]);
             $productInventoriesBuilder->insertBatch($productInventories);
             $productImagesBuilder->insert($productImage);

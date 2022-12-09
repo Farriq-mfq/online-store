@@ -102,3 +102,4 @@ if(!defined("TITLE_ADMIN_LEFT")){
 if(!defined("ADMIN_PATH")){
     define("ADMIN_PATH","DEV_ADMIN");
 }
+defined('PUBLIC_PATH') || define('PUBLIC_PATH', ROOTPATH . 'public');

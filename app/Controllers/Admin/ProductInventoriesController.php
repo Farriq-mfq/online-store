@@ -16,7 +16,7 @@ class ProductInventoriesController extends BaseController
     }
     public function index()
     {
-        $data['products'] =$this->product->find();
+        $data['products'] =$this->product->with("product_inventories")->find();
         return view("admin/product/inventories/index",add_data("Inventories Product","product/inventories",$data));
     }
     public function store($productID)
@@ -92,7 +92,7 @@ class ProductInventoriesController extends BaseController
     {
         if($this->request->isAjax()){
             header('Content-Type: application/json');
-            $inventory = $this->productInventories->without("products")->find((int)esc($this->request->getVar("id")));
+            $inventory = $this->productInventories->find((int)esc($this->request->getVar("id")));
             return json_encode($inventory);
         }
     }
