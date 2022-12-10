@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use Shipping;
 
 /**
  * Class BaseController
@@ -40,6 +41,7 @@ abstract class BaseController extends Controller
     /**
      * Constructor.
      */
+    protected Shipping $shipping;
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -50,5 +52,7 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
+        // lib
+        $this->shipping = new Shipping();
     }
 }
