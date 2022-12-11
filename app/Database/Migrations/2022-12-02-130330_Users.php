@@ -25,11 +25,6 @@ class Users extends Migration
             "users_detail_id"=>[
                 "type"=>"bigint",
             ],
-            "role"=>[
-                "type"=>"enum",
-                "constraint"=>"'user','admin'",
-                "default"=>"user"
-            ]
         ]);
         $this->forge->addKey("user_id",true);
         $this->forge->createTable("users",true);

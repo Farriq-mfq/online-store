@@ -2,15 +2,13 @@
 
 namespace App\Controllers;
 
-use Courier;
-
 class Home extends BaseController
 {
-    private string $c;
     public function index()
     {
         echo "<pre>";
-        print_r($this->shipping->get_cost(1,2,10,Courier::TIKI));
+            // print_r($this->payment->e_money("qris",["transaction_details"=>["gross_amount"=>100,"order_id"=>time()]]));
+            print_r($this->payment->e_money("qris",["transaction_details"=>["gross_amount"=>100,"order_id"=>time()]],1));
         echo "</pre>";
         return;
         return view('admin/home_view',add_data("james","/index"));

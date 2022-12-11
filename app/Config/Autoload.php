@@ -65,7 +65,8 @@ class Autoload extends AutoloadConfig
      * @var array<string, string>
      */
     public $classmap = [
-        "Shipping"=>APPPATH."Libraries/Shipping.php"
+        "Shipping"=>APPPATH."Libraries/Shipping.php",
+        "Payment"=>APPPATH."Libraries/Payment.php"
     ];
 
     /**
