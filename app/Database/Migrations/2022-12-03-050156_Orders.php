@@ -77,6 +77,7 @@ class Orders extends Migration
                 "type"=> "bigint",
             ],
             'created_at datetime default current_timestamp',
+            'deleted_at datetime default current_timestamp',
             'updated_at datetime default current_timestamp on update current_timestamp'
         ]);
         $this->forge->addKey("order_id",true);

@@ -1,5 +1,16 @@
 <?php
 
+enum BANK:string{
+    case PERMATA = "bank_permata";
+    case BNI = "bank_bni";
+    case BRI = "bank_bri";
+    case BCA = "bank_bca";
+    case MANDIRI = "bank_mandiri";
+}
+enum EMONEY:string{
+    case QRIS = "qris";
+}
+
     class Payment{
         private string $serverKey = "SB-Mid-server-bp_Ld2gLB8ijyBJGwu_7mBfb";
         private bool $isProduction = false;
@@ -14,10 +25,10 @@
             \Midtrans\Config::$is3ds = $this->is3ds;
             $this->db = db_connect();
         }
-        public function bank_transfer(string $bank,array $params)
+        public function bank_transfer(BANK $bank,array $params)
         {
             try{
-                switch ($bank) {
+                switch ($bank->value) {
                     case 'bank_permata':
                         $bank_permata = [
                             "payment_type"=> "bank_transfer",
@@ -66,14 +77,14 @@
                 throw $e;
             }
         }
-        public function e_money(string $emoney,array $params,int $userID)
+        public function e_money(EMONEY $emoney,array $params,int $userID)
         {
             try{
                 $expired = date("Y-m-d H:i:s");
                 $query = "SELECT * FROM session_emoney WHERE user_id=? AND expired >= ?";
                 $check = $this->db->query($query,[1,$expired])->getFirstRow();
                 if($check==null){
-                    switch ($emoney) {
+                    switch ($emoney->value) {
                         case 'qris':
                             $qris = [
                                 "payment_type"=> "qris",

@@ -9,7 +9,7 @@ class ProductOrders extends Migration
     public function up()
     {
         $this->forge->addField([
-            "product_order_id"=>[
+            "order_items_id"=>[
                 "type"=>"bigint",
                 "auto_increment"=>true
             ],
@@ -33,13 +33,13 @@ class ProductOrders extends Migration
                 "type"=>"bigint",
             ],
         ]);
-        $this->forge->addKey("product_order_id",true);
+        $this->forge->addKey("order_items_id",true);
         $this->forge->addForeignKey("order_id","orders","order_id","CASCADE","CASCADE");
-        $this->forge->createTable("product_orders");
+        $this->forge->createTable("order_items");
     }
 
     public function down()
     {
-        $this->forge->dropTable("product_orders");
+        $this->forge->dropTable("order_items");
     }
 }
