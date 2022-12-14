@@ -16,7 +16,6 @@ class Categories extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ["parent_category","category"];
-    protected $with = ["categories"];
 
     // Dates
     protected $useTimestamps = false;
@@ -41,4 +40,17 @@ class Categories extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getCategoriesByParentId(?int $parentId=null)
+    {   
+        $data =$this->db->table($this->table)->where("parent_category",$parentId)->get()->getResultArray();
+        for($i=0;$i<count($data);$i++)
+        {
+            if($this->getCategoriesByParentId($data[$i]['category_id']))
+            {
+                $data[$i]['child']=$this->getCategoriesByParentId($data[$i]['category_id']);
+            }
+        }
+       return $data;
+    }
 }

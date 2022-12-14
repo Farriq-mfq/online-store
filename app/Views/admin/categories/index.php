@@ -20,36 +20,24 @@
                     </tr>
                   </thead>
                   <tbody>
-                  <?php foreach($categories as $category): ?>
-                    <tr>
-                      <td><?= $category->category ?></td>
-                      <td>
-                        <?php if (count($category->categories)): ?>
-                          <table class="table">
-                            <tbody>
-                              <?php foreach($category->categories as $c): ?>
-                                <tr>
-                                  <td>
-                                    <span class="badge badge-info">
-                                      <?= $c->category ?>
-                                    </span>
-                                  </td>
-                                </tr>
-                                <?php endforeach ?>
-                            </tbody>
-                          </table>
-                          <?php else: ?>
-                          No Categories Yet
-                        <?php endif ?>
-                      </td>
-                      <td>
-                      <button class="btn btn-sm btn-primary" id="btn_show_modal_edit_category" type="button" data-id="<?= $category->category_id ?>">
-                          <i class="fas fa-edit"></i>
-                      </button>
-                        <button class="btn btn-danger btn-sm" confirm  data-slug="<?= $category->category ?>" data-action="<?= admin_url("/categories/".esc($category->category_id)) ?>"><i class="fas fa-trash"></i></button>
-                    </td>
-                    </tr>
-                  <?php endforeach ?>
+                      <?php foreach ($print_categories as $ct):?>
+                          <tr>
+                            <td><?= $ct["category"]; ?></td>
+                            <td>
+                            <?php if ($ct["child"]): ?>
+                              <table class="table">
+                                <tbody>
+                                    <?php foreach($ct['child'] as $child): ?>
+                                        <?php printMenu($print_categories); ?>
+                                    <?php endforeach ?>
+                                  </tbody>
+                                </table>
+                              <?php else: ?>
+                              No Categories Yet
+                            <?php endif ?>
+                            </td>
+                          </tr>
+                      <?php endforeach ?>
                   </tbody>
                 </table>
               </div>

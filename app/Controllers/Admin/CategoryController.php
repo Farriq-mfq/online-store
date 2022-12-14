@@ -15,6 +15,7 @@ class CategoryController extends BaseController
     public function index()
     {
         $data['categories'] = $this->categories->find();
+        $data['print_categories'] = $this->categories->getCategoriesByParentId();
         return view('admin/categories/index',add_data("All Categories","categories/index",$data));
     }
     public function remove($id)
