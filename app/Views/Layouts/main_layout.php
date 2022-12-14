@@ -139,6 +139,7 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="<?= base_url("/client/js/gmaps.min.js") ?>"></script>
 	<script src="<?= base_url("/client/js/main.js") ?>"></script>
+	<?= $this->renderSection("client_script") ?>
 </body>
 
 </html>

@@ -106,7 +106,7 @@ class ProductController extends BaseController
         $description = $this->request->getVar('description');
         $short_description = $this->request->getVar('short_description');
         $category = $this->request->getVar('category');
-        $content = $this->request->getVar('content');
+        $content = htmlentities($this->request->getVar('content'));
         $inventories_size = $this->request->getVar('inventories_size');
         $inventories_color = $this->request->getVar('inventories_color');
         $inventories_stock = $this->request->getVar('inventories_stock');
@@ -207,9 +207,15 @@ class ProductController extends BaseController
     }
     public function update($id)
     {
+        $originalTitle = $this->products->find($id)->title;
+        if($this->request->getVar("title")!= $originalTitle){
+            $unique = "|is_unique[products.title]";
+        }else{
+            $unique = "";
+        }
         $validate = $this->validate([
             "title"=> [
-                "rules"=>"required|is_unique[products.title,product_id,".$id."]"
+                "rules"=>"required".$unique.""
             ],
             "description"=> [
                 "rules"=>"required"
@@ -239,19 +245,13 @@ class ProductController extends BaseController
         $description = $this->request->getVar('description');
         $short_description = $this->request->getVar('short_description');
         $category = $this->request->getVar('category');
-        $content = $this->request->getVar('content');
-        $inventories_size = $this->request->getVar('inventories_size');
-        $inventories_color = $this->request->getVar('inventories_color');
-        $inventories_stock = $this->request->getVar('inventories_stock');
-        $inventories_sku = $this->request->getVar('inventories_sku');
-        $inventories_price = $this->request->getVar('inventories_price');
+        $content = htmlentities($this->request->getVar("content"));
         $price = $this->request->getVar('price');
         $weight = $this->request->getVar('weight');
         $featured = $this->request->getVar('featured');
         $new_label = $this->request->getVar('new_label');
         $status = $this->request->getVar('status');
         $brand = $this->request->getVar('brand');
-        $tags = $this->request->getVar('tags');
         $data = [
             "title"=>$title,
             "slug"=>url_title($title,"-"),

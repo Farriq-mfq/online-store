@@ -35,10 +35,13 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->group("product",function($route){
+    $route->get('/', 'ProductController::index');
+    $route->get('(:segment)', 'ProductController::detail/$1');
+});
 
 $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admin"],function($route){
-    $route->get("/","Home::index");
+    // $route->get("/","Home::index");
     /* PRODUCT ROUTES */
     $route->group("product",function($route){
         $route->get("/","ProductController::index");

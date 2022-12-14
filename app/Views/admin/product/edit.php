@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="title" required>Title Product</label>
-                            <input type="text" class="form-control <?= show_class_error("title") ?>" id="title" name="title" value="<?= set_value("title") ? set_value("title"):$product->title ?> ">
+                            <input type="text" class="form-control <?= show_class_error("title") ?>" id="title" name="title" value="<?= set_value("title") ? set_value("title"):$product->title ?>">
                             <?= show_error("title") ?>
                         </div>
                         <div class="form-group">

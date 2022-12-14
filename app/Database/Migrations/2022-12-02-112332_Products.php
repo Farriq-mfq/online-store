@@ -26,7 +26,7 @@ class Products extends Migration
             ],
             "short_description"=>[
                 "type"=>"varchar",
-                "constraint"=>100,
+                "constraint"=>255,
                 "null"=>true
             ],
             "discount"=>[

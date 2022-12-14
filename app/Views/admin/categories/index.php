@@ -20,21 +20,29 @@
                     </tr>
                   </thead>
                   <tbody>
-                      <?php foreach ($print_categories as $ct):?>
+                      <?php foreach ($categories as $category):?>
                           <tr>
-                            <td><?= $ct["category"]; ?></td>
+                            <td><?= $category->category; ?></td>
                             <td>
-                            <?php if ($ct["child"]): ?>
+                            <?php if ($category->categories): ?>
                               <table class="table">
                                 <tbody>
-                                    <?php foreach($ct['child'] as $child): ?>
-                                        <?php printMenu($print_categories); ?>
+                                  <?php foreach($category->categories as $child): ?>
+                                    <tr>
+                                      <td><?= $child->category; ?></td>
+                                    </tr>
                                     <?php endforeach ?>
                                   </tbody>
                                 </table>
                               <?php else: ?>
                               No Categories Yet
                             <?php endif ?>
+                            </td>
+                            <td>
+                            <button class="btn btn-sm btn-primary" id="btn_show_modal_edit_category" type="button" data-id="<?= $category->category_id ?>">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                              <button class="btn btn-danger btn-sm" confirm  data-slug="<?= $category->category ?>" data-action="<?= admin_url("/categories/".esc($category->category_id)) ?>"><i class="fas fa-trash"></i></button>
                             </td>
                           </tr>
                       <?php endforeach ?>

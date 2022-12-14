@@ -14,7 +14,7 @@ class CategoryController extends BaseController
     }
     public function index()
     {
-        $data['categories'] = $this->categories->find();
+        $data['categories'] = $this->categories->with("categories")->find();
         $data['print_categories'] = $this->categories->getCategoriesByParentId();
         return view('admin/categories/index',add_data("All Categories","categories/index",$data));
     }
@@ -48,6 +48,7 @@ class CategoryController extends BaseController
                 'parent_category'=>empty($this->request->getVar("parent_category")) ?NULL:$this->request->getVar("parent_category"),
                 'category'=>$this->request->getVar("category"),
             ];
+
             $this->categories->insert($data);
             alert("Success add Category","success");
         }else{
@@ -69,11 +70,22 @@ class CategoryController extends BaseController
             try{
                 $id = (int)esc($this->request->getVar("category_id"));
                 $parent = empty($this->request->getVar("parent_category")) ?NULL:$this->request->getVar("parent_category");
-                if($this->categories->find($id)->category_id != $parent){
-                    $this->categories->update($id,["category"=>$this->request->getVar("category"),'parent_category'=>$parent]);
-                    alert("Success update category","success");
+                $datachildparent = [];
+                if(!empty($this->request->getVar("parent_category"))){
+                    $dataParent = $this->categories->with("categories")->find($id);
+                    foreach($dataParent->categories as $child_parent){
+                        $datachildparent[] = (int) $child_parent->category_id;
+                    }
+                }
+                if(!in_array($parent,$datachildparent)){
+                    if($this->categories->find($id)->category_id != $parent){
+                        $this->categories->update($id,["category"=>$this->request->getVar("category"),'parent_category'=>$parent]);
+                        alert("Success update category","success");
+                    }else{
+                        alert("cannot use own category","error");
+                    }
                 }else{
-                    alert("cannot use own category","error");
+                    alert("ERROR","error");
                 }
             }catch(\Exception $e){
                 alert("Internal Server error","error");
