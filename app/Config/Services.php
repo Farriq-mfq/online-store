@@ -2,6 +2,9 @@
 
 namespace Config;
 
+use App\Models\Admin as AdminModel;
+use App\Models\User;
+use App\Service\AuthService;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -29,4 +32,21 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+     public static function authserviceUser($getShared = true)
+     {
+        if($getShared){
+            return static::getSharedInstance("authserviceUser");
+        }
+
+        return new AuthService($_ENV["USER_TOKEN_NAME"],User::class);
+     }
+     public static function authserviceAdmin($getShared = true)
+     {
+        if($getShared){
+            return static::getSharedInstance("authserviceAdmin");
+        }
+
+        return new AuthService($_ENV["ADMIN_TOKEN_NAME"],AdminModel::class);
+     }
 }

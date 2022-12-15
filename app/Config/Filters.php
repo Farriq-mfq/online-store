@@ -2,6 +2,9 @@
 
 namespace Config;
 
+use App\Filters\Admin;
+use App\Filters\Roles;
+use App\Filters\User;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -23,6 +26,9 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'admin-auth'         => Admin::class,
+        "user"          => User::class,
+        "roles-auth"          => Roles::class,
     ];
 
     /**

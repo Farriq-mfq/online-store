@@ -1,6 +1,7 @@
 <?php 
     namespace App\Service;
 
+use CodeIgniter\Model;
 use Config\Encryption;
 
     /**
@@ -8,37 +9,44 @@ use Config\Encryption;
      * CODED BY FARRIQ MFQ
      * token_name required
      */
-    class AuthService {
+    class AuthService 
+    {
         protected $session;
         protected $encryption;
         protected $db;
         protected string $token_name;
-        public function __construct(string $token_name)
+        protected $model;
+        public function __construct(string $token_name,$model)
         {
-            $this->session = \Config\Services::session();
-            $this->session->start();
-            $this->encryption =\Config\Services::encrypter(); 
-            $this->db = db_connect();
-            $this->token_name = $token_name;
+            try{
+                $this->session = \Config\Services::session();
+                $this->session->start();
+                $this->encryption =\Config\Services::encrypter(); 
+                $this->db = db_connect();
+                $this->token_name = $token_name;
+                $this->model = new $model;
+            }catch(\Exception $e){
+                throw $e;
+            }
         }
         /**
          * make same key in database
          * ex : key email (same db)
          * ex : key password (same db)
          */
-        public function attempt(array $credentials,string $key_session,string $table,string $password_key = "password"):bool
+        public function attempt(array $credentials,string $password_key = "password"):bool
         {
            try{
-            $db_field = array_column($this->db->getFieldData($table),"name");
+            $db_field = array_column($this->model->getFieldData(),"name");
             $query_search = array_intersect(array_keys($credentials),$db_field);
-            if(count($query_search) == count($credentials)){
+                if(count($query_search) == count($credentials)){
                 if(in_array($password_key,$query_search)){ // check field password
                     $data_credential = array_diff_key($credentials, array_flip([$password_key])); // except password
-                    $checkuser = $this->db->table($table)->where($data_credential)->get()->getFirstRow();
+                    $checkuser = $this->model->where($data_credential)->first();
                     if($checkuser){
                         $password_db = $checkuser->$password_key;
                         if(password_verify($credentials[$password_key],$password_db)){
-                            $data_user = array_merge(array_diff_key((array) $checkuser,array_flip([$password_key])),["IS_LOGIN"=>true]);
+                            $data_user = array_diff_key((array) $checkuser,array_flip([$password_key]));
                             $this->setToken($data_user);
                             return true;
                         }else{
@@ -69,7 +77,7 @@ use Config\Encryption;
                 throw $e;
             }
         }
-        public function getSesssionData():?array
+        public function getSessionData():?array
         {
             // get session login
             try{
@@ -85,5 +93,9 @@ use Config\Encryption;
             }catch(\Exception $e){
                 return null;
             }
+        }
+        public function authenticated():bool
+        {
+            return $this->getSessionData() == null ? false:true;
         }
     }
