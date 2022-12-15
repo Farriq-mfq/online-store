@@ -40,8 +40,8 @@ $routes->group("product",function($route){
     $route->get('(:segment)', 'ProductController::detail/$1');
 });
 
+$routes->get("/","Home::index");
 $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admin"],function($route){
-    // $route->get("/","Home::index");
     /* PRODUCT ROUTES */
     $route->group("product",function($route){
         $route->get("/","ProductController::index");

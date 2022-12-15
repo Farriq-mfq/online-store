@@ -2,18 +2,23 @@
 
     if(!function_exists("printMenu")){
         function printMenu(array $a){
-            if(!is_array($a)){
-                return;
-            }
-            foreach ($a as $v) {
-                if($v["parent_category"]){
-                    echo ' <tr>
-                    <td>'.$v['category'].'</td>
-                  </tr>';
+            $html = "";
+
+            $html .= "<ul>";
+
+            foreach($a as $v){
+                if($v['parent_category']){
+                    $html .= "<ul><li><a href='#'>".$v['category']."</a></li></ul>";
+                }else{
+                    $html .= '<li><a href="#">'.$v['category'].'</a></li>';
                 }
+
                 if(isset($v['child'])){
-                    printMenu($v['child']);
-                }             
+                    $html.=printMenu($v['child']);
+                }
             }
+            
+            $html .= "</ul>";
+            return $html;
         }
     }

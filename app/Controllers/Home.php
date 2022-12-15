@@ -12,7 +12,7 @@ class Home extends BaseController
         $ct = new Categories();
         $data['categories'] = $ct->getCategoriesByParentId();
         $data['print_categories'] = $ct->getCategoriesByParentId();
-        return view('client/shop/index',add_data("james","/index",$data));
+        return view('admin/home_view',add_data("james","/index",$data));
     }
     
 }

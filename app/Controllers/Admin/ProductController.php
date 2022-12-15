@@ -41,7 +41,7 @@ class ProductController extends BaseController
                 "rules"=>"required"
             ],
             "content"=> [
-                "rules"=>"required"
+                "rules"=>"  required"
             ],
             "inventories_size.*"=>[
                 "rules"=>"required|numeric",
