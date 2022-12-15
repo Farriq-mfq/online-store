@@ -44,7 +44,7 @@ abstract class BaseController extends Controller
      */
     protected Shipping $shipping;
     protected Payment $payment;
-    protected AuthService $authService;
+    protected AuthService $authUserService;
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -58,8 +58,9 @@ abstract class BaseController extends Controller
         // lib
         $this->shipping = new Shipping();
         $this->payment = new Payment();
-        $this->authService = new AuthService();
-        $this->authService->attempt(["email"=>"bonjames020@gmail.com","password"=>"admin"],"admin_path");
-        dd($this->authService->getSesssionData("admin_path"));
+        $this->authUserService = new AuthService($_ENV["USER_TOKEN_NAME"]);
+        // $this->authUserService->attempt(["email"=>"bonjames020@gmail.com","password"=>"admin"],"admin_path","users");
+        // $this->authUserService->logout();
+        dd($this->authUserService->getSesssionData());
     }
 }
