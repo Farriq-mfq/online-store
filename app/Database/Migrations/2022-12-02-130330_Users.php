@@ -20,10 +20,7 @@ class Users extends Migration
             ],
             "password"=>[
                 "type"=>"varchar",
-                "constraint"=>50,
-            ],
-            "users_detail_id"=>[
-                "type"=>"bigint",
+                "constraint"=>255,
             ],
         ]);
         $this->forge->addKey("user_id",true);

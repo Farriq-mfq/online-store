@@ -59,6 +59,7 @@ abstract class BaseController extends Controller
         $this->shipping = new Shipping();
         $this->payment = new Payment();
         $this->authService = new AuthService();
-        $this->authService->attempt();
+        $this->authService->attempt(["email"=>"bonjames020@gmail.com","password"=>"admin"],"admin_path");
+        dd($this->authService->getSesssionData("admin_path"));
     }
 }
