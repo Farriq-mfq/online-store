@@ -7,11 +7,10 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Multi_menu;
 use Psr\Log\LoggerInterface;
 use Shipping;
 use Payment;
-
+use App\Service\AuthService;
 /**
  * Class BaseController
  *
@@ -45,6 +44,7 @@ abstract class BaseController extends Controller
      */
     protected Shipping $shipping;
     protected Payment $payment;
+    protected AuthService $authService;
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -58,5 +58,7 @@ abstract class BaseController extends Controller
         // lib
         $this->shipping = new Shipping();
         $this->payment = new Payment();
+        $this->authService = new AuthService();
+        $this->authService->attempt();
     }
 }
