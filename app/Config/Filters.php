@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Filters\Admin;
+use App\Filters\Adminguest;
 use App\Filters\Roles;
 use App\Filters\User;
 use CodeIgniter\Config\BaseConfig;
@@ -27,6 +28,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'admin-auth'         => Admin::class,
+        'admin-guest'         => Adminguest::class,
         "user"          => User::class,
         "roles-auth"          => Roles::class,
     ];

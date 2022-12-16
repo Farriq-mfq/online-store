@@ -13,11 +13,7 @@ class Roles extends Migration
                 "type"=>"int",
                 "auto_increment"=>true
             ],
-            "controller"=>[
-                "type"=>"varchar",
-                "constraint"=>200
-            ],
-            "method"=>[
+            "role"=>[
                 "type"=>"varchar",
                 "constraint"=>200
             ],

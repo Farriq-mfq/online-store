@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Interface\AuthInterface;
 use CodeIgniter\Model;
 
-class User extends Model
+class User extends Model implements AuthInterface
 {
     protected $DBGroup          = 'default';
     protected $table            = 'users';

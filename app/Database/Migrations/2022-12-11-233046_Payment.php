@@ -30,9 +30,9 @@ class Payment extends Migration
         $this->forge->addForeignKey("payment_provider_id","payment_provider","payment_provider_id","CASCADE","CASCADE");
         $this->forge->createTable("payment");
     }
-
+    
     public function down()
     {
-        //
+        $this->forge->dropTable("payment");
     }
 }

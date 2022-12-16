@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Controllers\Admin\AuthController;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -39,8 +41,8 @@ $routes->group("product",["filter"=>"user"],function($route){
     $route->get('(:segment)', 'ProductController::detail/$1');
 });
 
-$routes->get("/","Home::index");
 $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admin","filter"=>["admin-auth","roles-auth"]],function($route){
+    $route->get("/","HomeController::index");
     /* PRODUCT ROUTES */
     $route->group("product",function($route){
         $route->get("/","ProductController::index");
@@ -86,8 +88,16 @@ $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admi
         $categories_route->put("/","CategoryController::update");
         $categories_route->get("get","CategoryController::get_update_category");
     });
+    /* Errors Routes */
+    $route->group("error",function($categories_route){
+        $categories_route->get("403","ErrorsController::error_forbidden");
+    });
 });
-
+$routes->post("/".ADMIN_PATH."/auth/logout","Admin\AuthController::logout",['filter'=>"admin-auth"]);
+$routes->group("/".ADMIN_PATH."/auth",["namespace"=>$routes->getDefaultNamespace()."Admin","filter"=>"admin-guest"],function($route){
+    $route->get("login","AuthController::index");
+    $route->post("login","AuthController::login");
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

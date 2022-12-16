@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
+use App\Controllers\BaseController;
 use App\Models\Categories;
-use BANK;
-use Config\Services;
 
-class Home extends BaseController
+class HomeController extends BaseController
 {
     public function index()
     {
@@ -15,6 +14,4 @@ class Home extends BaseController
         $data['print_categories'] = $ct->getCategoriesByParentId();
         return view('admin/home_view',add_data("james","/index",$data));
     }
-    
 }
-

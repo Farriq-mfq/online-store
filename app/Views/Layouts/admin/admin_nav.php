@@ -123,5 +123,11 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      <li class="nav-item">
+        <form action="<?= admin_url("/auth/logout") ?>" onsubmit="return confirm('Confirm Your action!')" method="POST">
+        <?= csrf_field() ?>
+          <button class="btn btn-danger btn-sm"><i class="fa fa-power-off"></i> Logout</button>
+        </form>
+      </li>
     </ul>
   </nav>

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Interface\AuthInterface;
 use CodeIgniter\Model;
 
-class Admin extends Model
+class Admin extends Model implements AuthInterface
 {
     use \Tatter\Relations\Traits\ModelTrait;
     protected $DBGroup          = 'default';

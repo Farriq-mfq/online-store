@@ -1,8 +1,10 @@
 <?php 
     namespace App\Service;
 
+use App\Interface\AuthInterface;
 use CodeIgniter\Model;
 use Config\Encryption;
+use Error;
 
     /**
      * AUTH SERVICE CLASS 
@@ -19,12 +21,16 @@ use Config\Encryption;
         public function __construct(string $token_name,$model)
         {
             try{
-                $this->session = \Config\Services::session();
-                $this->session->start();
-                $this->encryption =\Config\Services::encrypter(); 
-                $this->db = db_connect();
-                $this->token_name = $token_name;
                 $this->model = new $model;
+                if($this->model instanceof AuthInterface){
+                    $this->session = \Config\Services::session();
+                    $this->session->start();
+                    $this->encryption =\Config\Services::encrypter(); 
+                    $this->db = db_connect();
+                    $this->token_name = $token_name;
+                }else{
+                    throw new Error("Invalid Implements Interface : try implement AuthInterface in your model");
+                }
             }catch(\Exception $e){
                 throw $e;
             }
@@ -96,6 +102,6 @@ use Config\Encryption;
         }
         public function authenticated():bool
         {
-            return $this->getSessionData() == null ? false:true;
+            return $this->session->get($this->token_name) ? $this->getSessionData() == null ? false : true : false;
         }
     }

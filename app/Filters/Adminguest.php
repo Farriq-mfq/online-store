@@ -2,13 +2,12 @@
 
 namespace App\Filters;
 
-use App\Service\AuthService;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
-class Roles implements FilterInterface
+class Adminguest implements FilterInterface
 {
     /**
      * Do whatever processing this filter needs to do.
@@ -27,14 +26,8 @@ class Roles implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        $router = service("router");
-        // getMatchedRoute
-        if(isset(Services::authserviceAdmin()->getSessionData()['roles'])){
-            foreach (Services::authserviceAdmin()->getSessionData()['roles'] as $role) {
-                if($role['role'] == $router->getMatchedRoute()[1]){
-                    return redirect()->to(admin_url('/error/403'));
-                }
-            }
+        if(Services::authserviceAdmin()->authenticated()){
+            return redirect()->to(admin_url("/"));
         }
     }
 

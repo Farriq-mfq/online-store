@@ -27,7 +27,7 @@ class Admin implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if(!Services::authserviceAdmin()->authenticated()){
-            return redirect()->to("/");
+            return redirect()->to(admin_url('/auth/login'));
         }
     }
 
