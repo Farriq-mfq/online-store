@@ -2,10 +2,12 @@
 
 namespace Config;
 
+use App\Database\Migrations\Users;
 use App\Filters\Admin;
 use App\Filters\Adminguest;
 use App\Filters\Roles;
 use App\Filters\User;
+use App\Filters\UserGuest;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -31,6 +33,7 @@ class Filters extends BaseConfig
         'admin-guest'         => Adminguest::class,
         "user"          => User::class,
         "roles-auth"          => Roles::class,
+        'user-guest'         => UserGuest::class,
     ];
 
     /**

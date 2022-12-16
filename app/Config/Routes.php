@@ -36,11 +36,21 @@ $routes->set404Override();
  */
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+/* USER ROUTES */
 $routes->group("product",["filter"=>"user"],function($route){
     $route->get('/', 'ProductController::index');
     $route->get('(:segment)', 'ProductController::detail/$1');
 });
+$routes->group("auth",["filter"=>"user-guest"],function($route){
+    $route->get('login', 'AuthController::index');
+    $route->post('login', 'AuthController::login');
+    // $route->get('(:segment)', 'ProductController::detail/$1');
+});
 
+$routes->get("/","Home::index");
+
+
+/* ADMIN ROUTES */
 $routes->group("/".ADMIN_PATH,["namespace"=>$routes->getDefaultNamespace()."Admin","filter"=>["admin-auth","roles-auth"]],function($route){
     $route->get("/","HomeController::index");
     /* PRODUCT ROUTES */

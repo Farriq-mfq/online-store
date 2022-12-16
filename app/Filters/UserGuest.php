@@ -5,10 +5,9 @@ namespace App\Filters;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Service\AuthService;
 use Config\Services;
 
-class User implements FilterInterface
+class UserGuest implements FilterInterface
 {
     /**
      * Do whatever processing this filter needs to do.
@@ -25,11 +24,10 @@ class User implements FilterInterface
      *
      * @return mixed
      */
-    
     public function before(RequestInterface $request, $arguments = null)
     {
-        if(!Services::authserviceUser()->authenticated()){
-            return redirect()->to(base_url("/auth/login"));
+        if(Services::authserviceUser()->authenticated()){
+            return redirect()->to(base_url("/"));
         }
     }
 

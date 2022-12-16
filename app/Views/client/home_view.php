@@ -1,7 +1,7 @@
 <?= $this->extend("Layouts/main_layout") ?>
 
 <?= $this->section("content") ?>
-    <p>TEST HOME PAGE</p>
+    <p>THAT HOME PAGE</p>
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
 <script>
