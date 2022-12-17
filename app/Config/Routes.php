@@ -37,7 +37,7 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 /* USER ROUTES */
-$routes->group("product",["filter"=>"user"],function($route){
+$routes->group("product",function($route){
     $route->get('/', 'ProductController::index');
     $route->get('(:segment)', 'ProductController::detail/$1');
     $route->post("add_to_cart","ProductController::add_to_cart");

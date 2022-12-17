@@ -1,9 +1,5 @@
 <?= $this->extend("Layouts/main_layout") ?>
 <!-- IMPORT  -->
-<?php
-
-use Config\Services;
-?>
 <?= $this->section("content") ?>
 <!--================Single Product Area =================-->
 <div class="product_image_area">
@@ -12,6 +8,9 @@ use Config\Services;
 			<div class="col-lg-6">
 				<div class="s_Product_carousel">
 					<?php
+
+					use Config\Services;
+
 					foreach ($product->product_images as $images) : ?>
 						<div class="single-prd-item">
 							<img class="img-fluid" src="<?= $images->image ?>" alt="">
@@ -299,30 +298,34 @@ use Config\Services;
 <script>
 	$("#add_cart_btn").on("click", function(e) {
 		e.preventDefault();
-		$.ajax({
-			url: "<?= base_url("/cart") ?>",
-			method: "POST",
-			beforeSend: () => {
-				$(this).attr("disabled", true);
-				$(this).text("Wait To Add Cart");
-			},
-			data: {
-				product_id: "<?= $product->product_id ?>",
-				product_inventories_id: $("input[name='inventory_id']:checked").val() != undefined ? $("input[name='inventory_id']:checked").val() : null,
-				qty: $("input[name='qty']").val(),
-			},
-			success: (data) => {
-				$(this).attr("disabled", false);
-				$(this).text("Add To Cart");
-				$.toast({
-					heading: 'Success',
-					position: 'top-left',
-					text: data.success,
-				})
-				showCart();
+		<?php if (Services::authserviceUser()->authenticated()) : ?>
+			$.ajax({
+				url: "<?= base_url("/cart") ?>",
+				method: "POST",
+				beforeSend: () => {
+					$(this).attr("disabled", true);
+					$(this).text("Wait To Add Cart");
+				},
+				data: {
+					product_id: "<?= $product->product_id ?>",
+					product_inventories_id: $("input[name='inventory_id']:checked").val() != undefined ? $("input[name='inventory_id']:checked").val() : null,
+					qty: $("input[name='qty']").val(),
+				},
+				success: (data) => {
+					$(this).attr("disabled", false);
+					$(this).text("Add To Cart");
+					$.toast({
+						heading: 'Success',
+						position: 'top-left',
+						text: data.success,
+					})
+					showCart();
 
-			}
-		})
+				},
+			})
+		<?php else : ?>
+			window.location.href = "<?= base_url("/auth/login") ?>"
+		<?php endif ?>
 	})
 </script>
 <?= $this->endSection() ?>

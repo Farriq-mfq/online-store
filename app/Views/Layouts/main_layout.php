@@ -35,7 +35,6 @@
 </head>
 
 <body>
-
 	<!-- Start Header Area -->
 	<?= $this->include("Layouts/client/client_header") ?>
 	<!-- End Header Area -->
@@ -140,18 +139,24 @@
 	<script src="<?= base_url("/client/js/gmaps.min.js") ?>"></script>
 	<script src="<?= base_url("/client/js/jquery.toast.js") ?>"></script>
 	<script src="<?= base_url("/client/js/main.js") ?>"></script>
-	<script>
-		function showCart(){
-			$.get({
-				url:"<?= base_url("/cart") ?>",
-				success:(data)=>{
-					const cartEL = $(document).find(".cart_count");
-					cartEL.text(data.count)
-				}
-			})
-		}
-		showCart();
-	</script>
+	<?php
+
+	use Config\Services;
+
+	if (Services::authserviceUser()->authenticated()) : ?>
+		<script>
+			function showCart() {
+				$.get({
+					url: "<?= base_url("/cart") ?>",
+					success: (data) => {
+						const cartEL = $(document).find(".cart_count");
+						cartEL.text(data.count)
+					}
+				})
+			}
+			showCart();
+		</script>
+	<?php endif ?>
 	<?= $this->renderSection("client_script") ?>
 </body>
 
