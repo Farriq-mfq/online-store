@@ -41,6 +41,10 @@ class SessionCart extends Migration
                 "total"=>[
                     "type"=>"bigint"
                 ],
+                "product_img"=>[
+                    "type"=>"varchar",
+                    "constraint"=>255
+                ],
             ]
         );
 

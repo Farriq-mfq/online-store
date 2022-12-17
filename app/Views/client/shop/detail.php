@@ -300,7 +300,7 @@
 		e.preventDefault();
 		<?php if (Services::authserviceUser()->authenticated()) : ?>
 			$.ajax({
-				url: "<?= base_url("/cart") ?>",
+				url: "<?= base_url("/cart/add") ?>",
 				method: "POST",
 				beforeSend: () => {
 					$(this).attr("disabled", true);

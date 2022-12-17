@@ -147,7 +147,7 @@
 		<script>
 			function showCart() {
 				$.get({
-					url: "<?= base_url("/cart") ?>",
+					url: "<?= base_url("/cart/get") ?>",
 					success: (data) => {
 						const cartEL = $(document).find(".cart_count");
 						cartEL.text(data.count)

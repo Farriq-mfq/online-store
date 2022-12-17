@@ -44,8 +44,9 @@ $routes->group("product",function($route){
     $route->get("get_cart","ProductController::getCountCart");
 });
 $routes->group("cart",["filter"=>"user"],function($route){
-    $route->post("/","ProductController::add_to_cart");
-    $route->get("/","ProductController::getCountCart");
+    $route->get("/","CartController::index");
+    $route->post("add","ProductController::add_to_cart");
+    $route->get("get","ProductController::getCountCart");
 });
 $routes->group("auth",["filter"=>"user-guest"],function($route){
     $route->get('login', 'AuthController::index');

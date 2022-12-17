@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Tatter\Relations\Traits\ModelTrait;
 
 class ShoppingCart extends Model
 {
+    use ModelTrait;
     protected $DBGroup          = 'default';
     protected $table            = 'session_cart';
     protected $primaryKey       = 'session_cart_id';
@@ -14,7 +16,8 @@ class ShoppingCart extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["user_id","product_id","product_inventories_id","content","quantity","price","total"];
+    protected $allowedFields    = ["user_id","product_id","product_inventories_id","content","product_img","quantity","price","total"];
+    protected $with = ["products","product_inventories"];
 
     // Dates
     protected $useTimestamps = false;

@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Database\Migrations\SessionCart;
 use App\Models\Categories;
 use App\Models\Product;
+use App\Models\ProductImages;
 use App\Models\ProductInventories;
 use App\Models\ShoppingCart;
 use Config\Services;
@@ -16,12 +17,14 @@ class ProductController extends BaseController
     private Categories $categories;
     private ShoppingCart $shoppingcart;
     private ProductInventories $productInventories;
+    private ProductImages $productImages;
     public function __construct()
     {
         $this->products = new Product();
         $this->categories = new Categories();
         $this->shoppingcart = new ShoppingCart();
         $this->productInventories = new ProductInventories();
+        $this->productImages = new ProductImages();
     }
     public function index()
     {
@@ -62,13 +65,15 @@ class ProductController extends BaseController
                     $checkCartIsadded = $this->shoppingcart->where("user_id",$user_id)->where("product_id",$product_id)->where("product_inventories_id",NULL)->first();
                 }
                 $qty = $this->request->getPost("qty");
+
                 $data = [
                     "user_id"=>$user_id,
                     "product_id"=>$product_id,
                     "product_inventories_id"=>$product_inventories_id,
                     "quantity"=>$qty,
                     "price"=> (int) $price,
-                    "total"=> (int) $price * $qty
+                    "total"=> (int) $price * $qty,
+                    "product_img"=> $this->productImages->where("product_id",$product_id)->first()->image
                 ];
                 if($checkCartIsadded==null){
                     $this->shoppingcart->insert($data);
