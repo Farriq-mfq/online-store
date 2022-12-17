@@ -4,19 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Categories extends Model
+class ShoppingCart extends Model
 {
-    use \Tatter\Relations\Traits\ModelTrait;
     protected $DBGroup          = 'default';
-    protected $table            = 'categories';
-    protected $primaryKey       = 'category_id';
+    protected $table            = 'session_cart';
+    protected $primaryKey       = 'session_cart_id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["parent_category","category"];
-    protected $with    = ["products"];
+    protected $allowedFields    = ["user_id","product_id","product_inventories_id","content","quantity","price","total"];
 
     // Dates
     protected $useTimestamps = false;
@@ -41,17 +39,4 @@ class Categories extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function getCategoriesByParentId(?int $parentId=null)
-    {   
-        $data =$this->where("parent_category",$parentId)->get()->getResultArray();
-        for($i=0;$i<count($data);$i++)
-        {
-            if($this->getCategoriesByParentId($data[$i]['category_id']))
-            {
-                $data[$i]['child']=$this->getCategoriesByParentId($data[$i]['category_id']);
-            }
-        }
-       return $data;
-    }
 }

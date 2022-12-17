@@ -9,7 +9,7 @@ class AuthController extends BaseController
 {
     public function index()
     {
-        return view("client/auth/index");
+        return view("client/auth/index",add_data("Login",""));
     }
     public function login()
     {
@@ -32,7 +32,7 @@ class AuthController extends BaseController
             "password"=>$this->request->getVar("password"),
         ];
         if(Services::authserviceUser()->attempt($credentials)){
-            return redirect()->to(base_url("/"));
+            return redirect()->to(base_url("/product"));
         }else{
             session()->setFlashdata('error_login',"Invalid email or password");
             return redirect()->to(base_url('/auth/login'));

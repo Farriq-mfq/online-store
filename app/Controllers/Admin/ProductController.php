@@ -17,7 +17,7 @@ class ProductController extends BaseController
     }
     public function index()
     {
-        $data['products'] =  $this->products->find();
+        $data['products'] =  $this->products->findAll();
         return view("admin/product/index",add_data("All Product","product/index",$data));
     }
     public function create()

@@ -31,6 +31,7 @@
 	<link rel="stylesheet" href="<?= base_url("client/css/ion.rangeSlider.skinFlat.css") ?>" />
 	<link rel="stylesheet" href="<?= base_url("client/css/magnific-popup.css") ?>">
 	<link rel="stylesheet" href="<?= base_url("client/css/main.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/css/jquery.toast.css") ?>">
 </head>
 
 <body>
@@ -137,7 +138,20 @@
 	<!--gmaps Js-->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="<?= base_url("/client/js/gmaps.min.js") ?>"></script>
+	<script src="<?= base_url("/client/js/jquery.toast.js") ?>"></script>
 	<script src="<?= base_url("/client/js/main.js") ?>"></script>
+	<script>
+		function showCart(){
+			$.get({
+				url:"<?= base_url("/cart") ?>",
+				success:(data)=>{
+					const cartEL = $(document).find(".cart_count");
+					cartEL.text(data.count)
+				}
+			})
+		}
+		showCart();
+	</script>
 	<?= $this->renderSection("client_script") ?>
 </body>
 

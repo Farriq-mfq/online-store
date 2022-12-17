@@ -16,12 +16,14 @@ class ProductsComments extends Migration
             ],
             "replay_id"=>[  
                 "type"=>"int",
+                "null"=>true
             ],
             "comment"=>[
                 "type"=>"text"
             ],
             "user_id"=>[
                 "type"=>"bigint",
+
             ],
             "product_id"=>[
                 "type"=>"bigint",
@@ -30,8 +32,9 @@ class ProductsComments extends Migration
             'updated_at datetime default current_timestamp on update current_timestamp'
         ]);
         $this->forge->addKey("comment_id",true);
-        $this->forge->addForeignKey("user_id","users","user_id","NO ACTION","NO ACTION");
-        $this->forge->addForeignKey("product_id","products","product_id","NO ACTION","NO ACTION");
+        $this->forge->addForeignKey("user_id","users","user_id","CASCADE","CASCADE");
+        $this->forge->addForeignKey("product_id","products","product_id","CASCADE","CASCADE");
+        $this->forge->addForeignKey("replay_id","product_comments","comment_id","SET NULL","SET NULL");
         $this->forge->createTable("product_comments");
     }
     

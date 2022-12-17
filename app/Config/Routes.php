@@ -40,6 +40,12 @@ $routes->set404Override();
 $routes->group("product",["filter"=>"user"],function($route){
     $route->get('/', 'ProductController::index');
     $route->get('(:segment)', 'ProductController::detail/$1');
+    $route->post("add_to_cart","ProductController::add_to_cart");
+    $route->get("get_cart","ProductController::getCountCart");
+});
+$routes->group("cart",["filter"=>"user"],function($route){
+    $route->post("/","ProductController::add_to_cart");
+    $route->get("/","ProductController::getCountCart");
 });
 $routes->group("auth",["filter"=>"user-guest"],function($route){
     $route->get('login', 'AuthController::index');

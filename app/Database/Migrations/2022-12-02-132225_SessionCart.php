@@ -18,10 +18,15 @@ class SessionCart extends Migration
                     "type"=>"bigint"
                 ],
                 "product_id"=>[
-                    "type"=>"int"
+                    "type"=>"bigint"
+                ],
+                "product_inventories_id"=>[
+                    "type"=>"int",
+                    "null"=>true
                 ],
                 "content"=>[
-                    "type"=>"text"
+                    "type"=>"text",
+                    "null"=>true
                 ],
                 "discount"=>[
                     "type"=>"double",
@@ -40,7 +45,9 @@ class SessionCart extends Migration
         );
 
         $this->forge->addKey("session_cart_id",true);
-        $this->forge->addForeignKey("user_id","users","user_id","NO ACTION","NO ACTION");
+        $this->forge->addForeignKey("user_id","users","user_id","CASCADE","CASCADE");
+        $this->forge->addForeignKey("product_id","products","product_id","CASCADE","CASCADE");
+        $this->forge->addForeignKey("product_inventories_id","product_inventories","inventory_id","NULL","NULL");
         $this->forge->createTable("session_cart");
         
     }

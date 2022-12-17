@@ -95,7 +95,9 @@
                                     <?php endif ?>
                                 <?php endforeach ?>
 								<div class="product-details">
-									<h6><?= $product->title ?></h6>
+									<a href="<?=base_url("/product/".$product->slug) ?>">
+										<h6><?= $product->title ?></h6>
+									</a>
 									<div class="price">
 										<h6><?= $product->price ?></h6>
 										<!-- <h6 class="l-through">$210.00</h6> -->
