@@ -163,9 +163,8 @@
 	<script src="<?= base_url("/client/js/main.js") ?>"></script>
 	<?php
 
-	use Config\Services;
 
-	if (Services::authserviceUser()->authenticated()) : ?>
+	if (auth_user()) : ?>
 		<script>
 			function showCart() {
 				$.get({

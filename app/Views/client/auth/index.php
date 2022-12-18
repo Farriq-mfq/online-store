@@ -14,11 +14,11 @@
 						<form class="row login_form" action="<?= base_url("/auth/login") ?>" method="post" id="contactForm" novalidate="novalidate">
                         <?= csrf_field() ?>
 							<div class="col-md-12 form-group">
-								<input type="email" class="form-control <?= show_class_error("email") ?>" id="name" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" autofocus>
+								<input type="email" class="form-control <?= show_class_error("email") ?>" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" autofocus>
                                 <?= show_error("email") ?>
 							</div>
 							<div class="col-md-12 form-group">
-                                <input type="text" class="form-control <?= show_class_error("password") ?>" id="name" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+                                <input type="password" class="form-control <?= show_class_error("password") ?>" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
                                 <?= show_error("password") ?>
 							</div>
 							<div class="col-md-12 form-group">

@@ -4,137 +4,134 @@
 <section class="cart_area">
     <div class="container">
         <div class="cart_inner">
-            <div class="table-responsive" style="position: relative;">
-                <div class="overley_cart"></div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $subTotal = 0 ?>
-                        <?php if (count($carts)) : ?>
-                            <?php foreach ($carts as $cart) : ?>
+            <form action="<?= base_url("/cart/checkout") ?>" method="POST">
+                <div class="table-responsive" style="position: relative;">
+                    <div class="overley_cart"></div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $subTotal = 0 ?>
+                            <?php if (count($carts)) : ?>
+                                <?php foreach ($carts as $cart) : ?>
+                                    <tr>
+                                        <td>
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <img src="<?= $cart->product_img ?>" alt="" height="200" width="200" style="object-fit: cover;">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p><?= $cart->product->title ?></p>
+                                                    <?php if ($cart->product_inventory) : ?>
+                                                        <p><?= $cart->product_inventory->color ?></p>
+                                                    <?php endif ?>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h5>Rp.<?= number_format($cart->price, 0, ",", ".") ?></h5>
+                                        </td>
+                                        <td>
+                                            <div class="product_count">
+                                                <input type="text" name="qty[]" id="sst" maxlength="12" value="<?= $cart->quantity ?>" title="Quantity:" class="input-text qty">
+                                                <button class="increase items-count" id="plus_qty_update" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                                <button id="min_qty_update" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h5>Rp.<?= number_format($cart->total, 0, ",", ".") ?></h5>
+                                        </td>
+                                        <td class="d-grid place-items-center" style="gap: 10px;">
+                                            <label class="d-inline-block btn border">
+                                                <div class="primary-checkbox">
+                                                    <input type="checkbox" name="check_shopping_cart[]" id="<?= "default-checkbox" . $cart->session_cart_id ?>" value="<?= $cart->session_cart_id ?>">
+                                                    <label for="<?= "default-checkbox" . $cart->session_cart_id ?>"></label>
+                                                </div>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <input type="hidden" name="session_cart_id[]" value="<?= $cart->session_cart_id ?>">
+                                    <?php $subTotal += $cart->total ?>
+                                <?php endforeach ?>
+                            <?php else : ?>
                                 <tr>
                                     <td>
-                                        <div class="media">
-                                            <div class="d-flex">
-                                                <img src="<?= $cart->product_img ?>" alt="" height="200" width="200" style="object-fit: cover;">
-                                            </div>
-                                            <div class="media-body">
-                                                <p><?= $cart->product->title ?></p>
-                                                <?php if ($cart->product_inventory) : ?>
-                                                    <p><?= $cart->product_inventory->color ?></p>
-                                                <?php endif ?>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h5>Rp.<?= number_format($cart->price, 0, ",", ".") ?></h5>
-                                    </td>
-                                    <td>
-                                        <div class="product_count">
-                                            <input type="text" name="qty[]" id="sst" maxlength="12" value="<?= $cart->quantity ?>" title="Quantity:" class="input-text qty">
-                                            <button class="increase items-count" id="plus_qty_update" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                            <button id="min_qty_update" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h5>Rp.<?= number_format($cart->total, 0, ",", ".") ?></h5>
-                                    </td>
-                                    <td class="d-grid place-items-center" style="gap: 10px;">
-                                        <label class="d-inline-block btn border">
-                                            <div class="primary-checkbox">
-                                                <input type="checkbox" name="check_shopping_cart[]" id="<?= "default-checkbox" . $cart->session_cart_id ?>" value="<?= $cart->session_cart_id ?>">
-                                                <label for="<?= "default-checkbox" . $cart->session_cart_id ?>"></label>
-                                            </div>
-                                        </label>
-                                        <form class="d-inline" onsubmit="return confirm('Confirm your action !')" action="<?= base_url('/cart/delete/' . $cart->session_cart_id) ?>" method="POST">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <?= csrf_field() ?>
-                                            <button class="btn btn-sm"><span class="ti-trash text-danger"></span></button>
-                                        </form>
+                                        <h4>YOUR CART IS EMPTY</h4>
                                     </td>
                                 </tr>
-                                <input type="hidden" name="session_cart_id[]" value="<?= $cart->session_cart_id ?>">
-                                <?php $subTotal += $cart->total ?>
-                            <?php endforeach ?>
-                        <?php else : ?>
-                            <tr>
+                            <?php endif ?>
+                            <tr class="bottom_button">
                                 <td>
-                                    <h4>YOUR CART IS EMPTY</h4>
+                                    <?php if (count($carts)) : ?>
+                                        <button class="gray_btn" type="button" style="cursor: pointer;" id="update_cart">Update Cart</button>
+                                    <?php endif ?>
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <?php if (count($carts)) : ?>
+
+                                        <button class="btn btn-sm btn-danger" id="DELETE_SHOPPING_ALL" type="button"><span class="ti-trash"></span> Delete <span id="CHECKED_ID_SHOPPING">0</span></button>
+
+                                    <?php endif ?>
                                 </td>
                             </tr>
-                        <?php endif ?>
-                        <tr class="bottom_button">
-                            <td>
-                                <?php if (count($carts)) : ?>
-                                    <button class="gray_btn" type="button" style="cursor: pointer;" id="update_cart">Update Cart</button>
-                                <?php endif ?>
-                            </td>
-                            <td>
 
-                            </td>
-                            <td>
+                            <tr>
+                                <td>
 
-                            </td>
-                            <td>
+                                </td>
+                                <td>
 
-                            </td>
-                            <td>
-                                <?php if (count($carts)) : ?>
+                                </td>
+                                <td>
 
-                                    <button class="btn btn-sm btn-danger" id="DELETE_SHOPPING_ALL" type="button"><span class="ti-trash"></span> Delete <span id="CHECKED_ID_SHOPPING">0</span></button>
+                                </td>
+                                <td>
+                                    <h5>Subtotal</h5>
+                                </td>
+                                <td>
+                                    <h5 id="SUBTOTAL">Rp.<?= number_format($subTotal, 0, ".", ".")  ?></h5>
+                                </td>
+                            </tr>
+                            <tr class="out_button_area">
+                                <td>
 
-                                <?php endif ?>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
 
-                        <tr>
-                            <td>
+                                </td>
+                                <td>
 
-                            </td>
-                            <td>
+                                </td>
+                                <td>
 
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-                                <h5>Subtotal</h5>
-                            </td>
-                            <td>
-                                <h5 id="SUBTOTAL">Rp.<?= number_format($subTotal, 0, ".", ".")  ?></h5>
-                            </td>
-                        </tr>
-                        <tr class="out_button_area">
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-                                <div class="checkout_btn_inner d-flex align-items-center justify-content-end">
-                                    <?php if (count($carts)) : ?>
-                                        <a class="primary-btn" href="#">Proceed to checkout</a>
-                                    <?php endif ?>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center justify-content-end">
+                                        <?php if (count($carts)) : ?>
+                                            <button class="primary-btn btn" type="submit">Proceed to checkout</button>
+                                        <?php endif ?>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
         </div>
     </div>
 </section>
@@ -157,8 +154,8 @@
             data: {
                 input: data
             },
-            beforeSend:()=>{
-                $(".overley_cart").css("display","block")
+            beforeSend: () => {
+                $(".overley_cart").css("display", "block")
             },
             success: () => {
                 window.location.reload();
@@ -207,10 +204,10 @@
                     data: {
                         input: data
                     },
-                    beforeSend:()=>{
-                        $(this).attr("disabled",true);
+                    beforeSend: () => {
+                        $(this).attr("disabled", true);
                         $(this).text("Deleting...");
-                        $(".overley_cart").css("display","block")
+                        $(".overley_cart").css("display", "block")
 
                     },
                     success: function(data) {
@@ -223,7 +220,7 @@
     })
     <?php if (session()->getFlashdata("alert_cart")) : ?>
         $.toast({
-            heading: 'Success',
+            heading: 'Alert',
             position: 'top-right',
             text: "<?= session()->getFlashdata("alert_cart") ?>",
         })

@@ -9,8 +9,6 @@
 				<div class="s_Product_carousel">
 					<?php
 
-					use Config\Services;
-
 					foreach ($product->product_images as $images) : ?>
 						<div class="single-prd-item">
 							<img class="img-fluid" src="<?= $images->image ?>" alt="">
@@ -298,7 +296,7 @@
 <script>
 	$("#add_cart_btn").on("click", function(e) {
 		e.preventDefault();
-		<?php if (Services::authserviceUser()->authenticated()) : ?>
+		<?php if (auth_user()): ?>
 			$.ajax({
 				url: "<?= base_url("/cart/add") ?>",
 				method: "POST",
