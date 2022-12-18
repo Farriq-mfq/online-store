@@ -19,67 +19,72 @@ class CartController extends BaseController
     }
     public function index()
     {
-        $data['carts'] = $this->shopping->where("user_id",Services::authserviceUser()->getSessionData()['user_id'])->findAll();
-        return view("client/shop/cart",add_data("Shopping Cart","Cart",$data));
+        $data['carts'] = $this->shopping->where("user_id", Services::authserviceUser()->getSessionData()['user_id'])->findAll();
+        return view("client/shop/cart", add_data("Shopping Cart", "Cart", $data));
     }
     public function update_cart()
     {
-        if($this->request->isAJAX()){
+        if ($this->request->isAJAX()) {
             $user_id = Services::authserviceUser()->getSessionData()['user_id'];
             foreach ($this->request->getVar('input') as $input) {
                 $get_cart = $this->shopping->find($input['session_cart_id']);
                 $data = [
-                    'quantity'=>$input['qty'],
-                    "total"=>$input['qty'] *  $get_cart->price
+                    'quantity' => $input['qty'],
+                    "total" => $input['qty'] *  $get_cart->price
                 ];
 
-                $this->shopping->where("user_id",$user_id)->update($input['session_cart_id'],$data);
-                session()->setFlashdata("alert_cart","Success Update Cart");
+                $this->shopping->where("user_id", $user_id)->update($input['session_cart_id'], $data);
+                session()->setFlashdata("alert_cart", "Success Update Cart");
             }
         }
     }
     public function remove_cart($id)
     {
         $this->shopping->delete($id);
-        session()->setFlashdata("alert_cart","Success Delete Item");
+        session()->setFlashdata("alert_cart", "Success Delete Item");
         return redirect()->to(base_url("/cart"));
     }
     public function remove_cart_all()
     {
-        if($this->request->isAJAX()){
+        if ($this->request->isAJAX()) {
             $data = [];
-            foreach ($this->request->getVar('input') as $input ) {
-                $data []= $input["session_cart_id"];
+            foreach ($this->request->getVar('input') as $input) {
+                $data[] = $input["session_cart_id"];
             }
-            $this->shopping->whereIn("session_cart_id",$data)->delete();
-            session()->setFlashdata("alert_cart","Success Delete Items");
+            $this->shopping->whereIn("session_cart_id", $data)->delete();
+            session()->setFlashdata("alert_cart", "Success Delete Items");
         }
     }
     public function checkout()
     {
-        if($this->request->getVar("check_shopping_cart")){
+        if ($this->request->getVar("check_shopping_cart")) {
             $enc = base64_encode(bin2hex($this->encrypter->encrypt(auth_user_id())));
-            return redirect()->to(base_url("/cart/checkout?checkout_session=".$enc));
-        }else{
-            session()->setFlashdata("alert_cart","Please Selected Items to Proceed checkout");
+            session()->setFlashdata("checkout_send_data", $this->request->getVar("check_shopping_cart"));
+            return redirect()->to(base_url("/cart/checkout?checkout_session=" . $enc));
+        } else {
+            session()->setFlashdata("alert_cart", "Please Selected Items to Proceed checkout");
             return redirect()->to(base_url("/cart"));
         }
     }
     public function checkout_page()
     {
-        if($this->request->getVar("checkout_session")){
-            $checkout = htmlentities($this->request->getVar("checkout_session"));
-            try{
-                $dec = $this->encrypter->decrypt(hex2bin(base64_decode($checkout)));
-                if($dec == auth_user_id()){
-                    dd("ok");
-                }else{
+        if (session()->getFlashdata("checkout_send_data")) {
+            if ($this->request->getVar("checkout_session")) {
+                $checkout = htmlentities($this->request->getVar("checkout_session"));
+                try {
+                    $dec = $this->encrypter->decrypt(hex2bin(base64_decode($checkout)));
+                    if ($dec == auth_user_id()) {
+                        return view("client/shop/check_out",add_data("CHECKOUT","cart/checkout"));
+                    } else {
+                        return redirect()->to(base_url("/cart"));
+                    }
+                } catch (\Exception $e) {
                     return redirect()->to(base_url("/cart"));
                 }
-            }catch(\Exception $e){
+            } else {
                 return redirect()->to(base_url("/cart"));
             }
-        }else{
+        } else {
             return redirect()->to(base_url("/cart"));
         }
     }
