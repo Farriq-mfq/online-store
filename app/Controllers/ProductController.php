@@ -78,7 +78,7 @@ class ProductController extends BaseController
                 if($checkCartIsadded==null){
                     $this->shoppingcart->insert($data);
                 }else{
-                    $new_qty = $checkCartIsadded->quantity+1;
+                    $new_qty = $checkCartIsadded->quantity + $qty;
                     $new_total = $new_qty * $price;
                     $this->shoppingcart->update($checkCartIsadded->session_cart_id,["quantity"=>$new_qty,"total"=>$new_total]);
                 }
