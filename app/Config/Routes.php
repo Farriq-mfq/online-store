@@ -46,6 +46,8 @@ $routes->group("cart", ["filter" => "user"], function ($route) {
     $route->post("add", "ProductController::add_to_cart");
     $route->get("get", "ProductController::getCountCart");
     $route->post("update", "CartController::update_cart");
+    $route->delete("delete/(:num)", "CartController::remove_cart/$1");
+    $route->post("delete/all", "CartController::remove_cart_all");
 });
 $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     $route->get('login', 'AuthController::index');

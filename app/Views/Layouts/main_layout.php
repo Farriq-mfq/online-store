@@ -32,6 +32,28 @@
 	<link rel="stylesheet" href="<?= base_url("client/css/magnific-popup.css") ?>">
 	<link rel="stylesheet" href="<?= base_url("client/css/main.css") ?>">
 	<link rel="stylesheet" href="<?= base_url("client/css/jquery.toast.css") ?>">
+	<style>
+		.overley_cart{
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #000;
+			opacity: 0.2;
+			z-index: 999;
+			display: none;
+		}
+
+		.overley_cart::after{
+			content: "Loading...";
+			display: grid;
+			place-items:center;
+			min-height: 100%;
+			color: white;
+			font-size: 30px;
+		}
+	</style>
 </head>
 
 <body>

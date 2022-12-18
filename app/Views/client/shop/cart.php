@@ -4,7 +4,8 @@
 <section class="cart_area">
     <div class="container">
         <div class="cart_inner">
-            <div class="table-responsive">
+            <div class="table-responsive" style="position: relative;">
+                <div class="overley_cart"></div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -15,8 +16,8 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $subTotal = 0 ?>
                         <?php if (count($carts)) : ?>
-                            <?php $subTotal = 0 ?>
                             <?php foreach ($carts as $cart) : ?>
                                 <tr>
                                     <td>
@@ -33,7 +34,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <h5>Rp.<?= number_format($cart->price, 0, ".") ?></h5>
+                                        <h5>Rp.<?= number_format($cart->price, 0, ",", ".") ?></h5>
                                     </td>
                                     <td>
                                         <div class="product_count">
@@ -43,7 +44,20 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <h5>Rp.<?= number_format($cart->total, 0, ".") ?></h5>
+                                        <h5>Rp.<?= number_format($cart->total, 0, ",", ".") ?></h5>
+                                    </td>
+                                    <td class="d-grid place-items-center" style="gap: 10px;">
+                                        <label class="d-inline-block btn border">
+                                            <div class="primary-checkbox">
+                                                <input type="checkbox" name="check_shopping_cart[]" id="<?= "default-checkbox" . $cart->session_cart_id ?>" value="<?= $cart->session_cart_id ?>">
+                                                <label for="<?= "default-checkbox" . $cart->session_cart_id ?>"></label>
+                                            </div>
+                                        </label>
+                                        <form class="d-inline" onsubmit="return confirm('Confirm your action !')" action="<?= base_url('/cart/delete/' . $cart->session_cart_id) ?>" method="POST">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <?= csrf_field() ?>
+                                            <button class="btn btn-sm"><span class="ti-trash text-danger"></span></button>
+                                        </form>
                                     </td>
                                 </tr>
                                 <input type="hidden" name="session_cart_id[]" value="<?= $cart->session_cart_id ?>">
@@ -58,7 +72,9 @@
                         <?php endif ?>
                         <tr class="bottom_button">
                             <td>
-                                <button class="gray_btn" type="button" style="cursor: pointer;" id="update_cart">Update Cart</button>
+                                <?php if (count($carts)) : ?>
+                                    <button class="gray_btn" type="button" style="cursor: pointer;" id="update_cart">Update Cart</button>
+                                <?php endif ?>
                             </td>
                             <td>
 
@@ -67,6 +83,14 @@
 
                             </td>
                             <td>
+
+                            </td>
+                            <td>
+                                <?php if (count($carts)) : ?>
+
+                                    <button class="btn btn-sm btn-danger" id="DELETE_SHOPPING_ALL" type="button"><span class="ti-trash"></span> Delete <span id="CHECKED_ID_SHOPPING">0</span></button>
+
+                                <?php endif ?>
                             </td>
                         </tr>
 
@@ -78,10 +102,13 @@
 
                             </td>
                             <td>
+
+                            </td>
+                            <td>
                                 <h5>Subtotal</h5>
                             </td>
                             <td>
-                                <h5>Rp.<?= number_format($subTotal, 0, ".")  ?></h5>
+                                <h5 id="SUBTOTAL">Rp.<?= number_format($subTotal, 0, ".", ".")  ?></h5>
                             </td>
                         </tr>
                         <tr class="out_button_area">
@@ -95,8 +122,13 @@
 
                             </td>
                             <td>
+
+                            </td>
+                            <td>
                                 <div class="checkout_btn_inner d-flex align-items-center justify-content-end">
-                                    <a class="primary-btn" href="#">Proceed to checkout</a>
+                                    <?php if (count($carts)) : ?>
+                                        <a class="primary-btn" href="#">Proceed to checkout</a>
+                                    <?php endif ?>
                                 </div>
                             </td>
                         </tr>
@@ -125,13 +157,11 @@
             data: {
                 input: data
             },
-            success: (data) => {
-                const jdata = JSON.parse(data)
-                $.toast({
-                    heading: 'Success',
-                    position: 'top-right',
-                    text: jdata.success,
-                })
+            beforeSend:()=>{
+                $(".overley_cart").css("display","block")
+            },
+            success: () => {
+                window.location.reload();
             }
         })
     })
@@ -154,5 +184,49 @@
             }
         }
     })
+
+    $("input[name='check_shopping_cart[]']").change(function(e) {
+        e.preventDefault()
+        const checked = $("input[name='check_shopping_cart[]']:checked");
+        $("#CHECKED_ID_SHOPPING").text(checked.length)
+    })
+
+    $("#DELETE_SHOPPING_ALL").on("click", function(e) {
+        e.preventDefault()
+        const checks = $("input[name='check_shopping_cart[]']:checked");
+        let data = [];
+        checks.each(function() {
+            data.push({
+                session_cart_id: $(this).val()
+            })
+        })
+        if (data.length) {
+            if (window.confirm("Confirm Your action")) {
+                $.post({
+                    url: "<?= base_url("/cart/delete/all") ?>",
+                    data: {
+                        input: data
+                    },
+                    beforeSend:()=>{
+                        $(this).attr("disabled",true);
+                        $(this).text("Deleting...");
+                        $(".overley_cart").css("display","block")
+
+                    },
+                    success: function(data) {
+                        window.location.reload()
+                    }
+                })
+            }
+        }
+
+    })
+    <?php if (session()->getFlashdata("alert_cart")) : ?>
+        $.toast({
+            heading: 'Success',
+            position: 'top-right',
+            text: "<?= session()->getFlashdata("alert_cart") ?>",
+        })
+    <?php endif ?>
 </script>
 <?= $this->endSection() ?>

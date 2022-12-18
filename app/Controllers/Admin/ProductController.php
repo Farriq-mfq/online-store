@@ -32,7 +32,7 @@ class ProductController extends BaseController
     {
         $validate = $this->validate([
             "title"=> [
-                "rules"=>"required|is_unique[products.title]"
+                "rules"=>"required|is_unique[products.title]|max_length[150]"
             ],
             "description"=> [
                 "rules"=>"required"
@@ -215,7 +215,7 @@ class ProductController extends BaseController
         }
         $validate = $this->validate([
             "title"=> [
-                "rules"=>"required".$unique.""
+                "rules"=>"required|max_length[150]".$unique.""
             ],
             "description"=> [
                 "rules"=>"required"

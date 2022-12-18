@@ -15,11 +15,11 @@ class Products extends Migration
             ],
             "title"=>[
                 "type"=>"varchar",
-                "constraint"=>30,
+                "constraint"=>150,
             ],
             "slug"=>[
                 "type"=>"varchar",
-                "constraint"=>50,
+                "constraint"=>150,
             ],
             "description"=>[
                 "type"=>"text",

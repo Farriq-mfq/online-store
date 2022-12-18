@@ -30,8 +30,25 @@ class CartController extends BaseController
                 ];
 
                 $this->shopping->where("user_id",$user_id)->update($input['session_cart_id'],$data);
+                session()->setFlashdata("alert_cart","Success Update Cart");
             }
-            echo json_encode(["success"=>"Success update cart"]);
+        }
+    }
+    public function remove_cart($id)
+    {
+        $this->shopping->delete($id);
+        session()->setFlashdata("alert_cart","Success Delete Item");
+        return redirect()->to(base_url("/cart"));
+    }
+    public function remove_cart_all()
+    {
+        if($this->request->isAJAX()){
+            $data = [];
+            foreach ($this->request->getVar('input') as $input ) {
+                $data []= $input["session_cart_id"];
+            }
+            $this->shopping->whereIn("session_cart_id",$data)->delete();
+            session()->setFlashdata("alert_cart","Success Delete Items");
         }
     }
 }

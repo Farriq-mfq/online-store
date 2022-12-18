@@ -73,7 +73,7 @@ class ProductController extends BaseController
                     "quantity"=>$qty,
                     "price"=> (int) $price,
                     "total"=> (int) $price * $qty,
-                    "product_img"=> $this->productImages->where("product_id",$product_id)->first()->image
+                    "product_img"=> $this->productImages->where("product_id",$product_id)->where("is_primary",true)->first()->image
                 ];
                 if($checkCartIsadded==null){
                     $this->shoppingcart->insert($data);

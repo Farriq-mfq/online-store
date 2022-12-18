@@ -12,7 +12,7 @@
                   <div class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="title" required>Title Product</label>
+                            <label for="title" required>Title Product (max 150 character)</label>
                             <input type="text" class="form-control <?= show_class_error("title") ?>" id="title" name="title" value="<?= set_value("title") ?>">
                             <?= show_error("title") ?>
                         </div>
