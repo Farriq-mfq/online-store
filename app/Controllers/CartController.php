@@ -58,9 +58,8 @@ class CartController extends BaseController
     public function checkout()
     {
         if ($this->request->getVar("check_shopping_cart")) {
-            $enc = base64_encode(bin2hex($this->encrypter->encrypt(auth_user_id())));
-            session()->setFlashdata("checkout_send_data", $this->request->getVar("check_shopping_cart"));
-            return redirect()->to(base_url("/cart/checkout?checkout_session=" . $enc));
+            $enc = base64_encode(bin2hex($this->encrypter->encrypt(http_build_query(["items" => $this->request->getVar("check_shopping_cart"), "expired" => date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . "+ 2 hours"),)]))));
+            return redirect()->to(base_url("/cart/checkout?checkout_session=" . $enc . ""));
         } else {
             session()->setFlashdata("alert_cart", "Please Selected Items to Proceed checkout");
             return redirect()->to(base_url("/cart"));
@@ -68,20 +67,17 @@ class CartController extends BaseController
     }
     public function checkout_page()
     {
-        if (session()->getFlashdata("checkout_send_data")) {
-            if ($this->request->getVar("checkout_session")) {
-                $checkout = htmlentities($this->request->getVar("checkout_session"));
-                try {
-                    $dec = $this->encrypter->decrypt(hex2bin(base64_decode($checkout)));
-                    if ($dec == auth_user_id()) {
-                        return view("client/shop/check_out",add_data("CHECKOUT","cart/checkout"));
-                    } else {
-                        return redirect()->to(base_url("/cart"));
-                    }
-                } catch (\Exception $e) {
+        if ($this->request->getVar("checkout_session")) {
+            $checkout = htmlentities($this->request->getVar("checkout_session"));
+            try {
+                $dec = $this->encrypter->decrypt(hex2bin(base64_decode($checkout)));
+                parse_str($dec, $data);
+                if ($data['expired'] <= date("Y-m-d H:i:s")) {
+                    session()->setFlashdata("alert_cart", "Time Checkout expired");
                     return redirect()->to(base_url("/cart"));
                 }
-            } else {
+                return view("client/shop/check_out", add_data("CHECKOUT", "cart/checkout"));
+            } catch (\Exception $e) {
                 return redirect()->to(base_url("/cart"));
             }
         } else {
