@@ -137,7 +137,7 @@
 </section>
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
-<script>
+<script <?= csp_script_nonce() ?>>
     $("#update_cart").on("click", function(e) {
         const input = $("input[name='qty[]']")
         const input_id_session = $("input[name='session_cart_id[]']")

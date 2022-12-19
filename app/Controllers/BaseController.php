@@ -56,5 +56,7 @@ abstract class BaseController extends Controller
         // lib
         $this->shipping = new Shipping();
         $this->payment = new Payment();
+
+        // dd($this->shipping->get_province());
     }
 }

@@ -293,7 +293,7 @@
 <!--================End Product Description Area =================-->
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
-<script>
+<script <?= csp_script_nonce() ?>>
 	$("#add_cart_btn").on("click", function(e) {
 		e.preventDefault();
 		<?php if (auth_user()): ?>

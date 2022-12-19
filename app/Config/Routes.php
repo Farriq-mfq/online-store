@@ -56,6 +56,11 @@ $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     // $route->get('(:segment)', 'ProductController::detail/$1');
 });
 
+$routes->group("api",function($route){
+    $route->get("data/city","ShippingController::cityByprovice");
+    $route->get("data/province","ShippingController::getProvince");
+});
+
 $routes->get("/", "Home::index");
 
 

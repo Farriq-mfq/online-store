@@ -71,12 +71,13 @@ class CartController extends BaseController
             $checkout = htmlentities($this->request->getVar("checkout_session"));
             try {
                 $dec = $this->encrypter->decrypt(hex2bin(base64_decode($checkout)));
-                parse_str($dec, $data);
-                if ($data['expired'] <= date("Y-m-d H:i:s")) {
+                parse_str($dec, $output);
+                if ($output['expired'] <= date("Y-m-d H:i:s")) {
                     session()->setFlashdata("alert_cart", "Time Checkout expired");
                     return redirect()->to(base_url("/cart"));
                 }
-                return view("client/shop/check_out", add_data("CHECKOUT", "cart/checkout"));
+                $data['session_cart'] = $this->shopping->whereIn("session_cart_id",$output['items'])->with("products")->findAll();
+                return view("client/shop/check_out", add_data("CHECKOUT", "cart/checkout",$data));
             } catch (\Exception $e) {
                 return redirect()->to(base_url("/cart"));
             }

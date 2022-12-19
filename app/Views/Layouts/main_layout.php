@@ -32,6 +32,7 @@
 	<link rel="stylesheet" href="<?= base_url("client/css/magnific-popup.css") ?>">
 	<link rel="stylesheet" href="<?= base_url("client/css/main.css") ?>">
 	<link rel="stylesheet" href="<?= base_url("client/css/jquery.toast.css") ?>">
+	<link rel="stylesheet" href="<?= base_url("client/select2/css/select2.min.css") ?>">
 	<style>
 		.overley_cart{
 			position: absolute;
@@ -160,12 +161,16 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="<?= base_url("/client/js/gmaps.min.js") ?>"></script>
 	<script src="<?= base_url("/client/js/jquery.toast.js") ?>"></script>
+	<script src="<?= base_url("/client/select2/js/select2.min.js") ?>"></script>
 	<script src="<?= base_url("/client/js/main.js") ?>"></script>
+	<script>
+		$(".select2").select2();
+	</script>
 	<?php
 
 
 	if (auth_user()) : ?>
-		<script>
+		<script  <?= csp_script_nonce() ?>>
 			function showCart() {
 				$.get({
 					url: "<?= base_url("/cart/get") ?>",

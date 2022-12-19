@@ -13,9 +13,13 @@ class Admin extends Migration
                 "type"=>"bigint",
                 "auto_increment"=>true
             ],
+            "name"=>[
+                "type"=>"varchar",
+                "constraint"=>150,
+            ],
             "email"=>[
                 "type"=>"varchar",
-                "constraint"=>50,
+                "constraint"=>150,
                 "unique"=>true
             ],
             "password"=>[
