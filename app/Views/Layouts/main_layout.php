@@ -33,7 +33,7 @@
 	<link rel="stylesheet" href="<?= base_url("client/css/main.css") ?>">
 	<link rel="stylesheet" href="<?= base_url("client/css/jquery.toast.css") ?>">
 	<link rel="stylesheet" href="<?= base_url("client/select2/css/select2.min.css") ?>">
-	<style>
+	<style <?= csp_style_nonce() ?>>
 		.overley_cart{
 			position: absolute;
 			top: 0;
@@ -54,6 +54,11 @@
 			color: white;
 			font-size: 30px;
 		}
+
+		/* pick radio button custom */
+
+		
+
 	</style>
 </head>
 
@@ -163,7 +168,7 @@
 	<script src="<?= base_url("/client/js/jquery.toast.js") ?>"></script>
 	<script src="<?= base_url("/client/select2/js/select2.min.js") ?>"></script>
 	<script src="<?= base_url("/client/js/main.js") ?>"></script>
-	<script>
+	<script <?= csp_style_nonce() ?>>
 		$(".select2").select2();
 	</script>
 	<?php

@@ -62,8 +62,9 @@
             throw $e;
         }
     }
-    public function get_cost(int $origin,int $destination,int $weight,string $courier)
+    public function get_cost(int $destination,int $weight,string $courier)
     {
+        $origin = 349;
         try{
             $curl = curl_init();
             curl_setopt_array($curl, array(

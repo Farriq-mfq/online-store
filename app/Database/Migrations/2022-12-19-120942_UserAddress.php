@@ -31,14 +31,30 @@ class UserAddress extends Migration
             "address2" => [
                 "type" => "text",
             ],
+            "province" => [
+                "type" => "int",
+            ],
             "city" => [
                 "type" => "int",
             ],
+            "postcode_zip" => [
+                "type" => "int",
+            ],
+            "address_notes"=>[
+                "type"=>"text"
+            ],
+            "user_id"=>[
+                "type"=>"bigint"
+            ],
         ]);
+
+        $this->forge->addKey("user_address_id",true);
+        $this->forge->addForeignKey("user_id","users","user_id","CASCADE","CASCADE");
+        $this->forge->createTable("user_address");
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable("user_address");
     }
 }

@@ -50,24 +50,35 @@
                         <div class="col-md-12 form-group p_star">
                             <label>Province</label>
                             <select class="country_select select2" id="province" name="province">
+                                <option value=""></option>
 
                             </select>
                         </div>
                         <div class="col-md-12 form-group p_star">
                             <label id="lbl_city">City</label>
                             <select class="country_select select2" id="city" name="city" disabled>
+                                <option value=""></option>
 
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label id="lbl_shipping">Shipping</label>
+                            <select class="country_select select2" id="shipping" name="shipping" disabled>
+                                <option value=""></option>
+                                <option value="jne">JNE</option>
+                                <option value="tiki">TIKI</option>
+                                <option value="pos">POS</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label id="lbl_shipping_service">Shipping Service</label>
+                            <select class="country_select select2" id="shipping_service" name="shipping_service" disabled>
                             </select>
                         </div>
                         <div class="col-md-12 form-group">
                             <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
                         </div>
                         <div class="col-md-12 form-group">
-                            <div class="creat_account">
-                                <h3>Shipping Details</h3>
-                                <input type="checkbox" id="f-option3" name="selector">
-                                <label for="f-option3">Ship to a different address?</label>
-                            </div>
                             <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
                         </div>
                     </form>
@@ -77,15 +88,17 @@
                         <h2>Your Order</h2>
                         <ul class="list">
                             <li><a href="#">Product <span>Total</span></a></li>
-                            <?php $subtotal = 0 ?>
+                            <?php $subtotal = 0;
+                            $total_weight = 0 ?>
                             <?php foreach ($session_cart as $cart) : ?>
                                 <li><a href="#"><?= $cart->product->title ?> <span class="middle">x <?= $cart->quantity ?></span> <span class="last">Rp.<?= number_format($cart->total, 0, ",", ".") ?></span></a></li>
                                 <?php $subtotal += $cart->total ?>
+                                <?php $total_weight += $cart->product->weight ?>
                             <?php endforeach ?>
                         </ul>
                         <ul class="list list_2">
-                            <li><a href="#">Subtotal <span>Rp.<?= number_format($subtotal, 0, ",", ".") ?></span></a></li>
-                            <li><a href="#">Shipping <span>-</span></a></li>
+                            <li><a href="#">Subtotal <span data-value="<?= $subtotal ?>" id="SUBTOTAL_VALUE">Rp.<?= number_format($subtotal, 0, ",", ".") ?></span></a></li>
+                            <li><a href="#">Shipping <span id="SHIPPING_VALUE">-</span></a></li>
                             <li><a href="#" data-value=1010>Total <span>$2210.00</span></a></li>
                         </ul>
                         <div class="payment_item" id="bank_transfer">
@@ -153,7 +166,7 @@
     // });
 
     $.get({
-        url: "<?= base_url("/api/data/province") ?>",
+        url: "<?= base_url("/api/shipping/province") ?>",
 
         success: (data) => {
             for (let i = 0; i < data.length; i++) {
@@ -168,7 +181,7 @@
 
     $("#province").change(function(e) {
         $.get({
-            url: "<?= base_url("/api/data/city") ?>",
+            url: "<?= base_url("/api/shipping/city") ?>",
             data: {
                 province_id: $(this).val()
             },
@@ -176,11 +189,14 @@
                 $("#city option").remove()
                 $("#city").attr("disabled", true);
                 $("#lbl_city").text("Loading...");
-
+                $("#shipping").attr("disabled", true);
+                $("#lbl_shipping").text("Loading...");
             },
             success: (data) => {
                 $("#lbl_city").text("city");
                 $("#city").attr("disabled", false);
+                $("#shipping").attr("disabled", false);
+                $("#lbl_shipping").text("Shipping");
                 for (let i = 0; i < data.length; i++) {
                     const city = data[i];
                     $("#city").append($("<option>", {
@@ -191,8 +207,39 @@
             }
         })
     })
+    
+    $("#shipping").change(function(e) {
+        e.preventDefault();
+        $("#shipping_service").attr("disabled", false);
+        // $("#shipping_service")
+        $.get({
+            url: "<?= base_url("/api/shipping/cost") ?>",
+            data: {
+                destination: $("#city").val(),
+                weight:<?= $total_weight ?>,
+                courier:$(this).val()
+            },
+            beforeSend:()=>{
+                $("#shipping_service option").remove()
+                $("#shipping_service").attr("disabled", true);
+                $("#lbl_shipping_service").text("Loading...");
+            },
+            success:(data)=>{
+                $("#shipping_service").attr("disabled", false);
+                $("#lbl_shipping_service").text("Shipping Service");
+                const res = data.results[0];
+                res.costs.forEach(val => {
+                    $("#shipping_service").append($("<option>", {
+                        value: city.city_id,
+                        text: `${val.service} (${val.cost[0].value}) estimation ${val.cost[0].etd}`
+                    }))
+                    
+                });
+            }
 
-    $(document).on("click","input[name='payment_option']",function(e) {
+        })
+    })
+    $(document).on("click", "input[name='payment_option']", function(e) {
         e.preventDefault();
         if ($(this).is(":checked")) {
             $("#bank_transfer").html(`<label class="mb-2 d-flex align-items-center justify-content-between border border-warning" for="default-radio" style="padding: 0.5rem;border-radius: 5px;">

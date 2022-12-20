@@ -14,17 +14,14 @@
 					<ul class="nav navbar-nav menu_nav ml-auto">
 						<li class="nav-item active"><a class="nav-link" href="<?= base_url("/") ?>">Home</a></li>
 						<li class="nav-item"><a class="nav-link" href="<?= base_url("/product") ?>">Shop</a></li>
-						<!-- <li class="nav-item submenu dropdown active">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Shop</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item active"><a class="nav-link" href="category.html">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-									<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
-								</ul>
-							</li> -->
+						<li class="nav-item submenu dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Account</a>
+							<ul class="dropdown-menu">
+								<li class="nav-item active"><a class="nav-link" href="category.html">Orders</a></li>
+								<li class="nav-item "><a class="nav-link" href="category.html">Account</a></li>
+								<li class="nav-item "><a class="nav-link" href="category.html">Sign out</a></li>
+							</ul>
+						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="nav-item"><a href="<?= base_url("/cart") ?>" class="cart"><span class="ti-bag"></span><span class="badge text-warning cart_count">0</span></a></li>

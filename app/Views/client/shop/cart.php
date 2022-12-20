@@ -14,6 +14,14 @@
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Total</th>
+                                <th>
+                                    <label for="check_all_shopping_cart" class="d-inline-block btn border">
+                                        <div class="primary-checkbox ">
+                                            <input type="checkbox" id="check_all_shopping_cart">
+                                            <label for="check_all_shopping_cart"></label>
+                                        </div>
+                                    </label>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -212,11 +220,20 @@
                     },
                     success: function(data) {
                         window.location.reload()
+
                     }
                 })
             }
         }
 
+    })
+    $("#check_all_shopping_cart").change(function(e) {
+        e.preventDefault()
+        if($(this).is(":checked")){
+            $('input:checkbox').not(this).prop('checked', 'checked');
+        }else{
+            $('input:checkbox').not(this).prop('checked',false);
+        }
     })
     <?php if (session()->getFlashdata("alert_cart")) : ?>
         $.toast({

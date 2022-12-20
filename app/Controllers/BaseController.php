@@ -56,7 +56,9 @@ abstract class BaseController extends Controller
         // lib
         $this->shipping = new Shipping();
         $this->payment = new Payment();
-
-        // dd($this->shipping->get_province());
+        // echo "<pre>";
+        // print_r($this->shipping->get_cost(2,4,"jne"));
+        // echo "</pre>";
+        // return;
     }
 }
