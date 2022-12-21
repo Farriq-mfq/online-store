@@ -6,6 +6,7 @@ use App\Models\Admin as AdminModel;
 use App\Models\User;
 use App\Service\AuthService;
 use CodeIgniter\Config\BaseService;
+use Shipping;
 
 /**
  * Services Configuration file.
@@ -33,6 +34,14 @@ class Services extends BaseService
      * }
      */
 
+     public static function shippingservice($getShared = true)
+     {
+        if($getShared){
+            return static::getSharedInstance("shippingservice");
+        }
+
+        return new Shipping();
+     }
      public static function authserviceUser($getShared = true)
      {
         if($getShared){

@@ -30,6 +30,7 @@ class UserAddress extends Migration
             ],
             "address2" => [
                 "type" => "text",
+                "null"=>true
             ],
             "province" => [
                 "type" => "int",

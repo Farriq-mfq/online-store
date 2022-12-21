@@ -4,17 +4,20 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ShoppingCart;
+use App\Models\UserAddress;
 use CodeIgniter\Encryption\Encryption;
 use Config\Services;
 
 class CartController extends BaseController
 {
     protected ShoppingCart $shopping;
+    protected UserAddress $useraddress;
     protected $encrypter;
     protected $config;
     public function __construct()
     {
         $this->shopping = new ShoppingCart();
+        $this->useraddress = new UserAddress();
         $this->encrypter = Services::encrypter();
     }
     public function index()
@@ -77,12 +80,23 @@ class CartController extends BaseController
                     return redirect()->to(base_url("/cart"));
                 }
                 $data['session_cart'] = $this->shopping->whereIn("session_cart_id",$output['items'])->with("products")->findAll();
+                $data['addreses'] = $this->useraddress->where("user_id",auth_user_id())->findAll();
                 return view("client/shop/check_out", add_data("CHECKOUT", "cart/checkout",$data));
             } catch (\Exception $e) {
                 return redirect()->to(base_url("/cart"));
             }
         } else {
             return redirect()->to(base_url("/cart"));
+        }
+    }
+    public function get_user_address()
+    {
+        if($this->request->isAJAX()){
+            if($this->validate([
+                "user_address_id"=>"required|numeric"
+            ])){
+                return $this->response->setJSON($this->useraddress->find($this->request->getVar("user_address_id")));
+            }
         }
     }
 }

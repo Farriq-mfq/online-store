@@ -47,7 +47,7 @@ abstract class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-        helper(["data","alert","array","form","url_helper","menu_helper","auth_helper"]);
+        helper(["data","alert","array","form","url_helper","menu_helper","auth_helper","get_shipping_helper"]);
         helper("string");
         helper('inflector');
         // Preload any models, libraries, etc, here.

@@ -26,15 +26,13 @@ class Orders extends Migration
             "user_id"=>[
                 "type"=>"bigint",
             ],
-            "shipping"=>[
-                "type"=> "bigint",
-            ],
-            "shipping_type"=>[
+            "shipping_provider"=>[
                 "type"=>"varchar",
-                "constraint"=>20
+                "constraint"=>100
             ],
             "shipping_tracking"=>[
-                "type"=>"bigint",
+                "type"=>"varchar",
+                "constraint"=>100,
                 "null"=>true
             ],
             "shipping_service"=>[
@@ -42,24 +40,23 @@ class Orders extends Migration
                 "constraint"=>30,
             ],
             "origin"=>[
-                "type"=>"varchar",
-                "constraint"=>30,
+                "type"=>"int",
                 "null"=>true
             ],
             "destination_origin"=>[
-                "type"=>"varchar",
-                "constraint"=>30,
+                "type"=>"int",
                 "null"=>true
             ],
             "status"=>[
                 "type"=>"enum",
                 "constraint"=>[
-                    "PENDING",
+                    "WAITING",
                     "PROCESS",
+                    "SHIPPED",
                     "DONE",
                     "REJECT"
                 ],
-                "default"=>"PENDING"
+                "default"=>"WAITING"
             ],
             "discount"=>[
                 "type"=> "double",
@@ -75,6 +72,9 @@ class Orders extends Migration
             ],
             "subtotal"=>[
                 "type"=> "bigint",
+            ],
+            "user_address_id"=>[
+                "type"=>"int"
             ],
             'created_at datetime default current_timestamp',
             'deleted_at datetime default current_timestamp',

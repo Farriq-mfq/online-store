@@ -57,7 +57,18 @@
 
 		/* pick radio button custom */
 
-		
+		.radio_check_component_custom{
+			padding: 0.1rem 2rem;
+			border-radius: 0.6rem;
+			display: block;
+			user-select: none;
+		}
+		.radio_check_component_custom .radio_check_component{
+				width: 0;
+				height: 0;
+				opacity: 0;
+				visibility: hidden;
+		}
 
 	</style>
 </head>
@@ -167,9 +178,20 @@
 	<script src="<?= base_url("/client/js/gmaps.min.js") ?>"></script>
 	<script src="<?= base_url("/client/js/jquery.toast.js") ?>"></script>
 	<script src="<?= base_url("/client/select2/js/select2.min.js") ?>"></script>
+	<script src="<?= base_url("/client/js/jquery.number.min.js") ?>"></script>
 	<script src="<?= base_url("/client/js/main.js") ?>"></script>
 	<script <?= csp_style_nonce() ?>>
 		$(".select2").select2();
+		$(document).on("change",".radio_check_component",function(e){
+			e.preventDefault();
+
+			$(".radio_check_component").parent().removeClass("border-primary");
+			if($(this).is(":checked")){
+				$(this).parent().addClass("border-primary");
+			}
+		})
+
+		$('#price_format').number( true, 2 );
 	</script>
 	<?php
 
