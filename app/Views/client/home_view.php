@@ -1,7 +1,7 @@
 <?= $this->extend("Layouts/main_layout") ?>
 
 <?= $this->section("content") ?>
-    <p>THAT HOME PAGE</p>
+    <p id="price_format">2000000</p>
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
 <script>

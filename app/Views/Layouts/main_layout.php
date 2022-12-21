@@ -58,16 +58,18 @@
 		/* pick radio button custom */
 
 		.radio_check_component_custom{
-			padding: 0.1rem 2rem;
-			border-radius: 0.6rem;
+			padding: 0.1rem 1rem;
 			display: block;
 			user-select: none;
+			position: relative;
 		}
 		.radio_check_component_custom .radio_check_component{
 				width: 0;
 				height: 0;
 				opacity: 0;
 				visibility: hidden;
+				position: absolute;
+				/* display: none; */
 		}
 
 	</style>
@@ -191,7 +193,8 @@
 			}
 		})
 
-		$('#price_format').number( true, 2 );
+		// const $PRICE = $(document).find('#price_format');
+		// $PRICE.number( true, 2 ,",",".");
 	</script>
 	<?php
 

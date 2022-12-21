@@ -100,6 +100,9 @@
 
                                 </select>
                             </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
+                            </div>
                             <div class="col-md-12 form-group p_star">
                                 <label id="lbl_shipping">Shipping</label>
                                 <select class="country_select select2" id="shipping" name="shipping" disabled>
@@ -114,9 +117,7 @@
                                 <select class="country_select select2" id="shipping_service" name="shipping_service" disabled>
                                 </select>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
-                            </div>
+
                             <div class="col-md-12 form-group">
                                 <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
                             </div>
@@ -138,55 +139,25 @@
                             <?php endforeach ?>
                         </ul>
                         <ul class="list list_2">
-                            <li><a href="#">Subtotal <span data-value="<?= $subtotal ?>" id="SUBTOTAL_VALUE ">Rp.<?= number_format($subtotal, 0, ",", ".") ?></span></a></li>
-                            <li><a href="#">Shipping <span id="SHIPPING_VALUE">-</span></a></li>
-                            <li><a href="#">Shipping <span id="SHIPPING_VALUE price_format">1000000</span></a></li>
-                            <li><a href="#" data-value=1010>Total <span>$2210.00</span></a></li>
+                            <li><a href="#">Subtotal <span id="SUBTOTAL_VALUE"><?= $subtotal ?></span></a></li>
+                            <li><a href="#">Shipping <span id="SHIPPING_VALUE"></span></a></li>
+                            <li><a href="#">Total <span id="TOTAL_VALUE"></span></a></li>
                         </ul>
-                        <div class="payment_item" id="bank_transfer">
+                        <div class="payment_item">
                             <div class="radion_btn">
-                                <input type="radio" id="f-option5" name="payment_option" value="bank_transfer_option">
+                                <input type="radio" id="f-option5" name="payment_option" value="bank_transfer">
                                 <label for="f-option5">Bank Transfer</label>
                                 <div class="check"></div>
                             </div>
-                            <div></div>
 
-                            <label class="mb-2 d-flex align-items-center justify-content-between border border-warning" for="default-radio" style="padding: 0.5rem;border-radius: 5px;">
-                                <div class="primary-radio">
-                                    <input type="radio" id="default-radio" name="inventory_id">
-                                    <label for="default-radio"></label>
-                                </div>
-                                <span class="ml-2 text-primary">BRI</span>
-                            </label>
-                            <label class="mb-2 d-flex align-items-center justify-content-between border border-warning" for="default-radio" style="padding: 0.5rem;border-radius: 5px;">
-                                <div class="primary-radio">
-                                    <input type="radio" id="default-radio" name="inventory_id">
-                                    <label for="default-radio"></label>
-                                </div>
-                                <span class="ml-2 text-primary">MANDIRI</span>
-                            </label>
-                            <label class="mb-2 d-flex align-items-center justify-content-between border border-warning" for="default-radio" style="padding: 0.5rem;border-radius: 5px;">
-                                <div class="primary-radio">
-                                    <input type="radio" id="default-radio" name="inventory_id">
-                                    <label for="default-radio"></label>
-                                </div>
-                                <span class="ml-2 text-primary">BCA</span>
-                            </label>
                         </div>
-                        <div class="payment_item active">
+                        <div class="payment_item">
                             <div class="radion_btn">
                                 <input type="radio" id="f-option6" name="payment_option" value="e_money">
                                 <label for="f-option6">E-money</label>
                                 <img src="img/product/card.jpg" alt="">
                                 <div class="check"></div>
                             </div>
-                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
-                                account.</p>
-                        </div>
-                        <div class="creat_account">
-                            <input type="checkbox" id="f-option4" name="selector">
-                            <label for="f-option4">I’ve read and accept the </label>
-                            <a href="#">terms & conditions*</a>
                         </div>
                         <a class="primary-btn" href="#">Proceed to Paypal</a>
                     </div>
@@ -206,7 +177,12 @@
     //     } else
     //         return false;
     // });
-    
+
+    $("#SUBTOTAL_VALUE").number(true, 2, ",", ".");
+    $("#SHIPPING_VALUE").number(true, 2, ",", ".");
+    $("#TOTAL_VALUE").number(true, 2, ",", ".");
+
+
     <?php if (count($addreses)) : ?>
         let get_data = null;
         $("input[name='address_id']").on("change", function(e) {
@@ -237,7 +213,7 @@
             $.get({
                 url: "<?= base_url("/api/shipping/cost") ?>",
                 data: {
-                    destination: get_data!= null ? get_data.city : 0,
+                    destination: get_data != null ? get_data.city : 0,
                     weight: <?= $total_weight ?>,
                     courier: $(this).val()
                 },
@@ -345,9 +321,69 @@
 
 
     <?php endif ?>
-    $("#shipping_service").on("change",function(e){
+    $("#shipping_service").on("change", function(e) {
         e.preventDefault();
-        console.log($.isNumeric(10000));
+        $("#SHIPPING_VALUE").text($(this).val())
+    })
+
+    $("input[name='payment_option']").change(function(e) {
+        e.preventDefault();
+        $(".payment_item").children("#OPTION_PAYMENT").remove()
+        switch ($(this).val()) {
+            case "bank_transfer":
+                const $provider = [{
+                        name: "PERMATA",
+                        value: "bank_permata"
+                    },
+                    {
+                        name: "MANDIRI",
+                        value: "bank_mandiri"
+                    },
+                    {
+                        name: "BNI",
+                        value: "bank_bni"
+                    },
+                    {
+                        name: "BRI",
+                        value: "bank_bri"
+                    },
+                    {
+                        name: "BCA",
+                        value: "bank_bca"
+                    },
+                ];
+                $provider.forEach(val => {
+                    $(this).parent().parent().append(` <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
+                                <label class="radio_check_component_custom border" for="${val.name}">
+                                    <div class="d-flex">
+                                        <h4>${val.name}</h4>
+                                    </div>
+                                    <input type="radio" class="radio_check_component" name="option_payment" id="${val.name}" value="${val.value}">
+                                </label>
+                            </div>`);
+                })
+                break;
+            case "e_money":
+                const $eprovider = [{
+                    name: "Qris",
+                    value: "qris"
+                }, ];
+                $eprovider.forEach(val => {
+                    $(this).parent().parent().append(` <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
+                                <label class="radio_check_component_custom border" for="${val.name}">
+                                    <div class="d-flex">
+                                        <h4>${val.name}</h4>
+                                    </div>
+                                    <input type="radio" class="radio_check_component" name="option_payment" id="${val.name}" value="${val.value}">
+                                </label>
+                            </div>`);
+                })
+                break;
+
+            default:
+                console.log("NOT SELECTED")
+                break;
+        }
     })
 </script>
 <?= $this->endSection() ?>
