@@ -73,6 +73,14 @@ class Orders extends Migration
             "subtotal"=>[
                 "type"=> "bigint",
             ],
+            "payment_type"=>[
+                "type"=> "varchar",
+                "constraint"=>30
+            ],
+            "bank"=>[
+                "type"=> "varchar",
+                "constraint"=>30
+            ],
             "user_address_id"=>[
                 "type"=>"int"
             ],

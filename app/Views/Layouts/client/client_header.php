@@ -24,7 +24,7 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li class="nav-item"><a href="<?= base_url("/cart") ?>" class="cart"><span class="ti-bag"></span><span class="badge text-warning cart_count">0</span></a></li>
+						<li class="nav-item"><a href="<?= base_url("/cart") ?>" class="cart"><span class="ti-bag"></span><span class="badge text-warning cart_count"></span></a></li>
 						<li class="nav-item">
 							<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 						</li>

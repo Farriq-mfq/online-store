@@ -14,7 +14,7 @@ class Order extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["midtrans_id", "token", "user_id", "shipping_provider", "shipping_tracking", "shipping_service", "origin", "destination_origin", "status", "discount", "is_cencel", "notes", "subtotal","payment_type", "user_address_id"];
 
     // Dates
     protected $useTimestamps = true;

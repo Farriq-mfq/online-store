@@ -42,7 +42,8 @@ class UserAddress extends Migration
                 "type" => "int",
             ],
             "address_notes"=>[
-                "type"=>"text"
+                "type"=>"text",
+                "null"=>true
             ],
             "user_id"=>[
                 "type"=>"bigint"

@@ -49,6 +49,7 @@ $routes->group("cart", ["filter" => "user"], function ($route) {
     $route->post("delete/all", "CartController::remove_cart_all");
     $route->post("checkout","CartController::checkout");
     $route->get("checkout","CartController::checkout_page");
+    $route->post("process_to_checkout","OrderController::checkout");
     $route->get("get_user_address","CartController::get_user_address");
 });
 $routes->group("auth", ["filter" => "user-guest"], function ($route) {

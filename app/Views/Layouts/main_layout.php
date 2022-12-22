@@ -69,7 +69,6 @@
 				opacity: 0;
 				visibility: hidden;
 				position: absolute;
-				/* display: none; */
 		}
 
 	</style>

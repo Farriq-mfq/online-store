@@ -15,7 +15,9 @@
             <div class="row">
                 <div class="col-lg-8">
                     <h3>Address</h3>
-                    <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                    <form class="row contact_form" action="<?= base_url("/cart/process_to_checkout") ?>" method="post">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="items" value="<?= $items ?>">
                         <?php if (count($addreses)) : ?>
                             <div class="col-md-12">
                                 <div class="row">
@@ -63,48 +65,39 @@
                             </div>
                         <?php else : ?>
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="first" name="name">
-                                <span class="placeholder" data-placeholder="First name"></span>
+                                <input type="text" class="form-control <?= show_class_error("firstname", "border-danger") ?>" id="first" placeholder="First name" name="firstname" value="<?= set_value("firstname") ?>">
                             </div>
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="last" name="name">
-                                <span class="placeholder" data-placeholder="Last name"></span>
-                            </div>
-                            <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="number" name="number">
-                                <span class="placeholder" data-placeholder="Phone number"></span>
-                            </div>
-                            <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="email" name="compemailany">
-                                <span class="placeholder" data-placeholder="Email Address"></span>
+                                <input type="text" class="form-control <?= show_class_error("lastname", "border-danger") ?>" id="last" placeholder="Last name" name="lastname" value="<?= set_value("lastname") ?>">
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="add1" name="add1">
-                                <span class="placeholder" data-placeholder="Address line 01"></span>
+                                <input type="number" min="0" class="form-control <?= show_class_error("phone", "border-danger") ?>" id="number" placeholder="Phone number" name="phone" value="<?= set_value("phone") ?>">
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="add2" name="add2">
-                                <span class="placeholder" data-placeholder="Address line 02"></span>
+                                <input type="text" class="form-control <?= show_class_error("address1", "border-danger") ?>" id="add1" placeholder="Address line 01" name="address1">
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <label>Province</label>
+                                <input type="text" class="form-control" id="add2" name="address2" placeholder="Address line 02">
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <label class="<?= show_class_error("province", "text-danger") ?>">Province</label>
                                 <select class="country_select select2" id="province" name="province">
                                     <option value=""></option>
 
                                 </select>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <label id="lbl_city">City</label>
-                                <select class="country_select select2" id="city" name="city" disabled>
+                                <label id="lbl_city" class="<?= show_class_error("city", "text-danger") ?>">City</label>
+                                <select class="country_select select2" id="city" name="city">
                                     <option value=""></option>
 
                                 </select>
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
+                                <input type="text" class="form-control <?= show_class_error("postcode_zip", "border-danger") ?>" id="zip" name="postcode_zip" placeholder="Postcode/ZIP">
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <label id="lbl_shipping">Shipping</label>
+                                <label id="lbl_shipping <?= show_class_error("address2", "text-danger") ?>">Shipping</label>
                                 <select class="country_select select2" id="shipping" name="shipping" disabled>
                                     <option value=""></option>
                                     <option value="jne">JNE</option>
@@ -115,15 +108,15 @@
                             <div class="col-md-12 form-group p_star">
                                 <label id="lbl_shipping_service">Shipping Service</label>
                                 <select class="country_select select2" id="shipping_service" name="shipping_service" disabled>
+                                    <option value=""></option>
                                 </select>
                             </div>
 
                             <div class="col-md-12 form-group">
-                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
+                                <textarea class="form-control" name="notes" id="notes" rows="1" placeholder="Order Notes"></textarea>
                             </div>
                         <?php endif ?>
 
-                    </form>
                 </div>
                 <div class="col-lg-4">
                     <div class="order_box">
@@ -149,7 +142,46 @@
                                 <label for="f-option5">Bank Transfer</label>
                                 <div class="check"></div>
                             </div>
-
+                            <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
+                                <label class="radio_check_component_custom border" for="PERMATA">
+                                    <div class="d-flex">
+                                        <h4>PERMATA</h4>
+                                    </div>
+                                    <input type="radio" class="radio_check_component" name="option_payment" id="PERMATA" value="bank_permata">
+                                </label>
+                            </div>
+                            <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
+                                <label class="radio_check_component_custom border" for="MANDIRI">
+                                    <div class="d-flex">
+                                        <h4>MANDIRI</h4>
+                                    </div>
+                                    <input type="radio" class="radio_check_component" name="option_payment" id="MANDIRI" value="bank_mandiri">
+                                </label>
+                            </div>
+                            <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
+                                <label class="radio_check_component_custom border" for="BNI">
+                                    <div class="d-flex">
+                                        <h4>BNI</h4>
+                                    </div>
+                                    <input type="radio" class="radio_check_component" name="option_payment" id="BNI" value="bank_bni">
+                                </label>
+                            </div>
+                            <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
+                                <label class="radio_check_component_custom border" for="BRI">
+                                    <div class="d-flex">
+                                        <h4>BRI</h4>
+                                    </div>
+                                    <input type="radio" class="radio_check_component" name="option_payment" id="BRI" value="bank_bri">
+                                </label>
+                            </div>
+                            <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
+                                <label class="radio_check_component_custom border" for="BCA">
+                                    <div class="d-flex">
+                                        <h4>BCA</h4>
+                                    </div>
+                                    <input type="radio" class="radio_check_component" name="option_payment" id="BCA" value="bank_bca">
+                                </label>
+                            </div>
                         </div>
                         <div class="payment_item">
                             <div class="radion_btn">
@@ -158,11 +190,20 @@
                                 <img src="img/product/card.jpg" alt="">
                                 <div class="check"></div>
                             </div>
+                            <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
+                                <label class="radio_check_component_custom border" for="BCA">
+                                    <div class="d-flex">
+                                        <h4>Qris</h4>
+                                    </div>
+                                    <input type="radio" class="radio_check_component" name="option_payment" id="Qris" value="qris">
+                                </label>
+                            </div>
                         </div>
-                        <a class="primary-btn" href="#">Proceed to Paypal</a>
+                        <button class="primary-btn btn btn-block" type="submit">Proceed to Paypal</button>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </section>
@@ -228,7 +269,7 @@
                     const res = data.results[0];
                     res.costs.forEach(val => {
                         $("#shipping_service").append($("<option>", {
-                            value: val.cost[0].value,
+                            value: val.service,
                             text: `${val.service} (${val.cost[0].value}) estimation ${val.cost[0].etd}`
                         }))
 
@@ -309,7 +350,7 @@
                     const res = data.results[0];
                     res.costs.forEach(val => {
                         $("#shipping_service").append($("<option>", {
-                            value: val.cost[0].value,
+                            value: val.service,
                             text: `${val.service} (${val.cost[0].value}) estimation ${val.cost[0].etd}`
                         }))
 
@@ -324,60 +365,21 @@
     $("#shipping_service").on("change", function(e) {
         e.preventDefault();
         $("#SHIPPING_VALUE").text($(this).val())
+
+        console.log($(this).attr("data-value"))
     })
 
+    $(".payment_item").children("#OPTION_PAYMENT").css("display", 'none');
     $("input[name='payment_option']").change(function(e) {
         e.preventDefault();
-        $(".payment_item").children("#OPTION_PAYMENT").remove()
+        $(".payment_item").children("#OPTION_PAYMENT").css("display", 'none');
         switch ($(this).val()) {
             case "bank_transfer":
-                const $provider = [{
-                        name: "PERMATA",
-                        value: "bank_permata"
-                    },
-                    {
-                        name: "MANDIRI",
-                        value: "bank_mandiri"
-                    },
-                    {
-                        name: "BNI",
-                        value: "bank_bni"
-                    },
-                    {
-                        name: "BRI",
-                        value: "bank_bri"
-                    },
-                    {
-                        name: "BCA",
-                        value: "bank_bca"
-                    },
-                ];
-                $provider.forEach(val => {
-                    $(this).parent().parent().append(` <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
-                                <label class="radio_check_component_custom border" for="${val.name}">
-                                    <div class="d-flex">
-                                        <h4>${val.name}</h4>
-                                    </div>
-                                    <input type="radio" class="radio_check_component" name="option_payment" id="${val.name}" value="${val.value}">
-                                </label>
-                            </div>`);
-                })
+                $(this).parent().parent().children("#OPTION_PAYMENT").css("display", "block")
                 break;
             case "e_money":
-                const $eprovider = [{
-                    name: "Qris",
-                    value: "qris"
-                }, ];
-                $eprovider.forEach(val => {
-                    $(this).parent().parent().append(` <div class="col-md-12 form-group p_star" id="OPTION_PAYMENT">
-                                <label class="radio_check_component_custom border" for="${val.name}">
-                                    <div class="d-flex">
-                                        <h4>${val.name}</h4>
-                                    </div>
-                                    <input type="radio" class="radio_check_component" name="option_payment" id="${val.name}" value="${val.value}">
-                                </label>
-                            </div>`);
-                })
+                $(this).parent().parent().children("#OPTION_PAYMENT").css("display", "block")
+                console.log("EMONTY")
                 break;
 
             default:

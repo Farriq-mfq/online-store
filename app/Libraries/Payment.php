@@ -36,7 +36,7 @@ enum EMONEY:string{
                                 "bank"=> "permata",
                             ]
                         ];
-                        return \Midtrans\CoreApi::charge(array_merge($bank_permata,$params)); 
+                        return \Midtrans\CoreApi::charge(array_merge($bank_permata,["transaction_details"=>$params])); 
                     case "bank_bca":
                         $bank_bca = [
                             "payment_type"=> "bank_transfer",
@@ -44,7 +44,7 @@ enum EMONEY:string{
                                 "bank"=> "bca",
                             ]
                         ];
-                        return \Midtrans\CoreApi::charge(array_merge($bank_bca,$params));            
+                        return \Midtrans\CoreApi::charge(array_merge($bank_bca,["transaction_details"=>$params]));            
                     case "bank_mandiri":
                         $bank_mandiri = [
                             "payment_type"=> "echannel",
@@ -53,7 +53,7 @@ enum EMONEY:string{
                                 "bill_info2"=>"debt"
                             ]
                         ];
-                        return \Midtrans\CoreApi::charge(array_merge($bank_mandiri,$params));            
+                        return \Midtrans\CoreApi::charge(array_merge($bank_mandiri,["transaction_details"=>$params]));            
                     case "bank_bni":
                         $bank_bni = [
                             "payment_type"=> "bank_transfer",
@@ -61,7 +61,7 @@ enum EMONEY:string{
                                 "bank"=> "bni",
                             ]
                         ];
-                        return \Midtrans\CoreApi::charge(array_merge($bank_bni,$params));            
+                        return \Midtrans\CoreApi::charge(array_merge($bank_bni,["transaction_details"=>$params]));            
                     case "bank_bri":
                         $bank_bri = [
                             "payment_type"=> "bank_transfer",
@@ -69,7 +69,7 @@ enum EMONEY:string{
                                 "bank"=> "bri",
                             ]
                         ];
-                        return \Midtrans\CoreApi::charge(array_merge($bank_bri,$params));            
+                        return \Midtrans\CoreApi::charge(array_merge($bank_bri,["transaction_details"=>$params]));            
                     default:
                         return "Invalid Bank choose";
                 }
@@ -92,7 +92,7 @@ enum EMONEY:string{
                                     "acquirer"=> "gopay",
                                 ]
                             ];
-                            $result =  \Midtrans\CoreApi::charge(array_merge($qris,$params));
+                            $result =  \Midtrans\CoreApi::charge(array_merge($qris,["transaction_details"=>$params]));
                             $query = "INSERT INTO `session_emoney`(`name`, `method`, `url`,`user_id`, `expired`) VALUES (?,?,?,?,?)";
                             $this->db->query($query,[$result->actions[0]->name,$result->actions[0]->method,$result->actions[0]->url,$userID,$result->expire_time]);
                             return $result;  

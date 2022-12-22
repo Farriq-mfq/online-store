@@ -81,6 +81,7 @@ class CartController extends BaseController
                 }
                 $data['session_cart'] = $this->shopping->whereIn("session_cart_id",$output['items'])->with("products")->findAll();
                 $data['addreses'] = $this->useraddress->where("user_id",auth_user_id())->findAll();
+                $data['items'] = $checkout;
                 return view("client/shop/check_out", add_data("CHECKOUT", "cart/checkout",$data));
             } catch (\Exception $e) {
                 return redirect()->to(base_url("/cart"));
