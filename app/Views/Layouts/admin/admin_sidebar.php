@@ -96,17 +96,18 @@ use Config\Services;
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/layout/top-nav.html" class="nav-link">
+              <a href="<?= admin_url("/product/meta") ?>" class="nav-link <?= $active_page == "product/meta" ? "active" : "" ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Product Meta & SEO</p>
               </a>
             </li>
           </ul>
+        <li class="nav-header">MASTER</li>
         <li class="nav-item">
           <a href="<?= admin_url("/brands") ?>" class="nav-link <?= $active_page == "brands/index" ? "active" : "" ?>">
             <i class="nav-icon fas fa-list"></i>
             <p>
-              Product Brands
+              Brands
             </p>
           </a>
         </li>
@@ -115,7 +116,15 @@ use Config\Services;
           <a href="<?= admin_url("/categories") ?>" class="nav-link <?= $active_page == "categories/index" ? "active" : "" ?>">
             <i class="nav-icon fas fa-list"></i>
             <p>
-              Product Categories
+              Categories
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= admin_url("/tags") ?>" class="nav-link <?= $active_page == "tags/index" ? "active" : "" ?>">
+            <i class="nav-icon fas fa-list"></i>
+            <p>
+              Tags
             </p>
           </a>
         </li>

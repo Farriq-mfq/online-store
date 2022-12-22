@@ -19,9 +19,6 @@ class ProductOrders extends Migration
             "product_id"=>[
                 "type"=>"bigint",
             ],
-            "product_inventory_id"=>[
-                "type"=>"bigint",
-            ],
             "quantity"=>[
                 "type"=>"int",
             ],

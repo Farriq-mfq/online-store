@@ -56,10 +56,11 @@ abstract class BaseController extends Controller
         // lib
         $this->shipping = new Shipping();
         $this->payment = new Payment();
-        // dd(password_hash("admin",PASSWORD_DEFAULT));
+        // dd(password_hash("admin",PASSWORD_DEFAULT)); 
         // echo "<pre>";
         // print_r($this->shipping->get_cost(2,4,"jne"));
         // echo "</pre>";
         // return;
     }
 }
+// 

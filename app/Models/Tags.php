@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Tatter\Relations\Traits\ModelTrait;
 
 class Tags extends Model
 {
+    use ModelTrait;
     protected $DBGroup          = 'default';
     protected $table            = 'tags';
     protected $primaryKey       = 'tag_id';

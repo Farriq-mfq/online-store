@@ -35,7 +35,7 @@ class ProductTags extends BaseController
     {
         $validate = $this->validate([
             "tag" => [
-                'rules' => 'required',
+                'rules' => 'required|is_unique[product_tags.tag_id]',
             ],
         ]);
 
@@ -48,7 +48,6 @@ class ProductTags extends BaseController
             "tag_id" => $this->request->getVar('tag'),
             "product_id" => $productID
         ];
-
         if ($this->prdTags->insert($data)) {
             alert("Success Add Tag", "success");
         }
@@ -56,9 +55,15 @@ class ProductTags extends BaseController
     }
     public function update($id)
     {
+        $original = $this->prdTags->select("tag_id")->find($id);
+        if ($this->request->getVar('tag') == $original->tag_id) {
+            $unique = "";
+        } else {
+            $unique = "|is_unique[product_tags.tag_id]";
+        }
         $validate = $this->validate([
             "tag" => [
-                'rules' => 'required',
+                'rules' => 'required'.$unique,
             ],
         ]);
 

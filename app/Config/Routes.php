@@ -102,6 +102,12 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $route->get("tags/edit", "ProductTags::edit");
         $route->post("tags/(:num)", "ProductTags::store/$1");
         $route->put("tags/(:num)", "ProductTags::update/$1");
+        /* PRODUCT META ROUTES */
+        $route->get("meta", "ProductMeta::index");
+        $route->delete("meta/(:num)", "ProductMeta::remove/$1");
+        $route->get("meta/edit", "ProductMeta::edit");
+        $route->post("meta/(:num)", "ProductMeta::store/$1");
+        $route->put("meta/(:num)", "ProductMeta::update/$1");
     });
     /* brands routes */
     $route->group("brands", function ($brandRoute) {
@@ -118,6 +124,14 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $categories_route->post("/", "CategoryController::store");
         $categories_route->put("/", "CategoryController::update");
         $categories_route->get("get", "CategoryController::get_update_category");
+    });
+    /* tags routes */
+    $route->group("tags", function ($categories_route) {
+        $categories_route->get("/", "TagsController::index");
+        $categories_route->delete("(:num)", "TagsController::remove/$1");
+        $categories_route->post("/", "TagsController::store");
+        $categories_route->put("/", "TagsController::update");
+        $categories_route->get("get", "TagsController::get_update_tags");
     });
     /* Errors Routes */
     $route->group("error", function ($categories_route) {

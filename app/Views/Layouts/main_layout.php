@@ -18,35 +18,7 @@
 <body>
 	<div class="site-wrapper" id="top">
 		<?= $this->include("Layouts/client/client_header") ?>
-		<?= $this->include("Layouts/client/client_mobile") ?>
-
-		<div class="sticky-init fixed-header common-sticky">
-			<div class="container d-none d-lg-block">
-				<div class="row align-items-center">
-					<div class="col-lg-4">
-						<a href="index-2.html" class="site-brand">
-							<img src="image/logo.png" alt="">
-						</a>
-					</div>
-					<div class="col-lg-8">
-						<?= $this->include("Layouts/client/client_nav") ?>
-					</div>
-				</div>
-			</div>
-		</div>
-		<section class="breadcrumb-section">
-			<h2 class="sr-only">Site Breadcrumb</h2>
-			<div class="container">
-				<div class="breadcrumb-contents">
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
-							<li class="breadcrumb-item active">Cart</li>
-						</ol>
-					</nav>
-				</div>
-			</div>
-		</section>
+		<?= $this->include("Layouts/client/client_breadcrumb") ?>
 		<?= $this->renderSection("content") ?>
 	</div>
 	<!--=================================

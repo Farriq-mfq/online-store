@@ -3,21 +3,18 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use Tatter\Relations\Traits\ModelTrait;
 
-class ShoppingCart extends Model
+class ProductMeta extends Model
 {
-    use ModelTrait;
     protected $DBGroup          = 'default';
-    protected $table            = 'session_cart';
-    protected $primaryKey       = 'session_cart_id';
+    protected $table            = 'product_meta';
+    protected $primaryKey       = 'meta_id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["user_id","product_id","content","product_img","quantity","price","total"];
-    protected $with = ["products"];
+    protected $allowedFields    = ["key","content","product_id"];
 
     // Dates
     protected $useTimestamps = false;

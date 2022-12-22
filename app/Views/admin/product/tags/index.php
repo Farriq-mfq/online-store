@@ -91,8 +91,9 @@
         $("#FORM_TAGS")[0].reset()
         $("#TAGS_METHOD_SPOFF").remove()
         $("#FORM_TAGS").children().find(".invalid-feedback").remove()
-        $("#TAGS_PREVIEW").attr("src", "")
         $("#FORM_TAGS").children().find(".is-invalid").removeClass("is-invalid")
+        $("select[name='tag']").val("")
+        $("select[name='tag']").trigger("change")
     })
 
     $(document).on("click", "#BTN_EDIT_TAGS", function(e) {
