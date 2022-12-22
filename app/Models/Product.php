@@ -14,8 +14,8 @@ class Product extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id"];
-    protected $with = ["brands","categories","product_inventories","product_images"];
+    protected $allowedFields    = ["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id","stock","sku"];
+    protected $with = ["brands","categories"];
 
     // Dates
     protected $useTimestamps = true;
@@ -45,20 +45,17 @@ class Product extends Model
     public function addNew(array $data)
     {   
         try{
-            $productBuilder = $this->db->table($this->table);
-            $productInventoriesBuilder = $this->db->table("product_inventories");
-            $productImagesBuilder = $this->db->table("product_images");
+            $productData = pick($data,["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id","stock","sku"]);
+            $insert = $this->insert($productData);
+            $productTags = batch_convert(pick($data,['tag_id']),["product_id"=>$insert]);
             $productTagsBuilder = $this->db->table("product_tags");
-            $productData = pick($data,["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id"]);
-            $productBuilder->insert($productData);
-            $productInventories =batch_convert(pick($data,['inventories'])['inventories'],["product_id"=>$this->db->insertID()]);
-            $productImage = array_merge(pick($data,["product_image"])["product_image"],["product_id"=>$this->db->insertID()]);
-            $productTags = batch_convert(pick($data,['tags']),["product_id"=>$this->db->insertID()]);
-            $productInventoriesBuilder->insertBatch($productInventories);
-            $productImagesBuilder->insert($productImage);
             $productTagsBuilder->insertBatch($productTags);
+            $productImagesBuilder = $this->db->table("product_images");
+            $productImage = array_merge(pick($data,["product_image"])["product_image"],["product_id"=>$insert]);
+            $productImagesBuilder->insert($productImage);
             return true;
         }catch(\Exception $e){
+            dd($e);
             return false;
         }
     }
@@ -112,12 +109,5 @@ class Product extends Model
         }catch(\Exception $e){
             return false;
         }
-    }
-    public function checkAvailableStock(int $pid):int
-    {
-        $builder = $this->db->table("product_inventories");
-        $builder->select("sum(stock) as total_stock");
-        $builder->where("product_id",$pid);
-        return (int) $builder->get()->getFirstRow()->total_stock;        
     }
 }

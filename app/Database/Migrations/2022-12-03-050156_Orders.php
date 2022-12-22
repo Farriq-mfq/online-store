@@ -77,7 +77,7 @@ class Orders extends Migration
                 "type"=> "varchar",
                 "constraint"=>30
             ],
-            "bank"=>[
+            "payment_provider"=>[
                 "type"=> "varchar",
                 "constraint"=>30
             ],

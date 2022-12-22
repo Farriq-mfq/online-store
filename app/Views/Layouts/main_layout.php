@@ -1,218 +1,109 @@
 <!DOCTYPE html>
-<html lang="zxx" class="no-js">
+<html lang="zxx">
+
+
+<!-- Mirrored from htmldemo.net/pustok/pustok/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Dec 2022 07:38:08 GMT -->
 
 <head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="CodePixar">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>Karma Shop</title>
-
-	<!--
-            CSS
-            ============================================= -->
-	<link rel="stylesheet" href="<?= base_url("client/css/linearicons.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/font-awesome.min.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/themify-icons.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/bootstrap.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/owl.carousel.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/nice-select.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/nouislider.min.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/ion.rangeSlider.css") ?>" />
-	<link rel="stylesheet" href="<?= base_url("client/css/ion.rangeSlider.skinFlat.css") ?>" />
-	<link rel="stylesheet" href="<?= base_url("client/css/magnific-popup.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/main.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/css/jquery.toast.css") ?>">
-	<link rel="stylesheet" href="<?= base_url("client/select2/css/select2.min.css") ?>">
-	<style <?= csp_style_nonce() ?>>
-		.overley_cart{
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-color: #000;
-			opacity: 0.2;
-			z-index: 999;
-			display: none;
-		}
-
-		.overley_cart::after{
-			content: "Loading...";
-			display: grid;
-			place-items:center;
-			min-height: 100%;
-			color: white;
-			font-size: 30px;
-		}
-
-		/* pick radio button custom */
-
-		.radio_check_component_custom{
-			padding: 0.1rem 1rem;
-			display: block;
-			user-select: none;
-			position: relative;
-		}
-		.radio_check_component_custom .radio_check_component{
-				width: 0;
-				height: 0;
-				opacity: 0;
-				visibility: hidden;
-				position: absolute;
-		}
-
-	</style>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Pustok - Book Store HTML Template</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Use Minified Plugins Version For Fast Page Load -->
+	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/plugins.css") ?>" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/main.css") ?>" />
+	<link rel="shortcut icon" type="image/x-icon" href="<?= base_url("/client/image/favicon.ico") ?>">
 </head>
 
 <body>
-	<!-- Start Header Area -->
-	<?= $this->include("Layouts/client/client_header") ?>
-	<!-- End Header Area -->
+	<div class="site-wrapper" id="top">
+		<?= $this->include("Layouts/client/client_header") ?>
+		<?= $this->include("Layouts/client/client_mobile") ?>
 
-	<!-- Start Banner Area -->
-	<?= $this->include("Layouts/client/client_banner") ?>
-	<!-- End Banner Area -->
-	<div class="container">
-		<?= $this->renderSection("content") ?>
-	</div>
-
-
-	<!-- Start related-product Area -->
-	<?= $this->renderSection("related_product") ?>
-	<!-- End related-product Area -->
-
-	<!-- start footer Area -->
-	<?= $this->include("Layouts/client/client_footer") ?>
-	<!-- End footer Area -->
-
-	<!-- Modal Quick Product View -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="container relative">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<div class="product-quick-view">
-					<div class="row align-items-center">
-						<div class="col-lg-6">
-							<div class="quick-view-carousel">
-								<div class="item" style="background: url(img/organic-food/q1.jpg);">
-
-								</div>
-								<div class="item" style="background: url(img/organic-food/q1.jpg);">
-
-								</div>
-								<div class="item" style="background: url(img/organic-food/q1.jpg);">
-
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="quick-view-content">
-								<div class="top">
-									<h3 class="head">Mill Oil 1000W Heater, White</h3>
-									<div class="price d-flex align-items-center"><span class="lnr lnr-tag"></span> <span class="ml-10">$149.99</span></div>
-									<div class="category">Category: <span>Household</span></div>
-									<div class="available">Availibility: <span>In Stock</span></div>
-								</div>
-								<div class="middle">
-									<p class="content">Mill Oil is an innovative oil filled radiator with the most modern technology. If you are
-										looking for something that can make your interior look awesome, and at the same time give you the pleasant
-										warm feeling during the winter.</p>
-									<a href="#" class="view-full">View full Details <span class="lnr lnr-arrow-right"></span></a>
-								</div>
-								<div class="bottom">
-									<div class="color-picker d-flex align-items-center">Color:
-										<span class="single-pick"></span>
-										<span class="single-pick"></span>
-										<span class="single-pick"></span>
-										<span class="single-pick"></span>
-										<span class="single-pick"></span>
-									</div>
-									<div class="quantity-container d-flex align-items-center mt-15">
-										Quantity:
-										<input type="text" class="quantity-amount ml-15" value="1" />
-										<div class="arrow-btn d-inline-flex flex-column">
-											<button class="increase arrow" type="button" title="Increase Quantity"><span class="lnr lnr-chevron-up"></span></button>
-											<button class="decrease arrow" type="button" title="Decrease Quantity"><span class="lnr lnr-chevron-down"></span></button>
-										</div>
-
-									</div>
-									<div class="d-flex mt-20">
-										<a href="#" class="view-btn color-2"><span>Add to Cart</span></a>
-										<a href="#" class="like-btn"><span class="lnr lnr-layers"></span></a>
-										<a href="#" class="like-btn"><span class="lnr lnr-heart"></span></a>
-									</div>
-								</div>
-							</div>
-						</div>
+		<div class="sticky-init fixed-header common-sticky">
+			<div class="container d-none d-lg-block">
+				<div class="row align-items-center">
+					<div class="col-lg-4">
+						<a href="index-2.html" class="site-brand">
+							<img src="image/logo.png" alt="">
+						</a>
+					</div>
+					<div class="col-lg-8">
+						<?= $this->include("Layouts/client/client_nav") ?>
 					</div>
 				</div>
 			</div>
 		</div>
+		<section class="breadcrumb-section">
+			<h2 class="sr-only">Site Breadcrumb</h2>
+			<div class="container">
+				<div class="breadcrumb-contents">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
+							<li class="breadcrumb-item active">Cart</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</section>
+		<?= $this->renderSection("content") ?>
 	</div>
-
-
-
-	<script src="<?= base_url("/client/js/vendor/jquery-2.2.4.min.js") ?>"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-	<script src="<?= base_url("/client/js/vendor/bootstrap.min.js") ?>"></script>
-	<script src="<?= base_url("/client/js/jquery.ajaxchimp.min.js") ?>"></script>
-	<script src="<?= base_url("/client/js/jquery.nice-select.min.js") ?>"></script>
-	<script src="<?= base_url("/client/js/jquery.sticky.js") ?>"></script>
-	<script src="<?= base_url("/client/js/nouislider.min.js") ?>"></script>
-	<script src="<?= base_url("/client/js/countdown.js") ?>"></script>
-	<script src="<?= base_url("/client/js/jquery.magnific-popup.min.js") ?>"></script>
-	<script src="<?= base_url("/client/js/owl.carousel.min.js") ?>"></script>
-	<!--gmaps Js-->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-	<script src="<?= base_url("/client/js/gmaps.min.js") ?>"></script>
-	<script src="<?= base_url("/client/js/jquery.toast.js") ?>"></script>
-	<script src="<?= base_url("/client/select2/js/select2.min.js") ?>"></script>
-	<script src="<?= base_url("/client/js/jquery.number.min.js") ?>"></script>
-	<script src="<?= base_url("/client/js/main.js") ?>"></script>
-	<script <?= csp_style_nonce() ?>>
-		$(".select2").select2();
-		$(document).on("change",".radio_check_component",function(e){
-			e.preventDefault();
-
-			$(".radio_check_component").parent().removeClass("border-primary");
-			if($(this).is(":checked")){
-				$(this).parent().addClass("border-primary");
-			}
-		})
-
-		// const $PRICE = $(document).find('#price_format');
-		// $PRICE.number( true, 2 ,",",".");
-	</script>
-	<?php
-
-
-	if (auth_user()) : ?>
-		<script  <?= csp_script_nonce() ?>>
-			function showCart() {
-				$.get({
-					url: "<?= base_url("/cart/get") ?>",
-					success: (data) => {
-						const cartEL = $(document).find(".cart_count");
-						cartEL.text(data.count)
-					}
-				})
-			}
-			showCart();
-		</script>
-	<?php endif ?>
-	<?= $this->renderSection("client_script") ?>
+	<!--=================================
+  Brands Slider
+===================================== -->
+	<section class="section-margin">
+		<h2 class="sr-only">Brand Slider</h2>
+		<div class="container">
+			<div class="brand-slider sb-slick-slider border-top border-bottom" data-slick-setting='{
+                                            "autoplay": true,
+                                            "autoplaySpeed": 8000,
+                                            "slidesToShow": 6
+                                            }' data-slick-responsive='[
+                {"breakpoint":992, "settings": {"slidesToShow": 4} },
+                {"breakpoint":768, "settings": {"slidesToShow": 3} },
+                {"breakpoint":575, "settings": {"slidesToShow": 3} },
+                {"breakpoint":480, "settings": {"slidesToShow": 2} },
+                {"breakpoint":320, "settings": {"slidesToShow": 1} }
+            ]'>
+				<div class="single-slide">
+					<img src="<?= base_url("/client") ?>/image/others/brand-1.jpg" alt="">
+				</div>
+				<div class="single-slide">
+					<img src="<?= base_url("/client") ?>/image/others/brand-2.jpg" alt="">
+				</div>
+				<div class="single-slide">
+					<img src="<?= base_url("/client") ?>/image/others/brand-3.jpg" alt="">
+				</div>
+				<div class="single-slide">
+					<img src="<?= base_url("/client") ?>/image/others/brand-4.jpg" alt="">
+				</div>
+				<div class="single-slide">
+					<img src="<?= base_url("/client") ?>/image/others/brand-5.jpg" alt="">
+				</div>
+				<div class="single-slide">
+					<img src="<?= base_url("/client") ?>/image/others/brand-6.jpg" alt="">
+				</div>
+				<div class="single-slide">
+					<img src="<?= base_url("/client") ?>/image/others/brand-1.jpg" alt="">
+				</div>
+				<div class="single-slide">
+					<img src="<?= base_url("/client") ?>/image/others/brand-2.jpg" alt="">
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--=================================
+    Footer Area
+===================================== -->
+	<?= $this->include("/Layouts/client/client_footer") ?>
+	<!-- Use Minified Plugins Version For Fast Page Load -->
+	<script src="<?= base_url("/client/js/plugins.js") ?>"></script>
+	<script src="<?= base_url("/client/js/ajax-mail.js") ?>"></script>
+	<script src="<?= base_url("/client/js/custom.js") ?>"></script>
 </body>
+
+
+<!-- Mirrored from htmldemo.net/pustok/pustok/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Dec 2022 07:38:08 GMT -->
 
 </html>

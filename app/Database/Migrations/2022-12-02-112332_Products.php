@@ -57,6 +57,13 @@ class Products extends Migration
             "status"=>[
                 "type"=>"boolean"
             ],
+            "stock"=>[
+                "type"=>"int"
+            ],
+            "sku"=>[
+                "type"=>"varchar",
+                "constraint"=>100
+            ],
             "brand_id"=>[
                 "type"=>"int",
                 "null"=>true

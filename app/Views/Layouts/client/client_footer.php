@@ -1,77 +1,83 @@
-<footer class="footer-area section_gap">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3  col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>About Us</h6>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore
-							magna aliqua.
-						</p>
+<footer class="site-footer">
+	<div class="container">
+		<div class="row justify-content-between  section-padding">
+			<div class=" col-xl-3 col-lg-4 col-sm-6">
+				<div class="single-footer pb--40">
+					<div class="brand-footer footer-title">
+						<img src="image/logo--footer.png" alt="">
 					</div>
-				</div>
-				<div class="col-lg-4  col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>Newsletter</h6>
-						<p>Stay update with our latest</p>
-						<div class="" id="mc_embed_signup">
-
-							<form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-							 method="get" class="form-inline">
-
-								<div class="d-flex flex-row">
-
-									<input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-									 required="" type="email">
-
-
-									<button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
-									<div style="position: absolute; left: -5000px;">
-										<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-									</div>
-
-									<!-- <div class="col-lg-4 col-md-4">
-													<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-												</div>  -->
-								</div>
-								<div class="info"></div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3  col-md-6 col-sm-6">
-					<div class="single-footer-widget mail-chimp">
-						<h6 class="mb-20">Instragram Feed</h6>
-						<ul class="instafeed d-flex flex-wrap">
-							<li><img src="img/i1.jpg" alt=""></li>
-							<li><img src="img/i2.jpg" alt=""></li>
-							<li><img src="img/i3.jpg" alt=""></li>
-							<li><img src="img/i4.jpg" alt=""></li>
-							<li><img src="img/i5.jpg" alt=""></li>
-							<li><img src="img/i6.jpg" alt=""></li>
-							<li><img src="img/i7.jpg" alt=""></li>
-							<li><img src="img/i8.jpg" alt=""></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>Follow Us</h6>
-						<p>Let us be social</p>
-						<div class="footer-social d-flex align-items-center">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-dribbble"></i></a>
-							<a href="#"><i class="fa fa-behance"></i></a>
-						</div>
+					<div class="footer-contact">
+						<p><span class="label">Address:</span><span class="text">Example Street 98, HH2 BacHa, New
+								York,
+								USA</span></p>
+						<p><span class="label">Phone:</span><span class="text">+18088 234 5678</span></p>
+						<p><span class="label">Email:</span><span class="text">suport@hastech.com</span></p>
 					</div>
 				</div>
 			</div>
-			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-				<p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</p>
+			<div class=" col-xl-3 col-lg-2 col-sm-6">
+				<div class="single-footer pb--40">
+					<div class="footer-title">
+						<h3>Information</h3>
+					</div>
+					<ul class="footer-list normal-list">
+						<li><a href="#">Prices drop</a></li>
+						<li><a href="#">New products</a></li>
+						<li><a href="#">Best sales</a></li>
+						<li><a href="#">Contact us</a></li>
+						<li><a href="#">Sitemap</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class=" col-xl-3 col-lg-2 col-sm-6">
+				<div class="single-footer pb--40">
+					<div class="footer-title">
+						<h3>Extras</h3>
+					</div>
+					<ul class="footer-list normal-list">
+						<li><a href="#">Delivery</a></li>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Stores</a></li>
+						<li><a href="#">Contact us</a></li>
+						<li><a href="#">Sitemap</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class=" col-xl-3 col-lg-4 col-sm-6">
+				<div class="footer-title">
+					<h3>Newsletter Subscribe</h3>
+				</div>
+				<div class="newsletter-form mb--30">
+					<form action="https://htmldemo.net/pustok/pustok/php/mail.php">
+						<input type="email" class="form-control" placeholder="Enter Your Email Address Here...">
+						<button class="btn btn--primary w-100">Subscribe</button>
+					</form>
+				</div>
+				<div class="social-block">
+					<h3 class="title">STAY CONNECTED</h3>
+					<ul class="social-list list-inline">
+						<li class="single-social facebook"><a href="#"><i class="ion ion-social-facebook"></i></a>
+						</li>
+						<li class="single-social twitter"><a href="#"><i class="ion ion-social-twitter"></i></a></li>
+						<li class="single-social google"><a href="#"><i class="ion ion-social-googleplus-outline"></i></a></li>
+						<li class="single-social youtube"><a href="#"><i class="ion ion-social-youtube"></i></a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</footer>
+	</div>
+	<div class="footer-bottom">
+		<div class="container">
+			<p class="copyright-heading">Suspendisse in auctor augue. Cras fermentum est ac fermentum tempor. Etiam
+				vel
+				magna volutpat, posuere eros</p>
+			<a href="#" class="payment-block">
+				<img src="image/icon/payment.png" alt="">
+			</a>
+			<p class="copyright-text">Copyright © 2022 <a href="#" class="author">Pustok</a>. All Right Reserved.
+				<br>
+				Design By Pustok
+			</p>
+		</div>
+	</div>
+</footer>

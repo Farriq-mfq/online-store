@@ -10,26 +10,26 @@ class ProductTags extends Migration
     {
         $this->forge->addField(
             [
-                "tag_id"=>[
-                    "type"=>"int",
-                    "auto_increment"=>true
-
+                "products_tags_id" => [
+                    "type" => "int",
+                    "auto_increment" => true
                 ],
-                "tags"=>[
-                    "type"=>"varchar",
-                    "constraint"=>30
+                "tag_id" => [
+                    "type" => "int",
+                    "null"=>true
                 ],
-                "product_id"=>[
-                    "type"=>"bigint"
-                ]
+                'product_id' => [
+                    "type" => "bigint",
+                ],
             ]
         );
 
-        $this->forge->addKey("tag_id",true);
+        $this->forge->addKey("products_tags_id", true);
+        $this->forge->addForeignKey("tag_id","tags","tag_id","SET NULL","SET NULL");
         $this->forge->addForeignKey("product_id","products","product_id","CASCADE","CASCADE");
         $this->forge->createTable("product_tags");
     }
-    
+
     public function down()
     {
         $this->forge->dropTable("product_tags");

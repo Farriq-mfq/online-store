@@ -85,11 +85,8 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $route->put("(:num)/new_label", "ProductController::new_label/$1");
         // inventories
         $route->get("inventories", "ProductInventoriesController::index");
-        $route->post("inventories/(:num)", "ProductInventoriesController::store/$1");
-        $route->get("inventories/edit", "ProductInventoriesController::edit");
-        $route->put("inventories/(:num)", "ProductInventoriesController::update/$1");
-        $route->delete("inventories/(:num)", "ProductInventoriesController::remove/$1");
-        /* product inventories ROUTES */
+        $route->post("inventories/stockChange", "ProductInventoriesController::stockChange");
+        /* product IMAGES ROUTES */
         $route->get("images", "ProductImagesController::index");
         $route->delete("images/(:num)", "ProductImagesController::remove/$1");
         $route->post("images/(:num)", "ProductImagesController::store/$1");
@@ -98,6 +95,13 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $route->post("images/(:num)/primary", "ProductImagesController::is_primary/$1");
         /* product comments ROUTES */
         $route->get("comments", "ProductComments::index");
+        $route->get("reviews", "ProductReviews::index");
+        /* TAGS ROUTES */
+        $route->get("tags", "ProductTags::index");
+        $route->delete("tags/(:num)", "ProductTags::remove/$1");
+        $route->get("tags/edit", "ProductTags::edit");
+        $route->post("tags/(:num)", "ProductTags::store/$1");
+        $route->put("tags/(:num)", "ProductTags::update/$1");
     });
     /* brands routes */
     $route->group("brands", function ($brandRoute) {
