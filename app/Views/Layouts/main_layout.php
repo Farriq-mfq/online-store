@@ -17,7 +17,7 @@
 
 <body>
 	<div class="site-wrapper" id="top">
-		<?= $this->include("Layouts/client/client_header") ?>
+		<?= view_cell("\App\Libraries\Client::renderHeader") ?>
 		<?= $this->include("Layouts/client/client_breadcrumb") ?>
 		<?= $this->renderSection("content") ?>
 	</div>

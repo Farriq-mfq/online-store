@@ -87,20 +87,20 @@ class BannerController extends BaseController
     {
         switch ($type) {
             case 'BOTTOM_SLIDER':
-                if ($count >= 2) {
+                if ($count >= 4) {
                     return false;
                 } else {
                     return true;
                 }
             case 'BOTTOM_OFFER':
-                if ($count >= 1) {
+                if ($count >= 2) {
                     return false;
                 } else {
                     return true;
                 }
 
             case 'LONG_BANNER':
-                if ($count >= 1) {
+                if ($count >= 2) {
                     return false;
                 } else {
                     return true;

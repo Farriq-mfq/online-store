@@ -1,7 +1,7 @@
 <?= $this->extend("Layouts/main_layout") ?>
 
 <?= $this->section("content") ?>
-    <p id="price_format">2000000</p>
+<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores commodi est, cum accusamus qui blanditiis nesciunt maiores pariatur ducimus nisi nam at porro aspernatur voluptatem aliquid expedita velit earum. Eligendi!</p>
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
 <script>

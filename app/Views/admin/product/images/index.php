@@ -25,7 +25,7 @@
                                             <div class="col-md-4">
                                                 <div class="card <?php if($image->is_primary):?>border border-primary<?php endif ?>">
                                                     <div class="card-body">
-                                                        <img src="<?= $image->image ?>" alt="" class="img-thumbnail img-responsive">
+                                                        <img src="<?= $image->image ?>" alt="" class="img-thumbnail img-responsive" width="100px" height="100px">
                                                     </div>
                                                     <div class="card-footer">
                                                     <button class="btn btn-sm btn-primary" type="button" data-id="<?= $image->image_id ?>"  data-action="<?= admin_url("/product/images/".$image->image_id) ?>" id="BTN_EDIT_IMAGES"><i class="fas fa-edit"></i></button> 
