@@ -24,25 +24,20 @@
                         <?php foreach ($banners as $banner) : ?>
                             <tr>
                                 <td>
-                                    <?= $banner->title ?>
+                                    <?= $banner->banner_location ?>
                                 </td>
                                 <td>
                                     <img src="<?= $banner->image ?>" alt="" class="img-thumbnail img-responsive" width="100" height="100">
                                 </td>
-                                <td> <?= $banner->subtitle ?></td>
-                                <td>
-                                    <div style="background-color: <?= $banner->subtitle_color ?>; height: 50px;width: 50px;">
-
-                                    </div>
-                                </td>
-                                <td> <?= $banner->short_description ?></td>
-                                <td> <?= $banner->link_label ?></td>
+                                <td> <?= $banner->title != null ? $banner->title : "No title" ?></td>
+                                <td> <?= $banner->paragraph != null ? $banner->paragraph : "No Paragraph" ?></td>
+                                <td> <?= $banner->link_label != null ? $banner->link_label : "No Label" ?></td>
                                 <td> <?= $banner->link ?></td>
                                 <td>
                                     <button class="btn btn-sm btn-primary" id="btn_show_modal_edit_banner" type="button" data-id="<?= $banner->banner_id ?>">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm" confirm data-slug="<?= $banner->title ?>" data-action="<?= admin_url("/banner/" . esc($banner->banner_id)) ?>"><i class="fas fa-trash"></i></button>
+                                    <button class="btn btn-danger btn-sm" confirm data-slug="<?= $banner->banner_location ?>" data-action="<?= admin_url("/banner/" . esc($banner->banner_id)) ?>"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -124,15 +119,16 @@
         e.preventDefault();
         switch ($(this).val()) {
             case "BOTTOM_SLIDER":
-                $("#SHOW_DIMENSION").text("DIMENSION : 540 x 160")
+                $("#SHOW_DIMENSION").text("DIMENSION : 540 x 170")
                 break;
             case "BOTTOM_OFFER":
-                $("#SHOW_DIMENSION").text("DIMENSION : 350 x 150")
+                $("#SHOW_DIMENSION").text("DIMENSION : 370 x 160")
                 break;
             case "LONG_BANNER":
-                $("#SHOW_DIMENSION").text("DIMENSION : 1110 x 240")
+                $("#SHOW_DIMENSION").text("DIMENSION : 1170 x 240")
                 break;
             default:
+                $("#SHOW_DIMENSION").text("")
                 break;
         }
     })
@@ -144,9 +140,10 @@
         $("#FORM_BANNER").children().find(".invalid-feedback").remove()
         $("#IMAGE_PREVIEW").attr("src", "")
         $("#FORM_BANNER").children().find(".is-invalid").removeClass("is-invalid")
+        $("select[name='banner_location']").attr("disabled",false);
     })
 
-    $(document).on("click", "#btn_show_modal_edit_BANNER", function(e) {
+    $(document).on("click", "#btn_show_modal_edit_banner", function(e) {
         e.preventDefault();
         const id = $(this).data("id");
         $.ajax({
@@ -154,17 +151,17 @@
             data: {
                 id: id
             },
-            url: "<?= admin_url("/BANNER/edit") ?>",
+            url: "<?= admin_url("/banner/edit") ?>",
             success: (data) => {
                 const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "BANNER_METHOD_SPOFF").attr("value", "PUT")
-                const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "BANNER_id").attr("value", id)
+                const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "banner_id").attr("id", "BANNER_id").attr("value", id)
                 $("#FORM_BANNER").append(input_method)
                 $("#FORM_BANNER").append(input_id)
                 $("#IMAGE_PREVIEW").attr("src", data.image)
+                $("select[name='banner_location']").attr("disabled",true);
+                $("select[name='banner_location']").val(data.banner_location);
                 $("input[name='title']").val(data.title);
-                $("input[name='subtitle']").val(data.subtitle);
-                $("input[name='subtitlecolor']").val(data.subtitle_color);
-                $("textarea[name='short_description']").val(data.short_description);
+                $("textarea[name='paragraph']").val(data.paragraph);
                 $("input[name='link_label']").val(data.link_label);
                 $("input[name='link']").val(data.link);
                 $("#modal-images").modal({
@@ -198,7 +195,7 @@
 <?php if (session()->getFlashdata("update_id")) : ?>
     <script <?= csp_script_nonce() ?>>
         const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "BANNER_METHOD_SPOFF").attr("value", "PUT")
-        const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "BANNER_id").attr("value", "<?= session()->getFlashdata("update_id") ?>")
+        const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "banner_id").attr("id", "BANNER_id").attr("value", "<?= session()->getFlashdata("update_id") ?>")
         $("#FORM_BANNER").append(input_method)
         $("#FORM_BANNER").append(input_id)
     </script>

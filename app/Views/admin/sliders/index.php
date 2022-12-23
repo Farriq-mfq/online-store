@@ -139,7 +139,7 @@
             url: "<?= admin_url("/slider/edit") ?>",
             success: (data) => {
                 const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "SLIDER_METHOD_SPOFF").attr("value", "PUT")
-                const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "slider_id").attr("value", id)
+                const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "slider_id").attr("id","slider_id").attr("value", id)
                 $("#FORM_SLIDER").append(input_method)
                 $("#FORM_SLIDER").append(input_id)
                 $("#IMAGE_PREVIEW").attr("src", data.image)
@@ -181,7 +181,7 @@
 <?php if (session()->getFlashdata("update_id")) : ?>
   <script <?= csp_script_nonce() ?>>
     const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "SLIDER_METHOD_SPOFF").attr("value", "PUT")
-    const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "slider_id").attr("value", "<?= session()->getFlashdata("update_id") ?>")
+    const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "slider_id").attr("id","slider_id").attr("value", "<?= session()->getFlashdata("update_id") ?>")
     $("#FORM_SLIDER").append(input_method)
     $("#FORM_SLIDER").append(input_id)
   </script>

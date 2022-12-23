@@ -125,11 +125,6 @@ class SliderController extends BaseController
                 "link_label" => $this->request->getVar("link_label"),
                 "link" => $this->request->getVar("link"),
             ];
-            $image = $this->slider->find($id);
-            $path = PUBLIC_PATH . "/uploads/products/" . $image->image_name;
-            if (file_exists($path)) {
-                unlink($path);
-            }
         } else {
             $data = [
                 "title" => $this->request->getVar("title"),
@@ -143,23 +138,31 @@ class SliderController extends BaseController
         if (filter_var($this->request->getVar("link"), FILTER_VALIDATE_URL)) {
             if (!empty($this->request->getFile("image")->getName())) {
                 list($width, $height) = getimagesize($this->request->getFile("image")); // dimension harus  width 770 dan height 494
-                if ($width == 770 && $height == 494) {
+                if ($width == 770 && $height == 494 || $width == 770 && $height >= 494) {
+                    $image = $this->slider->find($id);
+                    if ($image != null) {
+                        $path = PUBLIC_PATH . "/uploads/sliders/" . $image->image_name;
+                        if (file_exists($path)) {
+                            unlink($path);
+                        }
+                    }
                     if ($this->slider->update($id, $data)) {
                         $this->request->getFile("image")->move("uploads/sliders", $name);
                         alert("Success Update Slider", "success");
                     }
                 } else {
-                    if ($this->slider->update($id, $data)) {
-
-                        alert("Success Update Slider", "success");
-                    }
+                    session()->setFlashdata("validation", ["image" => "Invalid Image dimension"]);
+                    session()->setFlashdata('update_id', (int)esc($this->request->getVar("slider_id")));
+                    return redirect()->back()->withInput();
                 }
             } else {
-                session()->setFlashdata("validation", ["image" => "Invalid Image dimension"]);
-                return redirect()->back()->withInput();
+                if ($this->slider->update($id, $data)) {
+                    alert("Success Update Slider", "success");
+                }
             }
         } else {
             session()->setFlashdata("validation", ["link" => "Invalid Link url"]);
+            session()->setFlashdata('update_id', (int)esc($this->request->getVar("slider_id")));
             return redirect()->back()->withInput();
         }
         return redirect()->back();
