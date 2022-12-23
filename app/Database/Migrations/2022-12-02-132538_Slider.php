@@ -15,12 +15,21 @@ class Slider extends Migration
             ],
             "image"=>[
                 "type"=>"varchar",
-                "constraint"=>50,
+                "constraint"=>200,
                 "unique"=>true
             ],
             "title"=>[
                 "type"=>"varchar",
                 "constraint"=>50,
+            ],
+            "subtitle"=>[
+                "type"=>"varchar",
+                "constraint"=>50,
+            ],
+            "subtitle_color"=>[
+                "type"=>"varchar",
+                "constraint"=>50,
+                "null"=>true
             ],
             "short_description"=>[
                 "type"=>"varchar",
@@ -32,7 +41,7 @@ class Slider extends Migration
             ],
             "link"=>[
                 "type"=>"varchar",
-                "constraint"=>50,
+                "constraint"=>150,
             ]
         ]);
         $this->forge->addKey("slider_id",true);

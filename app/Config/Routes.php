@@ -133,6 +133,14 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $categories_route->put("/", "TagsController::update");
         $categories_route->get("get", "TagsController::get_update_tags");
     });
+    /* slider routes */
+    $route->group("slider", function ($categories_route) {
+        $categories_route->get("/", "SliderController::index");
+        $categories_route->delete("(:num)", "SliderController::remove/$1");
+        $categories_route->post("/", "SliderController::store");
+        $categories_route->put("/", "SliderController::update");
+        $categories_route->get("get", "SliderController::get_update_tags");
+    });
     /* Errors Routes */
     $route->group("error", function ($categories_route) {
         $categories_route->get("403", "ErrorsController::error_forbidden");

@@ -66,12 +66,13 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="category" required>Parent Category</label>
-                        <select class="form-control select2" style="width: 100%;" name="parent_category" id="parent_category">
+                        <select class="form-control select2 <?= show_class_error("parent_category") ?>" style="width: 100%;" name="parent_category" id="parent_category">
                           <option value="" selected>Select Parent</option>
                           <?php foreach($categories as $category): ?>
                             <option value="<?= $category->category_id ?>"><?= $category->category ?></option>
                           <?php endforeach ?>
                         </select>
+                        <?= show_error("parent_category") ?>
                     </div>
                     <div class="form-group">
                         <label for="category" required>Category</label>
