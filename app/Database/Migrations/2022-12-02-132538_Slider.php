@@ -16,7 +16,10 @@ class Slider extends Migration
             "image"=>[
                 "type"=>"varchar",
                 "constraint"=>200,
-                "unique"=>true
+            ],
+            "image_name"=>[
+                "type"=>"varchar",
+                "constraint"=>200,
             ],
             "title"=>[
                 "type"=>"varchar",

@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Slider extends Model
+class Banner extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'sliders';
-    protected $primaryKey       = 'slider_id';
+    protected $table            = 'banners';
+    protected $primaryKey       = 'banner_id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["image","image_name","title","subtitle","subtitle_color","short_description","link_label","link"];
+    protected $allowedFields    = ["image","image_name","banner_location","title","paragraph","link_label","link"];
 
     // Dates
     protected $useTimestamps = false;

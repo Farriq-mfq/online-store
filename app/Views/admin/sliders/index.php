@@ -12,37 +12,38 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Images</th>
+                            <th>Image</th>
+                            <th>Subtitle</th>
+                            <th>Subtitle Color</th>
+                            <th>Short Description</th>
+                            <th>Link Label</th>
+                            <th>Link</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($products as $product) : ?>
+                        <?php foreach ($sliders as $slider) : ?>
                             <tr>
                                 <td>
-                                    <?= $product->title ?>
+                                    <?= $slider->title ?>
                                 </td>
                                 <td>
-                                    <div class="row">
-                                        <?php foreach ($product->product_images as $image) : ?>
-                                            <div class="col-md-4">
-                                                <div class="card <?php if ($image->is_primary) : ?>border border-primary<?php endif ?>">
-                                                    <div class="card-body">
-                                                        <img src="<?= $image->image ?>" alt="" class="img-thumbnail img-responsive">
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <button class="btn btn-sm btn-primary" type="button" data-id="<?= $image->image_id ?>" data-action="<?= admin_url("/product/images/" . $image->image_id) ?>" id="BTN_EDIT_IMAGES"><i class="fas fa-edit"></i></button>
-                                                        <button class="btn btn-danger btn-sm" confirm data-slug="<?= $image->mime ?>" data-action="<?= admin_url("/product/images/" . esc($image->image_id)) ?>"><i class="fas fa-trash"></i></button>
-                                                        <?php if (!$image->is_primary) : ?>
-                                                            <form method="POST" class="d-inline" action="<?= admin_url("/product/images/" . $image->image_id . "/primary") ?>">
-                                                                <?php csrf_field() ?>
-                                                                <button class="btn btn-warning btn-sm" type="submit"><i class="fas fa-star"></i></button>
-                                                            </form>
-                                                        <?php endif ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach ?>
+                                    <img src="<?= $slider->image ?>" alt="" class="img-thumbnail img-responsive" width="100" height="100">
+                                </td>
+                                <td> <?= $slider->subtitle ?></td>
+                                <td>
+                                    <div style="background-color: <?= $slider->subtitle_color ?>; height: 50px;width: 50px;">
+
                                     </div>
+                                </td>
+                                <td> <?= $slider->short_description ?></td>
+                                <td> <?= $slider->link_label ?></td>
+                                <td> <?= $slider->link ?></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" id="btn_show_modal_edit_slider" type="button" data-id="<?= $slider->slider_id ?>">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" confirm data-slug="<?= $slider->title ?>" data-action="<?= admin_url("/slider/" . esc($slider->slider_id)) ?>"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -119,28 +120,35 @@
     })
 
     $("#modal-images").on("hidden.bs.modal", function() {
-        $("#FORM_images")[0].reset()
-        $("#IMAGE_METHOD_SPOFF").remove()
-        $("#FORM_images").children().find(".invalid-feedback").remove()
+        $("#FORM_SLIDER")[0].reset()
+        $("#SLIDER_METHOD_SPOFF").remove()
+        $("#slider_id").remove()
+        $("#FORM_SLIDER").children().find(".invalid-feedback").remove()
         $("#IMAGE_PREVIEW").attr("src", "")
-        $("#FORM_images").children().find(".is-invalid").removeClass("is-invalid")
+        $("#FORM_SLIDER").children().find(".is-invalid").removeClass("is-invalid")
     })
 
-    $(document).on("click", "#BTN_EDIT_IMAGES", function(e) {
+    $(document).on("click", "#btn_show_modal_edit_slider", function(e) {
         e.preventDefault();
         const id = $(this).data("id");
-        const action = $(this).data("action");
         $.ajax({
             method: "GET",
             data: {
                 id: id
             },
-            url: "<?= admin_url("/product/images/edit") ?>",
+            url: "<?= admin_url("/slider/edit") ?>",
             success: (data) => {
-                const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "IMAGE_METHOD_SPOFF").attr("value", "PUT")
-                $("#FORM_images").append(input_method)
-                $("#FORM_images").attr("action", action)
+                const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "SLIDER_METHOD_SPOFF").attr("value", "PUT")
+                const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "slider_id").attr("value", id)
+                $("#FORM_SLIDER").append(input_method)
+                $("#FORM_SLIDER").append(input_id)
                 $("#IMAGE_PREVIEW").attr("src", data.image)
+                $("input[name='title']").val(data.title);
+                $("input[name='subtitle']").val(data.subtitle);
+                $("input[name='subtitlecolor']").val(data.subtitle_color);
+                $("textarea[name='short_description']").val(data.short_description);
+                $("input[name='link_label']").val(data.link_label);
+                $("input[name='link']").val(data.link);
                 $("#modal-images").modal({
                     show: true
                 })
@@ -162,15 +170,20 @@
 
     })
 
-    <?php if (session()->getFlashdata("METHOD_UPDATE_SESSION")) : ?>
-        const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "IMAGES_METHOD_SPOFF").attr("value", "PUT")
-        $("#FORM_images").append(input_method)
-    <?php endif ?>
 
     <?php if (session()->getFlashdata("validation")) : ?>
         $("#modal-images").modal({
             show: true
         })
     <?php endif ?>
+    
 </script>
+<?php if (session()->getFlashdata("update_id")) : ?>
+  <script <?= csp_script_nonce() ?>>
+    const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "SLIDER_METHOD_SPOFF").attr("value", "PUT")
+    const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "slider_id").attr("value", "<?= session()->getFlashdata("update_id") ?>")
+    $("#FORM_SLIDER").append(input_method)
+    $("#FORM_SLIDER").append(input_id)
+  </script>
+<?php endif ?>
 <?= $this->endSection() ?>

@@ -139,7 +139,15 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $categories_route->delete("(:num)", "SliderController::remove/$1");
         $categories_route->post("/", "SliderController::store");
         $categories_route->put("/", "SliderController::update");
-        $categories_route->get("get", "SliderController::get_update_tags");
+        $categories_route->get("edit", "SliderController::edit");
+    });
+    /* banner routes */
+    $route->group("banner", function ($categories_route) {
+        $categories_route->get("/", "BannerController::index");
+        $categories_route->delete("(:num)", "BannerController::remove/$1");
+        $categories_route->post("/", "BannerController::store");
+        $categories_route->put("/", "BannerController::update");
+        $categories_route->get("edit", "BannerController::edit");
     });
     /* Errors Routes */
     $route->group("error", function ($categories_route) {
