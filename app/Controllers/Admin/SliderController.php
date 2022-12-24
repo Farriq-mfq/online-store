@@ -63,7 +63,7 @@ class SliderController extends BaseController
 
         if (filter_var($this->request->getVar("link"), FILTER_VALIDATE_URL)) {
             list($width, $height) = getimagesize($this->request->getFile("image")); // dimension harus  width 770 dan height 494
-            if ($width == 770 && $height == 494) {
+            if ($width == 770 && $height == 494 || $width == 770 && $height >= 494) {
                 if ($this->slider->insert($data)) {
                     $this->request->getFile("image")->move("uploads/sliders", $name);
                     alert("Success Add Slider", "success");

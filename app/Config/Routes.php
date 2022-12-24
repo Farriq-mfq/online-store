@@ -108,6 +108,12 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $route->get("meta/edit", "ProductMeta::edit");
         $route->post("meta/(:num)", "ProductMeta::store/$1");
         $route->put("meta/(:num)", "ProductMeta::update/$1");
+        /* PRODUCT DISCOUNT */
+        $route->get("discount", "ProductDiscountController::index");
+        $route->delete("discount/(:num)", "ProductDiscountController::remove/$1");
+        $route->get("discount/edit", "ProductDiscountController::edit");
+        $route->post("discount/(:num)", "ProductDiscountController::store/$1");
+        $route->put("discount/(:num)", "ProductDiscountController::update/$1");
     });
     /* brands routes */
     $route->group("brands", function ($brandRoute) {

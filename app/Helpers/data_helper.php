@@ -1,4 +1,7 @@
 <?php
+
+use SebastianBergmann\Timer\Duration;
+
 function add_data(string $title, string $active_page, array $array = []): array
 {
     $data["title"] = $title;
@@ -26,4 +29,18 @@ function get_avg(array $data, string $key)
     }
 
     return ceil($total / count($data));
+}
+
+function get_discount(int $oldprice, int $discount): int
+{
+    return $oldprice - ($oldprice * $discount / 100);
+}
+function get_less_price(int $oldprice, int $discount): int
+{
+    return $oldprice - $discount;
+}
+
+function format_rupiah($value)
+{
+    return "Rp.".number_format($value,0,",",".");
 }

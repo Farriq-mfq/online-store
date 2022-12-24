@@ -29,10 +29,10 @@ class Products extends Migration
                 "constraint"=>255,
                 "null"=>true
             ],
-            "discount"=>[
-                "type"=>"double",
-                "null"=>true
-            ],
+            // "discount"=>[
+            //     "type"=>"double",
+            //     "null"=>true
+            // ],
             "category_id"=>[
                 "type"=>"int",
                 "null"=>true

@@ -15,7 +15,7 @@ class Product extends Model
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id","stock","sku"];
-    protected $with = ["brands","categories"];
+    protected $with = ["brands","categories","product_images"];
 
     // Dates
     protected $useTimestamps = true;

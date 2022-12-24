@@ -20,6 +20,7 @@
 		<?= view_cell("\App\Libraries\Client::renderHeader") ?>
 		<?= $this->include("Layouts/client/client_breadcrumb") ?>
 		<?= $this->renderSection("content") ?>
+		<?= $this->include("Layouts/client/client_detail_modal") ?>
 	</div>
 	<!--=================================
   Brands Slider

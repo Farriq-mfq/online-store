@@ -100,6 +100,11 @@ use Config\Services;
                 <i class="far fa-circle nav-icon"></i>
                 <p>Product Meta & SEO</p>
               </a>
+            <li class="nav-item">
+              <a href="<?= admin_url("/product/discount") ?>" class="nav-link <?= $active_page == "product/discount" ? "active" : "" ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Product Discount</p>
+              </a>
             </li>
           </ul>
         <li class="nav-header">MASTER</li>
@@ -190,6 +195,14 @@ use Config\Services;
             <i class="nav-icon fas fa-image"></i>
             <p>
               Banner
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= admin_url("/banner") ?>" class="nav-link <?= $active_page == "banner/index" ? "active" : "" ?>">
+            <i class="nav-icon fas fa-tag"></i>
+            <p>
+              Special Offers
             </p>
           </a>
         </li>
