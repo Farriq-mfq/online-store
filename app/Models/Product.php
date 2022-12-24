@@ -110,8 +110,20 @@ class Product extends Model
             return false;
         }
     }
-    public function getrating()
+    public function get_brand_a_z($perpage,$group)
     {
-        return $this->db->table("product_reviews")->select("*,AVG(rating) as 'total_rating'")->groupBy("product_id")->get()->getResultObject();
+        return $this->join("brands","products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name","ASC")->paginate($perpage,$group);
+    }
+    public function get_brand_z_a($perpage,$group)
+    {
+        return $this->join("brands","products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name","DESC")->paginate($perpage,$group);
+    }
+    public function getratingHigh($perpage,$group)
+    {
+        return $this->join("product_reviews","product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status",1)->orderBy("avg_rating","DESC")->paginate($perpage,$group);
+    }
+    public function getratinglow($perpage,$group)
+    {
+        return $this->join("product_reviews","product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status",1)->orderBy("avg_rating","ASC")->paginate($perpage,$group);
     }
 }

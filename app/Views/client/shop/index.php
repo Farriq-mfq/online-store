@@ -8,13 +8,13 @@
                 <div class="col-lg-2 col-md-2 col-sm-6">
                     <!-- Product View Mode -->
                     <div class="product-view-mode">
-                        <a href="#" class="sorting-btn active" data-target="grid"><i class="fas fa-th"></i></a>
-                        <a href="#" class="sorting-btn" data-target="grid-four">
+                        <a href="#" class="sorting-btn <?php if ($filter_view == "grid") : ?>active<?php endif ?>" data-target="grid"><i class="fas fa-th"></i></a>
+                        <a href="#" class="sorting-btn <?php if ($filter_view == "grid-four") : ?>active<?php endif ?>" data-target="grid-four">
                             <span class="grid-four-icon">
                                 <i class="fas fa-grip-vertical"></i><i class="fas fa-grip-vertical"></i>
                             </span>
                         </a>
-                        <a href="#" class="sorting-btn" data-target="list "><i class="fas fa-list"></i></a>
+                        <a href="#" class="sorting-btn <?php if ($filter_view == "list") : ?>active<?php endif ?>" data-target="list"><i class="fas fa-list"></i></a>
                     </div>
                 </div>
                 <div class="col-xl-5 col-md-4 col-sm-6  mt--10 mt-sm--0">
@@ -28,7 +28,7 @@
                         <select class="form-control nice-select sort-select" id="perpage_change">
                             <?php $page_show = [3, 6, 9, 12] ?>
                             <?php foreach ($page_show as $showC) : ?>
-                                <option value="<?= $showC ?>" <?php if($pager->getDetails("product")["perPage"] == $showC ): ?>selected="selected" <?php endif ?>><?= $showC ?></option>
+                                <option value="<?= $showC ?>" <?php if ($pager->getDetails("product")["perPage"] == $showC) : ?>selected="selected" <?php endif ?>><?= $showC ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -37,23 +37,10 @@
                     <div class="sorting-selection">
                         <span>Sort By:</span>
                         <select class="form-control nice-select sort-select mr-0" id="sort_change">
-                            <option value="" selected="selected">Default Sorting</option>
-                            <option value="a-z">Sort
-                                By:Title (A - Z)</option>
-                            <option value="z-a">Sort
-                                By:Title (Z - A)</option>
-                            <option value="low-high">Sort
-                                By:Price (Low &gt; High)</option>
-                            <option value="high-low">Sort
-                                By:Price (High &gt; Low)</option>
-                            <option value="rating_highest">Sort
-                                By:Rating (Highest)</option>
-                            <option value="rating_lowest">Sort
-                                By:Rating (Lowest)</option>
-                            <option value="">Sort
-                                By:Brand (A - Z)</option>
-                            <option value="">Sort
-                                By:Brand (Z - A)</option>
+                            <option value="" <?php if ($current_filter == "") : ?>selected="selected" <?php endif ?>>Default Sorting</option>
+                            <?php foreach ($filters as $filter) : ?>
+                                <option <?php if ($current_filter == $filter['value']) : ?>selected="selected" <?php endif ?> value="<?= $filter['value'] ?>"><?= $filter['title'] ?></option>
+                            <?php endforeach ?>
                         </select>
                     </div>
                 </div>
@@ -116,10 +103,10 @@
                 </div>
             </div>
         </div>
-        <div class="shop-product-wrap grid with-pagination row space-db--30 shop-border">
+        <div class="shop-product-wrap <?= $filter_view ?> with-pagination row space-db--30 shop-border">
             <?php foreach ($products as $product) : ?>
                 <div class="col-lg-4 col-sm-6">
-                    <div class="product-card">
+                    <div class="product-card <?php if ($filter_view == "list") : ?>card-style-list<?php endif ?>">
                         <div class="product-grid-content">
                             <div class="product-header">
                                 <a href="#" class="author">
@@ -383,6 +370,25 @@
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
 <script>
+    function removeURLParameter(url, parameter) {
+        var urlparts = url.split('?');
+        if (urlparts.length >= 2) {
+
+            var prefix = encodeURIComponent(parameter) + '=';
+            var pars = urlparts[1].split(/[&;]/g);
+
+            for (var i = pars.length; i-- > 0;) {
+                if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                    pars.splice(i, 1);
+                }
+            }
+
+            url = urlparts[0] + '?' + pars.join('&');
+            return url;
+        } else {
+            return url;
+        }
+    }
     $("#sort_change").change(function(e) {
         e.preventDefault()
         var searchParams = new URLSearchParams(window.location.search);
@@ -395,5 +401,25 @@
         searchParams.set("perpage", $(this).val());
         window.location.search = searchParams.toString();
     })
+
+    $(".sorting-btn").on("click", function(e) {
+        e.preventDefault();
+        var searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("view", $(this).data('target'));
+        let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+        window.history.pushState({
+            path: newurl
+        }, '', newurl);
+    })
+
+    resetUrl();
+    function resetUrl(){
+        var searchParams = new URLSearchParams(window.location.search);
+        console.log(searchParams);
+        
+        if(searchParams.get("view") == ""){
+            console.log("ok")
+        }
+    }
 </script>
 <?= $this->endSection() ?>
