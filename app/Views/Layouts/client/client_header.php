@@ -49,8 +49,10 @@
 				</div>
 				<div class="col-lg-5">
 					<div class="header-search-block">
-						<input type="text" placeholder="Search entire store here">
-						<button>Search</button>
+						<form action="<?= base_url('/shop') ?>">
+							<input type="text" name="q" placeholder="Search entire store here">
+							<button type="submit">Search</button>
+						</form>
 					</div>
 				</div>
 				<div class="col-lg-4">

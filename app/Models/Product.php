@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+
 class Product extends Model
 {
     use \Tatter\Relations\Traits\ModelTrait;
@@ -14,8 +15,8 @@ class Product extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id","stock","sku"];
-    protected $with = ["brands","categories","product_images","product_discount"];
+    protected $allowedFields    = ["title", "slug", "short_description", "description", "category_id", "content", "price", "weight", "featured", "new_label", "status", "brand_id", "stock", "sku"];
+    protected $with = ["brands", "categories", "product_images", "product_discount"];
 
     // Dates
     protected $useTimestamps = true;
@@ -43,87 +44,103 @@ class Product extends Model
 
 
     public function addNew(array $data)
-    {   
-        try{
-            $productData = pick($data,["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id","stock","sku"]);
+    {
+        try {
+            $productData = pick($data, ["title", "slug", "short_description", "description", "category_id", "content", "price", "weight", "featured", "new_label", "status", "brand_id", "stock", "sku"]);
             $insert = $this->insert($productData);
-            $productTags = batch_convert(pick($data,['tag_id']),["product_id"=>$insert]);
+            $productTags = batch_convert(pick($data, ['tag_id']), ["product_id" => $insert]);
             $productTagsBuilder = $this->db->table("product_tags");
             $productTagsBuilder->insertBatch($productTags);
             $productImagesBuilder = $this->db->table("product_images");
-            $productImage = array_merge(pick($data,["product_image"])["product_image"],["product_id"=>$insert]);
+            $productImage = array_merge(pick($data, ["product_image"])["product_image"], ["product_id" => $insert]);
             $productImagesBuilder->insert($productImage);
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             dd($e);
             return false;
         }
     }
-    public function update_product(int $id,array $data)
+    public function update_product(int $id, array $data)
     {
-        try{    
-            $productBuilder = $this->db->table($this->table);   
-            $productData = pick($data,["title","slug","short_description","description","category_id","content","price","weight","featured","new_label","status","brand_id"]);
-            $productBuilder->where("product_id",$id);
+        try {
+            $productBuilder = $this->db->table($this->table);
+            $productData = pick($data, ["title", "slug", "short_description", "description", "category_id", "content", "price", "weight", "featured", "new_label", "status", "brand_id"]);
+            $productBuilder->where("product_id", $id);
             $productBuilder->update($productData);
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
     }
-    public function active_inactive($id):bool
-    {   
-        try{
-            if($this->find($id)->status){
-                $this->update($id,['status'=>false]);
-            }else{
-                $this->update($id,['status'=>true]);
+    public function active_inactive($id): bool
+    {
+        try {
+            if ($this->find($id)->status) {
+                $this->update($id, ['status' => false]);
+            } else {
+                $this->update($id, ['status' => true]);
             }
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
     }
-    public function featured_unfeatured($id):bool
+    public function featured_unfeatured($id): bool
     {
-        try{
-            if($this->find($id)->featured){
-                $this->update($id,['featured'=>false]);
-            }else{
-                $this->update($id,['featured'=>true]);
+        try {
+            if ($this->find($id)->featured) {
+                $this->update($id, ['featured' => false]);
+            } else {
+                $this->update($id, ['featured' => true]);
             }
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
     }
-    public function new_label_remove_label($id):bool
+    public function new_label_remove_label($id): bool
     {
-        try{
-            if($this->find($id)->new_label){
-                $this->update($id,['new_label'=>false]);
-            }else{
-                $this->update($id,['new_label'=>true]);
+        try {
+            if ($this->find($id)->new_label) {
+                $this->update($id, ['new_label' => false]);
+            } else {
+                $this->update($id, ['new_label' => true]);
             }
             return true;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
     }
-    public function get_brand_a_z($perpage,$group)
+    public function get_brand_a_z($perpage, $group, $q = "")
     {
-        return $this->join("brands","products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name","ASC")->paginate($perpage,$group);
+        if (!empty($q)) {
+            return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->like("title", "" . $q . "")->orderBy("brand_name", "ASC")->paginate($perpage, $group);
+        } else {
+            return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name", "ASC")->paginate($perpage, $group);
+        }
     }
-    public function get_brand_z_a($perpage,$group)
+    public function get_brand_z_a($perpage, $group, $q = "")
     {
-        return $this->join("brands","products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name","DESC")->paginate($perpage,$group);
+        if (!empty($q)) {
+            return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->like("title", "" . $q . "")->orderBy("brand_name", "DESC")->paginate($perpage, $group);
+        } else {
+            return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name", "DESC")->paginate($perpage, $group);
+        }
     }
-    public function getratingHigh($perpage,$group)
+    public function getratingHigh($perpage, $group, $q = "")
     {
-        return $this->join("product_reviews","product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status",1)->orderBy("avg_rating","DESC")->paginate($perpage,$group);
+        if (!empty($q)) {
+            return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->like("title", "" . $q . "")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "DESC")->paginate($perpage, $group);
+        } else {
+            return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "DESC")->paginate($perpage, $group);
+        }
     }
-    public function getratinglow($perpage,$group)
+    public function getratinglow($perpage, $group, $q = "")
     {
-        return $this->join("product_reviews","product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status",1)->orderBy("avg_rating","ASC")->paginate($perpage,$group);
+        if (!empty($q)) {
+            return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->like("title", "" . $q . "")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "ASC")->paginate($perpage, $group);
+        }else{
+            return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "ASC")->paginate($perpage, $group);
+        }
     }
 }
