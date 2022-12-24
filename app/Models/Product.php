@@ -110,4 +110,8 @@ class Product extends Model
             return false;
         }
     }
+    public function getrating()
+    {
+        return $this->db->table("product_reviews")->select("*,AVG(rating) as 'total_rating'")->groupBy("product_id")->get()->getResultObject();
+    }
 }
