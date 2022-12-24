@@ -67,10 +67,10 @@
                                                         <span class="price"><?= format_rupiah(get_discount($featured->price, $discount->discount_value)) ?></span>
                                                         <del class="price-old"><?= format_rupiah($featured->price) ?></del>
                                                         <span class="price-discount"><?= $discount->discount_value ?>%</span>
-                                                    <?php elseif ($discount->discount_type === "PERCENTAGE") : ?>
+                                                    <?php elseif ($discount->discount_type === "VALUE") : ?>
                                                         <span class="price"><?= format_rupiah(get_less_price($featured->price, $discount->discount_value)) ?></span>
                                                         <del class="price-old"><?= format_rupiah($featured->price) ?></del>
-                                                        <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                        <span class="price-discount"><?= thousandsCurrencyFormat($discount->discount_value) ?></span>
                                                     <?php else : ?>
                                                         <span class="price"><?= format_rupiah($featured->price) ?></span>
                                                     <?php endif ?>
@@ -253,10 +253,10 @@
                                                             <span class="price"><?= format_rupiah(get_discount($featured->price, $discount->discount_value)) ?></span>
                                                             <del class="price-old"><?= format_rupiah($featured->price) ?></del>
                                                             <span class="price-discount"><?= $discount->discount_value ?>%</span>
-                                                        <?php elseif ($discount->discount_type === "PERCENTAGE") : ?>
+                                                        <?php elseif ($discount->discount_type === "VALUE") : ?>
                                                             <span class="price"><?= format_rupiah(get_less_price($featured->price, $discount->discount_value)) ?></span>
                                                             <del class="price-old"><?= format_rupiah($featured->price) ?></del>
-                                                            <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                            <span class="price-discount"><?= thousandsCurrencyFormat($discount->discount_value) ?></span>
                                                         <?php else : ?>
                                                             <span class="price"><?= format_rupiah($featured->price) ?></span>
                                                         <?php endif ?>
@@ -344,10 +344,10 @@
                                                             <span class="price"><?= format_rupiah(get_discount($new->price, $discount->discount_value)) ?></span>
                                                             <del class="price-old"><?= format_rupiah($new->price) ?></del>
                                                             <span class="price-discount"><?= $discount->discount_value ?>%</span>
-                                                        <?php elseif ($discount->discount_type === "PERCENTAGE") : ?>
+                                                        <?php elseif ($discount->discount_type === "VALUE") : ?>
                                                             <span class="price"><?= format_rupiah(get_less_price($new->price, $discount->discount_value)) ?></span>
                                                             <del class="price-old"><?= format_rupiah($new->price) ?></del>
-                                                            <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                            <span class="price-discount"><?= thousandsCurrencyFormat($discount->discount_value) ?></span>
                                                         <?php else : ?>
                                                             <span class="price"><?= format_rupiah($new->price) ?></span>
                                                         <?php endif ?>
@@ -448,10 +448,10 @@
                                                                 <span class="price"><?= format_rupiah(get_discount($offer->price, $discount->discount_value)) ?></span>
                                                                 <del class="price-old"><?= format_rupiah($offer->price) ?></del>
                                                                 <span class="price-discount"><?= $discount->discount_value ?>%</span>
-                                                            <?php elseif ($discount->discount_type === "PERCENTAGE") : ?>
+                                                            <?php elseif ($discount->discount_type === "VALUE") : ?>
                                                                 <span class="price"><?= format_rupiah(get_less_price($offer->price, $discount->discount_value)) ?></span>
                                                                 <del class="price-old"><?= format_rupiah($offer->price) ?></del>
-                                                                <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                                <span class="price-discount"><?= thousandsCurrencyFormat($discount->discount_value) ?></span>
                                                             <?php else : ?>
                                                                 <span class="price"><?= format_rupiah($offer->price) ?></span>
                                                             <?php endif ?>
@@ -532,10 +532,10 @@
                                                                 <span class="price"><?= format_rupiah(get_discount($ct1->price, $discount->discount_value)) ?></span>
                                                                 <del class="price-old"><?= format_rupiah($ct1->price) ?></del>
                                                                 <span class="price-discount"><?= $discount->discount_value ?>%</span>
-                                                            <?php elseif ($discount->discount_type === "PERCENTAGE") : ?>
+                                                            <?php elseif ($discount->discount_type === "VALUE") : ?>
                                                                 <span class="price"><?= format_rupiah(get_less_price($ct1->price, $discount->discount_value)) ?></span>
                                                                 <del class="price-old"><?= format_rupiah($ct1->price) ?></del>
-                                                                <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                                <span class="price-discount"><?= thousandsCurrencyFormat($discount->discount_value) ?></span>
                                                             <?php else : ?>
                                                                 <span class="price"><?= format_rupiah($ct1->price) ?></span>
                                                             <?php endif ?>
@@ -624,10 +624,10 @@
                                                                 <span class="price"><?= format_rupiah(get_discount($ct2->price, $discount->discount_value)) ?></span>
                                                                 <del class="price-old"><?= format_rupiah($ct2->price) ?></del>
                                                                 <span class="price-discount"><?= $discount->discount_value ?>%</span>
-                                                            <?php elseif ($discount->discount_type === "PERCENTAGE") : ?>
+                                                            <?php elseif ($discount->discount_type === "VALUE") : ?>
                                                                 <span class="price"><?= format_rupiah(get_less_price($ct2->price, $discount->discount_value)) ?></span>
                                                                 <del class="price-old"><?= format_rupiah($ct2->price) ?></del>
-                                                                <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                                <span class="price-discount"><?= thousandsCurrencyFormat($discount->discount_value) ?></span>
                                                             <?php else : ?>
                                                                 <span class="price"><?= format_rupiah($ct2->price) ?></span>
                                                             <?php endif ?>
@@ -703,10 +703,10 @@
                                                 <span class="price"><?= format_rupiah(get_discount($ct3->price, $discount->discount_value)) ?></span>
                                                 <del class="price-old"><?= format_rupiah($ct3->price) ?></del>
                                                 <span class="price-discount"><?= $discount->discount_value ?>%</span>
-                                            <?php elseif ($discount->discount_type === "PERCENTAGE") : ?>
+                                            <?php elseif ($discount->discount_type === "VALUE") : ?>
                                                 <span class="price"><?= format_rupiah(get_less_price($ct3->price, $discount->discount_value)) ?></span>
                                                 <del class="price-old"><?= format_rupiah($ct3->price) ?></del>
-                                                <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                <span class="price-discount"><?= thousandsCurrencyFormat($discount->discount_value) ?></span>
                                             <?php else : ?>
                                                 <span class="price"><?= format_rupiah($ct3->price) ?></span>
                                             <?php endif ?>
