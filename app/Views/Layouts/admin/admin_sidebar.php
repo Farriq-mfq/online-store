@@ -199,7 +199,7 @@ use Config\Services;
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= admin_url("/banner") ?>" class="nav-link <?= $active_page == "banner/index" ? "active" : "" ?>">
+          <a href="<?= admin_url("/offer") ?>" class="nav-link <?= $active_page == "offer/index" ? "active" : "" ?>">
             <i class="nav-icon fas fa-tag"></i>
             <p>
               Special Offers

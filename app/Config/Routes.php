@@ -66,6 +66,10 @@ $routes->group("api/shipping",function($route){
 
 $routes->get("/", "Home::index");
 
+$routes->group("api/data",function($route){
+    $route->get("product","ApiController::get_product");
+});
+
 
 /* ADMIN ROUTES */
 $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() . "Admin", "filter" => ["admin-auth", "roles-auth"]], function ($route) {
@@ -154,6 +158,14 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $categories_route->post("/", "BannerController::store");
         $categories_route->put("/", "BannerController::update");
         $categories_route->get("edit", "BannerController::edit");
+    });
+    /* offer routes */
+    $route->group("offer", function ($categories_route) {
+        $categories_route->get("/", "OfferController::index");
+        $categories_route->delete("(:num)", "OfferController::remove/$1");
+        $categories_route->post("/", "OfferController::store");
+        $categories_route->put("/", "OfferController::update");
+        $categories_route->get("edit", "OfferController::get_update_offer");
     });
     /* Errors Routes */
     $route->group("error", function ($categories_route) {

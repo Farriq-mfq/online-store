@@ -74,6 +74,7 @@
 	<script src="<?= base_url("/client/js/plugins.js") ?>"></script>
 	<script src="<?= base_url("/client/js/ajax-mail.js") ?>"></script>
 	<script src="<?= base_url("/client/js/custom.js") ?>"></script>
+	<?= $this->renderSection("client_script") ?>
 </body>
 
 

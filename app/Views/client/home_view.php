@@ -399,49 +399,85 @@
                                         {"breakpoint":992, "settings": {"slidesToShow": 2} },
                                         {"breakpoint":480, "settings": {"slidesToShow": 1} }
                                     ]'>
-                            <div class="single-slide">
-                                <div class="product-card">
-                                    <div class="product-header">
-                                        <span class="author">
-                                            xpple
-                                        </span>
-                                        <h3><a href="product-details.html">Koss KPH7 Lightweight Portable
-                                                Headphone</a></h3>
-                                    </div>
-                                    <div class="product-card--body">
-                                        <div class="card-image">
-                                            <img src="image/products/product-2.jpg" alt="">
-                                            <div class="hover-contents">
-                                                <a href="product-details.html" class="hover-image">
-                                                    <img src="image/products/product-1.jpg" alt="">
-                                                </a>
-                                                <div class="hover-btns">
-                                                    <a href="cart.html" class="single-btn">
-                                                        <i class="fas fa-shopping-basket"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="single-btn">
-                                                        <i class="fas fa-heart"></i>
-                                                    </a>
-                                                    <a href="compare.html" class="single-btn">
-                                                        <i class="fas fa-random"></i>
-                                                    </a>
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
+                            <?php if (count($offers)) : ?>
+
+                                <?php foreach ($offers as $offer) : ?>
+                                    <div class="single-slide">
+                                        <div class="product-card">
+                                            <div class="product-header">
+                                                <span class="author">
+                                                    <?= $offer->brand ?  $offer->brand->brand : "No author / brand" ?>
+                                                </span>
+                                                <h3><a href="product-details.html"><?= $offer->title ?></a></h3>
+                                            </div>
+                                            <div class="product-card--body">
+                                                <div class="card-image">
+                                                    <?php foreach ($offer->product_images as $image) : ?>
+                                                        <?php if ($image->is_primary) : ?>
+                                                            <img src="<?= $image->image ?>" alt="PRODUCT IMAGE">
+                                                        <?php endif ?>
+                                                    <?php endforeach ?>
+                                                    <div class="hover-contents">
+                                                        <a href="product-details.html" class="hover-image">
+                                                            <?php foreach ($offer->product_images as $image) : ?>
+                                                                <?php if ($image->is_primary) : ?>
+                                                                    <img src="<?= $image->image ?>" alt="PRODUCT IMAGE">
+                                                                <?php endif ?>
+                                                            <?php endforeach ?>
+                                                        </a>
+                                                        <div class="hover-btns">
+                                                            <a href="cart.html" class="single-btn">
+                                                                <i class="fas fa-shopping-basket"></i>
+                                                            </a>
+                                                            <a href="wishlist.html" class="single-btn">
+                                                                <i class="fas fa-heart"></i>
+                                                            </a>
+                                                            <a href="compare.html" class="single-btn">
+                                                                <i class="fas fa-random"></i>
+                                                            </a>
+                                                            <a href="#" class="single-btn" id="show_detail_product" data-id="<?= $offer->product_id ?>">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="price-block">
+                                                    <?php if (count($offer->product_discount)) : ?>
+                                                        <?php foreach ($offer->product_discount as $discount) : ?>
+                                                            <?php if ($discount->discount_type === "PERCENTAGE") : ?>
+                                                                <span class="price"><?= format_rupiah(get_discount($offer->price, $discount->discount_value)) ?></span>
+                                                                <del class="price-old"><?= format_rupiah($offer->price) ?></del>
+                                                                <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                            <?php elseif ($discount->discount_type === "PERCENTAGE") : ?>
+                                                                <span class="price"><?= format_rupiah(get_less_price($offer->price, $discount->discount_value)) ?></span>
+                                                                <del class="price-old"><?= format_rupiah($offer->price) ?></del>
+                                                                <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                            <?php else : ?>
+                                                                <span class="price"><?= format_rupiah($offer->price) ?></span>
+                                                            <?php endif ?>
+                                                        <?php endforeach ?>
+                                                    <?php else : ?>
+                                                        <span class="price"><?= format_rupiah($offer->price) ?></span>
+                                                    <?php endif ?>
+                                                </div>
+                                                <div class="count-down-block">
+                                                    <div class="product-countdown" data-countdown="<?= replace_date_to_slash($offer->offers[0]->offer_end) ?>"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="price-block">
-                                            <span class="price">£51.20</span>
-                                            <del class="price-old">£51.20</del>
-                                            <span class="price-discount">20%</span>
-                                        </div>
-                                        <div class="count-down-block">
-                                            <div class="product-countdown" data-countdown="01/05/2020"></div>
+                                    </div>
+                                <?php endforeach ?>
+                            <?php else : ?>
+                                <div class="single-slide">
+                                    <div class="product-card">
+                                        <div class="product-header">
+                                            <a href="#" class="author">
+                                                NO OFFER
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <?php foreach ($banner_bottom_offer as $bbo) : ?>
@@ -731,7 +767,44 @@ Promotion Section Two
 </section>
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
-<script>
-    console.log("home_view")
+<script <?= csp_script_nonce() ?>>
+    $(document).on("click", "#show_detail_product", function(e) {
+        e.preventDefault();
+        const $modal = $(document).find("#quickModal")
+        const $id = $(this).data("id");
+        const $image = $(document).find("#product_image_modal");
+        const $slider_image = $(document).find("#slider_image_modal");
+        $.get({
+            url: "<?= base_url("/api/data/product") ?>",
+            data: {
+                id: $id,
+            },
+            beforeSend: () => {
+                $image.slick("destroy");
+                $slider_image.slick("destroy");
+            },
+            success: (data) => {
+                if (data != null) {
+                    for (let i = 0; i < data.product_images.length; i++) {
+                        const images = data.product_images[i];
+                        $image.append(`<div class="single-slide">
+                            <img src="${images.image}" alt="">
+                            </div>`)
+                    }
+                    for (let i = 0; i < data.product_images.length; i++) {
+                        const images = data.product_images[i];
+                        $slider_image.append(`<div class="single-slide">
+                                    <img src="${images.image}" alt="">
+                                </div>`)
+                    }
+
+                    $image.slick()
+                    $slider_image.slick()
+                    $modal.modal("show");
+                }
+            }
+        });
+
+    })
 </script>
 <?= $this->endSection() ?>

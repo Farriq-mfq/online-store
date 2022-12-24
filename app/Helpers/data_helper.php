@@ -44,3 +44,8 @@ function format_rupiah($value)
 {
     return "Rp.".number_format($value,0,",",".");
 }
+
+function replace_date_to_slash($date)
+{
+    return str_replace("-","/",$date);
+}

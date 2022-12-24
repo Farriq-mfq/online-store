@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Banner;
 use App\Models\Categories;
+use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Slider;
 use Config\Services;
@@ -14,18 +15,20 @@ class Home extends BaseController
     protected Product $product;
     protected Banner $banner;
     protected Categories $categories;
+    protected Offer $offer;
     public function __construct()
     {
         $this->slider = new Slider();
         $this->product = new Product();
         $this->banner = new Banner();
         $this->categories = new Categories();
+        $this->offer = new Offer();
     }
     public function index()
     {
         $data['sliders'] = $this->slider->findAll();
-        $data['featureds'] = $this->product->where("status",true)->with("product_discount")->where("featured",true)->findAll();
-        $data['news'] = $this->product->where("status",true)->with("product_discount")->where("new_label",true)->findAll();
+        $data['featureds'] = $this->product->where("status",true)->where("featured",true)->findAll();
+        $data['news'] = $this->product->where("status",true)->where("new_label",true)->findAll();
         $data['banner_bottom_slider'] = $this->banner->where("banner_location","BOTTOM_SLIDER")->findAll();
         $data['banner_long_banner'] = $this->banner->where("banner_location","LONG_BANNER")->findAll();
         $data['banner_bottom_offer'] = $this->banner->where("banner_location","BOTTOM_OFFER")->findAll();
@@ -38,9 +41,19 @@ class Home extends BaseController
         $data['ct2_items'] = $item2;
         $data['ct3_name'] = $category3;
         $data['ct3_items'] = $item3;
+        $data['offers'] = $this->get_offers_($this->product->with("offers")->findAll());
         return view('client/home_view',add_data("Welcome Back","home/index",$data));
     }
     
+
+    public function get_offers_($productOffer)
+    {
+        $expired = date("Y-m-d H:i:s");
+        $filter = array_filter($productOffer,function($v) use($expired){
+            return $v->offers != null && $v->offers[0]->offer_end >= $expired && $v->offers[0]->offer_start <= $expired;;
+        });
+        return array_values($filter);
+    }
     protected function getRandomProductByCategory()
     {
         $randomCategory = $this->categories->without("products")->orderBy("rand()")->first();

@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-5">
                         <!-- Product Details Slider Big Image-->
-                        <div class="product-details-slider sb-slick-slider arrow-type-two" data-slick-setting='{
+                        <div id="product_image_modal" class="product-details-slider sb-slick-slider arrow-type-two" data-slick-setting='{
                                     "slidesToShow": 1,
                                     "arrows": false,
                                     "fade": true,
@@ -15,24 +15,9 @@
                                     "swipe": false,
                                     "asNavFor": ".product-slider-nav"
                                     }'>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-1.jpg" alt="">
-                            </div>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-2.jpg" alt="">
-                            </div>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-3.jpg" alt="">
-                            </div>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-4.jpg" alt="">
-                            </div>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-5.jpg" alt="">
-                            </div>
                         </div>
                         <!-- Product Details Slider Nav -->
-                        <div class="mt--30 product-slider-nav sb-slick-slider arrow-type-two" data-slick-setting='{
+                        <div id="slider_image_modal" class="mt--30 product-slider-nav sb-slick-slider arrow-type-two" data-slick-setting='{
             "infinite":true,
               "autoplay": true,
               "autoplaySpeed": 8000,
@@ -43,21 +28,9 @@
               "asNavFor": ".product-details-slider",
               "focusOnSelect": true
               }'>
-                            <div class="single-slide">
+                            <!-- <div class="single-slide">
                                 <img src="image/products/product-details-1.jpg" alt="">
-                            </div>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-2.jpg" alt="">
-                            </div>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-3.jpg" alt="">
-                            </div>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-4.jpg" alt="">
-                            </div>
-                            <div class="single-slide">
-                                <img src="image/products/product-details-5.jpg" alt="">
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-lg-7 mt--30 mt-lg--30">
