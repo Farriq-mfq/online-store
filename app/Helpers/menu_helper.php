@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists("printMenu")) {
+if (!function_exists("printcategories")) {
     function printcategories(array $a)
     {
         $html = "";
@@ -10,11 +10,14 @@ if (!function_exists("printMenu")) {
 
         foreach ($a as $v) {
             if ($v['parent_category']) {
-                $html .= '<li><a href="#">' . $v['category'] . '</a></li>';
+                $html .= '<li><a href="'.base_url('/shop?category_id='.$v['category_id']).'">' . $v['category'] . '</a></li>';
             }
 
             if (isset($v['child'])) {
-                $html .= '<li class="cat-item has-children"><a href="#">' . $v['category'] . '</a><ul class="sub-menu">' . printcategories($v['child']) . '</a></ul></li>';
+                $html .= '<li class="cat-item has-children">
+                <a href="'.base_url('/shop?category_id='.$v['category_id']).'">' . $v['category'] . '</a>
+                     <ul class="sub-menu">' . printcategories($v['child']) . '</ul>
+                </li>';
             }
         }
 

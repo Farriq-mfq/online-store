@@ -111,36 +111,49 @@ class Product extends Model
             return false;
         }
     }
-    public function get_brand_a_z($perpage, $group, $q = "")
+    public function get_brand_a_z($perpage, $group, $q = "", $ct = "")
     {
         if (!empty($q)) {
             return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->like("title", "" . $q . "")->orderBy("brand_name", "ASC")->paginate($perpage, $group);
+        } else if (!empty($ct)) {
+            return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->where("category_id", $ct)->orderBy("brand_name", "ASC")->paginate($perpage, $group);
         } else {
             return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name", "ASC")->paginate($perpage, $group);
         }
     }
-    public function get_brand_z_a($perpage, $group, $q = "")
+    public function get_brand_z_a($perpage, $group, $q = "", $ct = "")
     {
         if (!empty($q)) {
             return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->like("title", "" . $q . "")->orderBy("brand_name", "DESC")->paginate($perpage, $group);
+        } else if (!empty($ct)) {
+            return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->where("category_id", $ct)->orderBy("brand_name", "DESC")->paginate($perpage, $group);
         } else {
             return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name", "DESC")->paginate($perpage, $group);
         }
     }
-    public function getratingHigh($perpage, $group, $q = "")
+    public function getratingHigh($perpage, $group, $q = "",$ct="")
     {
         if (!empty($q)) {
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->like("title", "" . $q . "")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "DESC")->paginate($perpage, $group);
+        } else if (!empty($ct)) {
+            return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->where("category_id", $ct)->where("status", 1)->groupBy("product_reviews.product_id")->orderBy("avg_rating", "DESC")->paginate($perpage, $group);
         } else {
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "DESC")->paginate($perpage, $group);
         }
     }
-    public function getratinglow($perpage, $group, $q = "")
+    public function getratinglow($perpage, $group, $q = "",$ct="")
     {
         if (!empty($q)) {
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->like("title", "" . $q . "")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "ASC")->paginate($perpage, $group);
-        }else{
+        }else if (!empty($ct)) {
+            return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->where("category_id", $ct)->where("status", 1)->groupBy("product_reviews.product_id")->orderBy("avg_rating", "ASC")->paginate($perpage, $group);
+        } else {
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "ASC")->paginate($perpage, $group);
         }
+    }
+
+    public function getTagsProduct($idProduct)
+    {
+        return $this->where("status",1)->without(['brands',"categories","product_discount","product_images"])->where('products.product_id',$idProduct)->select("products.product_id,products.status,product_tags.tag_id,tags.tag")->join("product_tags","product_tags.product_id=products.product_id")->join("tags","product_tags.tag_id=tags.tag_id")->findAll();
     }
 }

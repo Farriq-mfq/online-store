@@ -17,7 +17,7 @@ class ProductReviews extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ["review","rating","user_id","product_id"];
-
+    protected $with = ['users'];
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';

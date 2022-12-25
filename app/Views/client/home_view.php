@@ -240,7 +240,7 @@
                                                         <a href="compare.html" class="single-btn">
                                                             <i class="fas fa-random"></i>
                                                         </a>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
+                                                        <a href="#" class="single-btn" id="show_detail_product" data-id="<?= $featured->product_id ?>">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                     </div>
@@ -331,7 +331,7 @@
                                                         <a href="compare.html" class="single-btn">
                                                             <i class="fas fa-random"></i>
                                                         </a>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
+                                                        <a href="#" class="single-btn" id="show_detail_product" data-id="<?= $new->product_id ?>">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                     </div>
@@ -611,7 +611,7 @@
                                                             <a href="compare.html" class="single-btn">
                                                                 <i class="fas fa-random"></i>
                                                             </a>
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
+                                                            <a href="#" class="single-btn" id="show_detail_product" data-id="<?= $ct2->product_id ?>">
                                                                 <i class="fas fa-eye"></i>
                                                             </a>
                                                         </div>
@@ -767,44 +767,5 @@ Promotion Section Two
 </section>
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
-<script <?= csp_script_nonce() ?>>
-    $(document).on("click", "#show_detail_product", function(e) {
-        e.preventDefault();
-        const $modal = $(document).find("#quickModal")
-        const $id = $(this).data("id");
-        const $image = $(document).find("#product_image_modal");
-        const $slider_image = $(document).find("#slider_image_modal");
-        $.get({
-            url: "<?= base_url("/api/data/product") ?>",
-            data: {
-                id: $id,
-            },
-            beforeSend: () => {
-                $image.slick("destroy");
-                $slider_image.slick("destroy");
-            },
-            success: (data) => {
-                if (data != null) {
-                    for (let i = 0; i < data.product_images.length; i++) {
-                        const images = data.product_images[i];
-                        $image.append(`<div class="single-slide">
-                            <img src="${images.image}" alt="">
-                            </div>`)
-                    }
-                    for (let i = 0; i < data.product_images.length; i++) {
-                        const images = data.product_images[i];
-                        $slider_image.append(`<div class="single-slide">
-                                    <img src="${images.image}" alt="">
-                                </div>`)
-                    }
 
-                    $image.slick()
-                    $slider_image.slick()
-                    $modal.modal("show");
-                }
-            }
-        });
-
-    })
-</script>
 <?= $this->endSection() ?>

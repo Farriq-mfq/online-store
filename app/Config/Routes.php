@@ -39,7 +39,7 @@ $routes->set404Override();
 /* USER ROUTES */
 $routes->group("shop", function ($route) {
     $route->get('/', 'ShopControlller::index');
-    $route->get('(:segment)', 'ProductController::detail/$1');
+    $route->get('(:segment)', 'ShopControlller::detail/$1');
 });
 $routes->group("cart", ["filter" => "user"], function ($route) {
     $route->get("/", "CartController::index");
@@ -68,6 +68,7 @@ $routes->get("/", "Home::index");
 
 $routes->group("api/data",function($route){
     $route->get("product","ApiController::get_product");
+    $route->get("load/product","ApiController::index");
 });
 
 

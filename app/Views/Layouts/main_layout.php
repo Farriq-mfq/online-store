@@ -74,6 +74,10 @@
 	<script src="<?= base_url("/client/js/plugins.js") ?>"></script>
 	<script src="<?= base_url("/client/js/ajax-mail.js") ?>"></script>
 	<script src="<?= base_url("/client/js/custom.js") ?>"></script>
+	<script src="<?= base_url("/client/js/client.js") ?>"></script>
+	<script <?= csp_script_nonce() ?>>
+		clickModal("<?= base_url("/api/data/product") ?>", "<?= base_url("/api/data/load/product") ?>");
+	</script>
 	<?= $this->renderSection("client_script") ?>
 </body>
 

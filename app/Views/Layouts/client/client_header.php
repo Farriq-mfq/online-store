@@ -39,7 +39,7 @@
 							<ul class="category-menu">
 								<?php foreach ($categories as $ct) : ?>
 									<?php if (!isset($ct['child'])) : ?>
-										<li class="cat-item"><a href="#"><?= $ct['category'] ?></a></li>
+										<li class="cat-item"><a href="<?= base_url("/shop?category_id=".$ct['category_id']) ?>"><?= $ct['category'] ?></a></li>
 									<?php endif ?>
 								<?php endforeach ?>
 								<?= printcategories($categories) ?>
@@ -121,7 +121,7 @@
 							<ul class="category-menu">
 								<?php foreach ($categories as $ct) : ?>
 									<?php if (!isset($ct['child'])) : ?>
-										<li class="cat-item"><a href="#"><?= $ct['category'] ?></a></li>
+										<li class="cat-item"><a href="<?= base_url("/shop?category_id=".$ct['category_id']) ?>"><?= $ct['category'] ?></a></li>
 									<?php endif ?>
 								<?php endforeach ?>
 								<?= printcategories($categories) ?>
