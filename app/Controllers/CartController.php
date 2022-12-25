@@ -45,11 +45,10 @@ class CartController extends BaseController
             try {
                 $validate = $this->validate([
                     'id' => "required",
-                    'qty' => "required"
                 ]);
                 if ($validate) {
                     $id = htmlentities($this->request->getVar('id'));
-                    $qty = htmlentities($this->request->getVar('qty'));
+                    $qty = $this->request->getVar('qty') ?  htmlentities($this->request->getVar('qty')) : 1;
                     $product = $this->product->find($id);
                     $check_product_exist = $this->cart->where("user_id", auth_user_id())->where("product_id", $id)->first();
                     if ($product->product_discount) {

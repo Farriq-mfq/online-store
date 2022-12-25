@@ -231,9 +231,13 @@
                                                         <?php endforeach ?>
                                                     </a>
                                                     <div class="hover-btns">
-                                                        <a href="cart.html" class="single-btn">
-                                                            <i class="fas fa-shopping-basket"></i>
-                                                        </a>
+                                                        <?php if (auth_user()) : ?>
+                                                            <button class="single-btn" id="__btn__add__to__cart" data-id="<?= $featured->product_id ?>"><i class="fas fa-shopping-basket"></i></button>
+                                                        <?php else : ?>
+                                                            <a href="<?= base_url('/auth') ?>" class="single-btn">
+                                                                <i class="fas fa-shopping-basket"></i>
+                                                            </a>
+                                                        <?php endif ?>
                                                         <a href="wishlist.html" class="single-btn">
                                                             <i class="fas fa-heart"></i>
                                                         </a>
@@ -322,9 +326,13 @@
                                                         <?php endforeach ?>
                                                     </a>
                                                     <div class="hover-btns">
-                                                        <a href="cart.html" class="single-btn">
-                                                            <i class="fas fa-shopping-basket"></i>
-                                                        </a>
+                                                        <?php if (auth_user()) : ?>
+                                                            <button class="single-btn" id="__btn__add__to__cart" data-id="<?= $new->product_id ?>"><i class="fas fa-shopping-basket"></i></button>
+                                                        <?php else : ?>
+                                                            <a href="<?= base_url('/auth') ?>" class="single-btn">
+                                                                <i class="fas fa-shopping-basket"></i>
+                                                            </a>
+                                                        <?php endif ?>
                                                         <a href="wishlist.html" class="single-btn">
                                                             <i class="fas fa-heart"></i>
                                                         </a>
@@ -426,9 +434,13 @@
                                                             <?php endforeach ?>
                                                         </a>
                                                         <div class="hover-btns">
-                                                            <a href="cart.html" class="single-btn">
-                                                                <i class="fas fa-shopping-basket"></i>
-                                                            </a>
+                                                            <?php if (auth_user()) : ?>
+                                                                <button class="single-btn" id="__btn__add__to__cart" data-id="<?= $offer->product_id ?>"><i class="fas fa-shopping-basket"></i></button>
+                                                            <?php else : ?>
+                                                                <a href="<?= base_url('/auth') ?>" class="single-btn">
+                                                                    <i class="fas fa-shopping-basket"></i>
+                                                                </a>
+                                                            <?php endif ?>
                                                             <a href="wishlist.html" class="single-btn">
                                                                 <i class="fas fa-heart"></i>
                                                             </a>
@@ -602,9 +614,13 @@
                                                             <?php endforeach ?>
                                                         </a>
                                                         <div class="hover-btns">
-                                                            <a href="cart.html" class="single-btn">
-                                                                <i class="fas fa-shopping-basket"></i>
-                                                            </a>
+                                                            <?php if (auth_user()) : ?>
+                                                                <button class="single-btn" id="__btn__add__to__cart" data-id="<?= $ct2->product_id ?>"><i class="fas fa-shopping-basket"></i></button>
+                                                            <?php else : ?>
+                                                                <a href="<?= base_url('/auth') ?>" class="single-btn">
+                                                                    <i class="fas fa-shopping-basket"></i>
+                                                                </a>
+                                                            <?php endif ?>
                                                             <a href="wishlist.html" class="single-btn">
                                                                 <i class="fas fa-heart"></i>
                                                             </a>

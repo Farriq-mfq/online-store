@@ -12,6 +12,7 @@
 	<!-- Use Minified Plugins Version For Fast Page Load -->
 	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/plugins.css") ?>" />
 	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/main.css") ?>" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/jquery.toast.css") ?>" />
 	<link rel="shortcut icon" type="image/x-icon" href="<?= base_url("/client/image/favicon.ico") ?>">
 </head>
 
@@ -73,6 +74,7 @@
 	<!-- Use Minified Plugins Version For Fast Page Load -->
 	<script src="<?= base_url("/client/js/plugins.js") ?>"></script>
 	<script src="<?= base_url("/client/js/ajax-mail.js") ?>"></script>
+	<script src="<?= base_url("/client/js/jquery.toast.js") ?>"></script>
 	<script src="<?= base_url("/client/js/custom.js") ?>"></script>
 	<script src="<?= base_url("/client/js/client.js") ?>"></script>
 	<?php if (auth_user()) : ?>

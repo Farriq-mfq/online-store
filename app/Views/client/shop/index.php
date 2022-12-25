@@ -118,7 +118,7 @@
                                         <?= $product->brand ?  $product->brand->brand : "No author / brand" ?>
                                         <?= $product->category_id ?>
                                     </a>
-                                    <h3><a href="<?= base_url("/shop/".$product->slug) ?>"><?= $product->title ?></a></h3>
+                                    <h3><a href="<?= base_url("/shop/" . $product->slug) ?>"><?= $product->title ?></a></h3>
                                 </div>
                                 <div class="product-card--body">
                                     <div class="card-image">
@@ -128,7 +128,7 @@
                                             <?php endif ?>
                                         <?php endforeach ?>
                                         <div class="hover-contents">
-                                            <a href="<?= base_url("/shop/".$product->slug) ?>" class="hover-image">
+                                            <a href="<?= base_url("/shop/" . $product->slug) ?>" class="hover-image">
                                                 <?php foreach ($product->product_images as $image) : ?>
                                                     <?php if ($image->is_primary) : ?>
                                                         <img src="<?= $image->image ?>" alt="PRODUCT IMAGE">
@@ -136,9 +136,13 @@
                                                 <?php endforeach ?>
                                             </a>
                                             <div class="hover-btns">
-                                                <a href="cart.html" class="single-btn">
-                                                    <i class="fas fa-shopping-basket"></i>
-                                                </a>
+                                                <?php if (auth_user()) : ?>
+                                                    <button class="single-btn" id="__btn__add__to__cart" data-id="<?= $product->product_id ?>"><i class="fas fa-shopping-basket"></i></button>
+                                                <?php else : ?>
+                                                    <a href="<?= base_url('/auth') ?>" class="single-btn">
+                                                        <i class="fas fa-shopping-basket"></i>
+                                                    </a>
+                                                <?php endif ?>
                                                 <a href="wishlist.html" class="single-btn">
                                                     <i class="fas fa-heart"></i>
                                                 </a>
@@ -185,7 +189,7 @@
                                         <a href="#" class="author">
                                             <?= $product->brand ?  $product->brand->brand : "No author / brand" ?>
                                         </a>
-                                        <h3><a href="<?= base_url("/shop/".$product->slug) ?>" tabindex="0"><?= $product->title ?></a></h3>
+                                        <h3><a href="<?= base_url("/shop/" . $product->slug) ?>" tabindex="0"><?= $product->title ?></a></h3>
                                     </div>
                                     <article>
                                         <h2 class="sr-only">Card List Article</h2>
@@ -226,7 +230,13 @@
                                         <?php endif ?>
                                     </div>
                                     <div class="btn-block">
-                                        <a href="#" class="btn btn-outlined">Add To Cart</a>
+                                        <?php if (auth_user()) : ?>
+                                            <button class="btn btn-outlined" id="__btn__add__to__cart" data-id="<?= $product->product_id ?>">Add to
+                                                Cart</button>
+                                        <?php else : ?>
+                                            <a href="<?= base_url('/auth') ?>" class="btn btn-outlined">Add to
+                                                Cart</a>
+                                        <?php endif ?>
                                         <a href="#" class="card-link"><i class="fas fa-heart"></i> Add To Wishlist</a>
                                         <a href="#" class="card-link"><i class="fas fa-random"></i> Add To Cart</a>
                                     </div>

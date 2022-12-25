@@ -11,13 +11,23 @@ function addToCart(url, urlload, loadCount, loadTotalPrice) {
       },
       url,
       success: (data) => {
-        console.log(data);
-        loadCart(urlload, loadCount, loadTotalPrice);
+        if (data.success) {
+          loadCart(urlload, loadCount, loadTotalPrice);
+          $.toast({
+            heading: "Information",
+            text: "Add cart success",
+            bgColor: "#62AB00",
+            textColor: "white",
+            icon: "info",
+            showHideTransition: "slide",
+            position: "bottom-left",
+          });
+        }
       },
     });
   });
 }
-function removeCart(url, urlload, loadCount,loadTotalPrice) {
+function removeCart(url, urlload, loadCount, loadTotalPrice) {
   $(document).on("click", "#__remove__cart__action", function (e) {
     e.preventDefault();
     const $id = $(this).data("id");
@@ -28,8 +38,18 @@ function removeCart(url, urlload, loadCount,loadTotalPrice) {
       },
       url,
       success: (data) => {
-        console.log(data);
-        loadCart(urlload, loadCount, loadTotalPrice);
+        if (data.success) {
+          loadCart(urlload, loadCount, loadTotalPrice);
+          $.toast({
+            heading: "Information",
+            text: "Remove cart success",
+            bgColor: "#62AB00",
+            textColor: "white",
+            icon: "info",
+            showHideTransition: "slide",
+            position: "bottom-left",
+          });
+        }
       },
     });
   });
