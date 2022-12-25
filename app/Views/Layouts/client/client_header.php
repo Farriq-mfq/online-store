@@ -39,7 +39,7 @@
 							<ul class="category-menu">
 								<?php foreach ($categories as $ct) : ?>
 									<?php if (!isset($ct['child'])) : ?>
-										<li class="cat-item"><a href="<?= base_url("/shop?category_id=".$ct['category_id']) ?>"><?= $ct['category'] ?></a></li>
+										<li class="cat-item"><a href="<?= base_url("/shop?category_id=" . $ct['category_id']) ?>"><?= $ct['category'] ?></a></li>
 									<?php endif ?>
 								<?php endforeach ?>
 								<?= printcategories($categories) ?>
@@ -59,41 +59,37 @@
 					<div class="main-navigation flex-lg-right">
 						<div class="cart-widget">
 							<div class="login-block">
-								<a href="login-register.html" class="font-weight-bold">Login</a> <br>
-								<span>or</span><a href="login-register.html">Register</a>
+								<?php if (auth_user()) : ?>
+
+									<ul class="main-menu">
+										<li class="menu-item has-children">
+											<a href="javascript:void(0)">My Account <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+											<ul class="sub-menu">
+												<li><a href="#">My Account</a></li>
+												<li><a href="#">Order History</a></li>
+												<li><a href="#">Transactions</a></li>
+												<li><a href="#">Downloads</a></li>
+											</ul>
+										</li>
+									</ul>
+								<?php else : ?>
+									<a href="<?= base_url("/auth") ?>" class="font-weight-bold">Login</a> <br>
+									<span>or</span><a href="<?= base_url("/auth") ?>">Register</a>
+								<?php endif ?>
 							</div>
 							<div class="cart-block">
 								<div class="cart-total">
-									<span class="text-number">
-										1
-									</span>
+									<span class="text-number" id="load__cart__count">0</span>
 									<span class="text-item">
 										Shopping Cart
 									</span>
-									<span class="price">
-										£0.00
-										<i class="fas fa-chevron-down"></i>
+									<span class="price" id="load__total__price">
+										Rp.0
 									</span>
 								</div>
-								<div class="cart-dropdown-block">
-									<div class=" single-cart-block ">
-										<div class="cart-product">
-											<a href="product-details.html" class="image">
-												<img src="image/products/cart-product-1.jpg" alt="">
-											</a>
-											<div class="content">
-												<h3 class="title"><a href="product-details.html">Kodak PIXPRO
-														Astro Zoom AZ421 16 MP</a></h3>
-												<p class="price"><span class="qty">1 ×</span> £87.34</p>
-												<button class="cross-btn"><i class="fas fa-times"></i></button>
-											</div>
-										</div>
-									</div>
-									<div class=" single-cart-block ">
-										<div class="btn-block">
-											<a href="cart.html" class="btn">View Cart <i class="fas fa-chevron-right"></i></a>
-											<a href="checkout.html" class="btn btn--primary">Check Out <i class="fas fa-chevron-right"></i></a>
-										</div>
+								<div class="cart-dropdown-block" id="load__cart____">
+									<div class="single-cart-block text-center">
+										Cart Empty
 									</div>
 								</div>
 							</div>
@@ -121,7 +117,7 @@
 							<ul class="category-menu">
 								<?php foreach ($categories as $ct) : ?>
 									<?php if (!isset($ct['child'])) : ?>
-										<li class="cat-item"><a href="<?= base_url("/shop?category_id=".$ct['category_id']) ?>"><?= $ct['category'] ?></a></li>
+										<li class="cat-item"><a href="<?= base_url("/shop?category_id=" . $ct['category_id']) ?>"><?= $ct['category'] ?></a></li>
 									<?php endif ?>
 								<?php endforeach ?>
 								<?= printcategories($categories) ?>
@@ -169,19 +165,21 @@
 				<!-- mobile menu navigation end -->
 			</div>
 			<!-- mobile menu end -->
-			<nav class="off-canvas-nav">
-				<ul class="mobile-menu menu-block-2">
-					<li class="menu-item-has-children">
-						<a href="#">My Account <i class="fas fa-angle-down"></i></a>
-						<ul class="sub-menu">
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">Order History</a></li>
-							<li><a href="#">Transactions</a></li>
-							<li><a href="#">Downloads</a></li>
-						</ul>
-					</li>
-				</ul>
-			</nav>
+			<?php if (auth_user()) : ?>
+				<nav class="off-canvas-nav">
+					<ul class="mobile-menu menu-block-2">
+						<li class="menu-item-has-children">
+							<a href="#">My Account <i class="fas fa-angle-down"></i></a>
+							<ul class="sub-menu">
+								<li><a href="#">My Account</a></li>
+								<li><a href="#">Order History</a></li>
+								<li><a href="#">Transactions</a></li>
+								<li><a href="#">Downloads</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			<?php endif ?>
 			<div class="off-canvas-bottom">
 				<div class="contact-list mb--10">
 					<a href="#" class="sin-contact"><i class="fas fa-mobile-alt"></i>(12345) 78790220</a>

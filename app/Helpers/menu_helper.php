@@ -10,12 +10,12 @@ if (!function_exists("printcategories")) {
 
         foreach ($a as $v) {
             if ($v['parent_category']) {
-                $html .= '<li><a href="'.base_url('/shop?category_id='.$v['category_id']).'">' . $v['category'] . '</a></li>';
+                $html .= '<li><a href="' . base_url('/shop?category_id=' . $v['category_id']) . '">' . $v['category'] . '</a></li>';
             }
 
             if (isset($v['child'])) {
                 $html .= '<li class="cat-item has-children">
-                <a href="'.base_url('/shop?category_id='.$v['category_id']).'">' . $v['category'] . '</a>
+                <a href="' . base_url('/shop?category_id=' . $v['category_id']) . '">' . $v['category'] . '</a>
                      <ul class="sub-menu">' . printcategories($v['child']) . '</ul>
                 </li>';
             }
@@ -59,10 +59,10 @@ if (!function_exists("printMenu")) {
             if (isset($menu["child"])) {
                 $child = "";
                 foreach ($menu['child'] as $c) {
-                    $child .= '<li> <a href="'.$c['link'].'">'.$c['title'].'</a></li>';
+                    $child .= '<li> <a href="' . $c['link'] . '">' . $c['title'] . '</a></li>';
                 }
                 $html .= '<li class="menu-item has-children">
-                            <a href="'.$menu['link'].'">' . $menu['title'] . '</a>
+                            <a href="' . $menu['link'] . '">' . $menu['title'] . '</a>
                             <ul class="sub-menu">
                                 ' . $child . '
                             </ul>
@@ -70,7 +70,7 @@ if (!function_exists("printMenu")) {
             } else {
 
                 $html .= '<li class="menu-item">
-                <a href="'.$menu['link'].'">' . $menu['title'] . '</a>
+                <a href="' . $menu['link'] . '">' . $menu['title'] . '</a>
             </li>';
             }
         }

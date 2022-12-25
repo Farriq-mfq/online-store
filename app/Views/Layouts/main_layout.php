@@ -75,6 +75,14 @@
 	<script src="<?= base_url("/client/js/ajax-mail.js") ?>"></script>
 	<script src="<?= base_url("/client/js/custom.js") ?>"></script>
 	<script src="<?= base_url("/client/js/client.js") ?>"></script>
+	<?php if (auth_user()) : ?>
+		<script src="<?= base_url("/client/js/cart.js") ?>"></script>
+		<script <?= csp_script_nonce() ?>>
+			loadCart("<?= base_url("/api/cart") ?>", "<?= base_url("/api/cart/count") ?>", "<?= base_url("/api/cart/total_price") ?>");
+			addToCart("<?= base_url("/api/cart/add") ?>", "<?= base_url("/api/cart") ?>", "<?= base_url("/api/cart/count") ?>", "<?= base_url("/api/cart/total_price") ?>")
+			removeCart("<?= base_url("/api/cart/remove") ?>", "<?= base_url("/api/cart") ?>", "<?= base_url("/api/cart/count") ?>", "<?= base_url("/api/cart/total_price") ?>")
+		</script>
+	<?php endif ?>
 	<script <?= csp_script_nonce() ?>>
 		clickModal("<?= base_url("/api/data/product") ?>", "<?= base_url("/api/data/load/product") ?>");
 	</script>

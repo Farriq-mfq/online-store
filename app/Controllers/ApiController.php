@@ -21,6 +21,9 @@ class ApiController extends BaseController
         $stock = $product->stock > 0 ? "In Stock" : "Out Of Stock";
         $stock_class = $product->stock > 0 ? "" : "text-danger";
         $tags = count($this->product->getTagsProduct($product->product_id)) ? $this->printtags($this->product->getTagsProduct($product->product_id)) : "-";
+        $button = auth_user() ? '<button class="btn btn-outlined--primary" id="__btn__add__to__cart" data-id="'.$product->product_id.'"><span class="plus-icon">+</span>Add to
+        Cart</button>' : '<a href="' . base_url('/auth') . '" class="btn btn-outlined--primary"><span class="plus-icon">+</span>Add to
+        Cart</a>';
         if ($product) {
             return '<div class="product-details-info pl-lg--30">
                 <p class="tag-block">Tags: ' . $tags . '</p>
@@ -37,8 +40,8 @@ class ApiController extends BaseController
                         ' . $this->printRating($product->product_reviews) . '
                     </div>
                     <div class="review-widget">
-                        <a href="'.base_url("/shop")."/".$product->slug.'">(' . count($product->product_reviews) . ' Reviews)</a> <span>|</span>
-                        <a href="'.base_url("/shop")."/".$product->slug.'">Write a review</a>
+                        <a href="' . base_url("/shop") . "/" . $product->slug . '">(' . count($product->product_reviews) . ' Reviews)</a> <span>|</span>
+                        <a href="' . base_url("/shop") . "/" . $product->slug . '">Write a review</a>
                     </div>
                 </div>
                 <article class="product-details-article">
@@ -48,10 +51,10 @@ class ApiController extends BaseController
                 <div class="add-to-cart-row">
                     <div class="count-input-block">
                         <span class="widget-label">Qty</span>
-                        <input type="number" class="form-control text-center" value="1">
+                        <input type="number" class="form-control text-center" value="1" min="0" id="__qty__to__add__cart">
                     </div>
                     <div class="add-cart-btn">
-                        <a href="#" class="btn btn-outlined--primary"><span class="plus-icon">+</span>Add to Cart</a>
+                        ' . $button . '
                     </div>
                 </div>
                 <div class="compare-wishlist-row">

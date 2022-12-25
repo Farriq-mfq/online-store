@@ -69,11 +69,3 @@ function clickModal(urlcall,urlload) {
     })
 }
 
-
-// function addToCart(){
-
-// }
-
-// function showCart(){
-
-// }

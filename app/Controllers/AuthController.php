@@ -24,7 +24,7 @@ class AuthController extends BaseController
 
         if(!$validate){
             session()->setFlashdata('validation',$this->validator->getErrors());
-            return redirect()->to(base_url('/auth/login'))->withInput();
+            return redirect()->to(base_url('/auth'))->withInput();
         }
 
         $credentials = [
@@ -32,10 +32,10 @@ class AuthController extends BaseController
             "password"=>$this->request->getVar("password"),
         ];
         if(Services::authserviceUser()->attempt($credentials)){
-            return redirect()->to(base_url("/product"));
+            return redirect()->to(base_url("/shop"));
         }else{
             session()->setFlashdata('error_login',"Invalid email or password");
-            return redirect()->to(base_url('/auth/login'));
+            return redirect()->to(base_url('/auth'));
         }
     }
 }

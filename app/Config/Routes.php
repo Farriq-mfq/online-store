@@ -41,19 +41,23 @@ $routes->group("shop", function ($route) {
     $route->get('/', 'ShopControlller::index');
     $route->get('(:segment)', 'ShopControlller::detail/$1');
 });
-$routes->group("cart", ["filter" => "user"], function ($route) {
+$routes->group("api/cart", ["filter" => "user"], function ($route) {
     $route->get("/", "CartController::index");
-    $route->post("add", "ProductController::add_to_cart");
-    $route->get("get", "ProductController::getCountCart");
-    $route->post("update", "CartController::update_cart");
-    $route->post("delete/all", "CartController::remove_cart_all");
-    $route->post("checkout","CartController::checkout");
-    $route->get("checkout","CartController::checkout_page");
-    $route->post("process_to_checkout","OrderController::checkout");
-    $route->get("get_user_address","CartController::get_user_address");
+    $route->post("add", "CartController::add_to_cart");
+    $route->get("count", "CartController::show_count_cart");
+    $route->get("total_price", "CartController::show_total_price_cart");
+    $route->post("remove", "CartController::remove_cart");
+    // $route->post("add", "ProductController::add_to_cart");
+    // $route->get("get", "ProductController::getCountCart");
+    // $route->post("update", "CartController::update_cart");
+    // $route->post("delete/all", "CartController::remove_cart_all");
+    // $route->post("checkout","CartController::checkout");
+    // $route->get("checkout","CartController::checkout_page");
+    // $route->post("process_to_checkout","OrderController::checkout");
+    // $route->get("get_user_address","CartController::get_user_address");
 });
 $routes->group("auth", ["filter" => "user-guest"], function ($route) {
-    $route->get('login', 'AuthController::index');
+    $route->get('/', 'AuthController::index');
     $route->post('login', 'AuthController::login');
     // $route->get('(:segment)', 'ProductController::detail/$1');
 });

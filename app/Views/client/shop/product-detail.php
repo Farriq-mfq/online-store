@@ -50,7 +50,7 @@
                             -
                         <?php endif ?>
                     </p>
-                    <h3 class="product-title">Beats EP Wired On-Ear Headphone-Black</h3>
+                    <h3 class="product-title"><?= $product->title ?></h3>
                     <ul class="list-unstyled">
                         <li>Brands: <a href="#" class="list-value font-weight-bold"> <?= $product->brand != null ? $product->brand->brand : "No Brand / Author" ?></a></li>
                         <li>Availability: <span class="list-value <?php if (!$product->stock > 0) : ?>text-danger<?php endif ?>"> <?= $product->stock > 0 ? "In Stock" : "Out Of Stock" ?></span></li>
@@ -102,11 +102,16 @@
                     <div class="add-to-cart-row">
                         <div class="count-input-block">
                             <span class="widget-label">Qty</span>
-                            <input type="number" class="form-control text-center" value="1">
+                            <input type="number" class="form-control text-center" value="1" min="0" id="__qty__to__add__cart">
                         </div>
                         <div class="add-cart-btn">
-                            <a href="#" class="btn btn-outlined--primary"><span class="plus-icon">+</span>Add to
-                                Cart</a>
+                            <?php if (auth_user()) : ?>
+                                <button class="btn btn-outlined--primary" id="__btn__add__to__cart" data-id="<?= $product->product_id ?>"><span class="plus-icon">+</span>Add to
+                                    Cart</button>
+                            <?php else : ?>
+                                <a href="<?= base_url('/auth') ?>" class="btn btn-outlined--primary"><span class="plus-icon">+</span>Add to
+                                    Cart</a>
+                            <?php endif ?>
                         </div>
                     </div>
                     <div class="compare-wishlist-row">
