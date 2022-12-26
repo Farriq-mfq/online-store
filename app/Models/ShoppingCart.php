@@ -16,7 +16,7 @@ class ShoppingCart extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["user_id","product_id","content","product_img","quantity","price","total"];
+    protected $allowedFields    = ["user_id", "product_id", "content", "product_img", "quantity", "price", "total"];
     protected $with = ["products"];
 
     // Dates
@@ -45,6 +45,15 @@ class ShoppingCart extends Model
 
     public function getTotalCart()
     {
-        return $this->where("user_id",auth_user_id())->without("products")->select("sum(total) as 'total_cart'")->groupBy("user_id")->first();
+        return $this->where("user_id", auth_user_id())->without("products")->select("sum(total) as 'total_cart'")->groupBy("user_id")->first();
+    }
+    public function getGrandTotal($shipping)
+    {
+        return $this->getTotalCart()->total_cart + (int) $shipping;
+    }
+
+    public function getWeightProduct()
+    {
+        return $this->where("user_id", auth_user_id())->without("products")->join("products", "session_cart.product_id=products.product_id")->select("SUM(quantity * weight) as 'total_weight'")->first();
     }
 }

@@ -48,9 +48,9 @@ $routes->group("cart", ["filter" => "user"], function ($route) {
     $route->delete("remove/(:num)", "WebCartController::removeCart/$1");
 });
 $routes->group("checkout", ["filter" => "user"], function ($route) {
-    $route->get("/", "WebCartController::index");
-    $route->put("update", "WebCartController::updateCart");
-    $route->delete("remove/(:num)", "WebCartController::removeCart/$1");
+    $route->get("/", "CheckOutController::index");
+    $route->post("/", "WebCartController::order");
+    // $route->delete("remove/(:num)", "WebCartController::removeCart/$1");
 });
 $routes->group("api/cart", ["filter" => "user"], function ($route) {
     $route->get("/", "CartController::index");
@@ -65,10 +65,12 @@ $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     // $route->get('(:segment)', 'ProductController::detail/$1');
 });
 
-$routes->group("api/shipping", function ($route) {
+$routes->group("api/shipping",['filter'=>'user'], function ($route) {
     $route->get("city", "ShippingController::cityByprovice");
     $route->get("province", "ShippingController::getProvince");
     $route->get("cost", "ShippingController::getCost");
+    $route->get("get_price", "ShippingController::getPrice");
+    $route->get("get_grand_price", "ShippingController::getGrand");
 });
 
 $routes->get("/", "Home::index");

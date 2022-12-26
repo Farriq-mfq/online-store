@@ -77,7 +77,7 @@
 									<span>or</span><a href="<?= base_url("/auth") ?>">Register</a>
 								<?php endif ?>
 							</div>
-							<?php if (current_url() != site_url("/cart")) : ?>
+							<?php if (current_url() != site_url("/cart") && current_url() != site_url("/checkout")) : ?>
 								<div class="cart-block">
 									<div class="cart-total">
 										<span class="text-number" id="load__cart__count">0</span>

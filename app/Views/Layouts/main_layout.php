@@ -14,6 +14,8 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/main.css") ?>" />
 	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/jquery.toast.css") ?>" />
 	<link rel="shortcut icon" type="image/x-icon" href="<?= base_url("/client/image/favicon.ico") ?>">
+	<?= $this->renderSection("client_style") ?>
+
 </head>
 
 <body>

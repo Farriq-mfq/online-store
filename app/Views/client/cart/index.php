@@ -189,7 +189,7 @@
                                 <h2>Grand Total <span class="text-primary"><?= format_rupiah($total_cart->total_cart) ?></span></h2>
                             </div>
                             <div class="cart-summary-button">
-                                <a href="checkout.html" class="checkout-btn c-btn btn--primary">Checkout</a>
+                                <a href="<?= base_url('/checkout') ?>" class="checkout-btn c-btn btn--primary">Checkout</a>
                             </div>
                         </div>
                     </div>

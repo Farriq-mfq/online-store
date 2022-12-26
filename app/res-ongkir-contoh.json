@@ -1,0 +1,58 @@
+{
+  "query": {
+    "origin": "349",
+    "destination": "17",
+    "weight": 23,
+    "courier": "tiki"
+  },
+  "status": {
+    "code": 200,
+    "description": "OK"
+  },
+  "origin_details": {
+    "city_id": "349",
+    "province_id": "10",
+    "province": "Jawa Tengah",
+    "type": "Kota",
+    "city_name": "Pekalongan",
+    "postal_code": "51122"
+  },
+  "destination_details": {
+    "city_id": "17",
+    "province_id": "1",
+    "province": "Bali",
+    "type": "Kabupaten",
+    "city_name": "Badung",
+    "postal_code": "80351"
+  },
+  "results": [
+    {
+      "code": "tiki",
+      "name": "Citra Van Titipan Kilat (TIKI)",
+      "costs": [
+        {
+          "service": "ECO",
+          "description": "Economy Service",
+          "cost": [
+            {
+              "value": 28000,
+              "etd": "4",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "service": "REG",
+          "description": "Regular Service",
+          "cost": [
+            {
+              "value": 29000,
+              "etd": "3",
+              "note": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

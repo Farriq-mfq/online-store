@@ -27,7 +27,7 @@ class CartController extends BaseController
             <div class=" single-cart-block ">
                 <div class="btn-block">
                     <a href="'.base_url('/cart').'" class="btn">View Cart <i class="fas fa-chevron-right"></i></a>
-                    <a href="checkout.html" class="btn btn--primary">Check Out <i class="fas fa-chevron-right"></i></a>
+                    <a href="'.base_url('/checkout').'" class="btn btn--primary">Check Out <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
             ';

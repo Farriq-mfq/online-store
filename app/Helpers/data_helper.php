@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\Encryption\Encryption;
+use Config\Services;
 use SebastianBergmann\Timer\Duration;
 
 function add_data(string $title, string $active_page, array $array = []): array
@@ -92,3 +94,14 @@ if (!function_exists('getEndPage')) {
         }
     }
 }
+
+if (!function_exists('randomhash')) {
+    function randomhash($value)
+    {
+        $enc = Services::encrypter();
+
+       return bin2hex($enc->encrypt($value));
+    }
+}
+
+

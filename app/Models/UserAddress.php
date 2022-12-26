@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Tatter\Relations\Traits\ModelTrait;
 
 class UserAddress extends Model
 {
+    use ModelTrait;
     protected $DBGroup          = 'default';
     protected $table            = 'user_address';
     protected $primaryKey       = 'user_address_id';

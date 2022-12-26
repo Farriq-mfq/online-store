@@ -63,4 +63,9 @@ class WebCartController extends BaseController
             }
         }
     }
+
+    public function order()
+    {
+        dd($this->request->getVar());
+    }
 }
