@@ -40,6 +40,17 @@ $routes->set404Override();
 $routes->group("shop", function ($route) {
     $route->get('/', 'ShopControlller::index');
     $route->get('(:segment)', 'ShopControlller::detail/$1');
+    $route->post('(:segment)/review', 'ShopControlller::postReviews/$1');
+});
+$routes->group("cart", ["filter" => "user"], function ($route) {
+    $route->get("/", "WebCartController::index");
+    $route->put("update", "WebCartController::updateCart");
+    $route->delete("remove/(:num)", "WebCartController::removeCart/$1");
+});
+$routes->group("checkout", ["filter" => "user"], function ($route) {
+    $route->get("/", "WebCartController::index");
+    $route->put("update", "WebCartController::updateCart");
+    $route->delete("remove/(:num)", "WebCartController::removeCart/$1");
 });
 $routes->group("api/cart", ["filter" => "user"], function ($route) {
     $route->get("/", "CartController::index");
@@ -47,14 +58,6 @@ $routes->group("api/cart", ["filter" => "user"], function ($route) {
     $route->get("count", "CartController::show_count_cart");
     $route->get("total_price", "CartController::show_total_price_cart");
     $route->post("remove", "CartController::remove_cart");
-    // $route->post("add", "ProductController::add_to_cart");
-    // $route->get("get", "ProductController::getCountCart");
-    // $route->post("update", "CartController::update_cart");
-    // $route->post("delete/all", "CartController::remove_cart_all");
-    // $route->post("checkout","CartController::checkout");
-    // $route->get("checkout","CartController::checkout_page");
-    // $route->post("process_to_checkout","OrderController::checkout");
-    // $route->get("get_user_address","CartController::get_user_address");
 });
 $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     $route->get('/', 'AuthController::index');
@@ -62,17 +65,17 @@ $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     // $route->get('(:segment)', 'ProductController::detail/$1');
 });
 
-$routes->group("api/shipping",function($route){
-    $route->get("city","ShippingController::cityByprovice");
-    $route->get("province","ShippingController::getProvince");
-    $route->get("cost","ShippingController::getCost");
+$routes->group("api/shipping", function ($route) {
+    $route->get("city", "ShippingController::cityByprovice");
+    $route->get("province", "ShippingController::getProvince");
+    $route->get("cost", "ShippingController::getCost");
 });
 
 $routes->get("/", "Home::index");
 
-$routes->group("api/data",function($route){
-    $route->get("product","ApiController::get_product");
-    $route->get("load/product","ApiController::index");
+$routes->group("api/data", function ($route) {
+    $route->get("product", "ApiController::get_product");
+    $route->get("load/product", "ApiController::index");
 });
 
 

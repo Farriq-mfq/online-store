@@ -42,4 +42,9 @@ class ShoppingCart extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getTotalCart()
+    {
+        return $this->where("user_id",auth_user_id())->without("products")->select("sum(total) as 'total_cart'")->groupBy("user_id")->first();
+    }
 }

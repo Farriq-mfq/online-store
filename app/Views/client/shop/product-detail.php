@@ -148,69 +148,65 @@
                 </div>
                 <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="tab2">
                     <div class="review-wrapper">
-                        <h2 class="title-lg mb--20">1 REVIEW FOR AUCTOR GRAVIDA ENIM</h2>
-                        <div class="review-comment mb--20">
-                            <div class="avatar">
-                                <img src="image/icon/author-logo.png" alt="">
-                            </div>
-                            <div class="text">
-                                <div class="rating-block mb--15">
-                                    <span class="ion-android-star-outline star_on"></span>
-                                    <span class="ion-android-star-outline star_on"></span>
-                                    <span class="ion-android-star-outline star_on"></span>
-                                    <span class="ion-android-star-outline"></span>
-                                    <span class="ion-android-star-outline"></span>
+                        <h2 class="title-lg mb--20"><?= count($product->product_reviews) ?> REVIEW FOR <?= $product->title ?></h2>
+                        <?php if (count($reviews)) : ?>
+                            <?php foreach ($reviews as $review) : ?>
+                                <div class="review-comment mb--20">
+                                    <div class="avatar">
+                                        <img src="image/icon/author-logo.png" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <div class="rating-block mb--15">
+                                            <?php for ($i = 0; $i < 5; $i++) : ?>
+                                                <?php if ($review->rating <= $i) : ?>
+                                                    <span class="ion-android-star-outline"></span>
+                                                <?php else : ?>
+                                                    <span class="ion-android-star-outline star_on"></span>
+                                                <?php endif ?>
+                                            <?php endfor ?>
+                                        </div>
+                                        <h6 class="author"><?= $review->name ?> – <span class="font-weight-400"><?= date("d/m/Y H-i-s", strtotime($review->created_at)) ?></span>
+                                        </h6>
+                                        <p><?= $review->review ?></p>
+                                    </div>
                                 </div>
-                                <h6 class="author">ADMIN – <span class="font-weight-400">March 23, 2015</span>
-                                </h6>
-                                <p>Lorem et placerat vestibulum, metus nisi posuere nisl, in accumsan elit odio
-                                    quis mi.</p>
+                            <?php endforeach ?>
+                        <?php else : ?>
+                            <div class="review-comment mb--20">
+                                <p>No Reviews Here</p>
                             </div>
-                        </div>
+                        <?php endif ?>
+                        <!-- end -->
                         <h2 class="title-lg mb--20 pt--15">ADD A REVIEW</h2>
                         <div class="rating-row pt-2">
                             <p class="d-block">Your Rating</p>
-                            <span class="rating-widget-block">
-                                <input type="radio" name="star" id="star1">
-                                <label for="star1"></label>
-                                <input type="radio" name="star" id="star2">
-                                <label for="star2"></label>
-                                <input type="radio" name="star" id="star3">
-                                <label for="star3"></label>
-                                <input type="radio" name="star" id="star4">
-                                <label for="star4"></label>
-                                <input type="radio" name="star" id="star5">
-                                <label for="star5"></label>
-                            </span>
-                            <form action="https://htmldemo.net/pustok/pustok/" class="mt--15 site-form ">
+                            <form action="<?= base_url("/shop/" . $product->product_id . "/review") ?>" class="mt--15" method="POST">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="message">Comment</label>
-                                            <textarea name="message" id="message" cols="30" rows="10" class="form-control"></textarea>
+                                            <span class="rating-widget-block <?= show_class_error("star") ?>">
+                                                <input type="radio" name="star" id="star1" value="5">
+                                                <label for="star1"></label>
+                                                <input type="radio" name="star" id="star2" value="4">
+                                                <label for="star2"></label>
+                                                <input type="radio" name="star" id="star3" value="3">
+                                                <label for="star3"></label>
+                                                <input type="radio" name="star" id="star4" value="2">
+                                                <label for="star4"></label>
+                                                <input type="radio" name="star" id="star5" value="1">
+                                                <label for="star5"></label>
+                                            </span>
+                                            <?= show_error('star') ?>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label for="name">Name *</label>
-                                            <input type="text" id="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="email">Email *</label>
-                                            <input type="text" id="email" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="website">Website</label>
-                                            <input type="text" id="website" class="form-control">
+                                            <label for="review">Review</label>
+                                            <textarea name="review" id="review" cols="30" rows="10" class="form-control <?= show_class_error('review') ?>"></textarea>
+                                            <?= show_error('review') ?>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="submit-btn">
-                                            <a href="#" class="btn btn-black">Post Comment</a>
+                                            <button type="submit" class="btn btn-black">Post Review</button>
                                         </div>
                                     </div>
                                 </div>
@@ -243,203 +239,85 @@ RELATED PRODUCTS BOOKS
         {"breakpoint":768, "settings": {"slidesToShow": 2} },
         {"breakpoint":480, "settings": {"slidesToShow": 1} }
     ]'>
-                <div class="single-slide">
-                    <div class="product-card">
-                        <div class="product-header">
-                            <a href="#" class="author">
-                                Lpple
-                            </a>
-                            <h3><a href="product-details.html">Revolutionize Your BOOK With</a></h3>
-                        </div>
-                        <div class="product-card--body">
-                            <div class="card-image">
-                                <img src="image/products/product-10.jpg" alt="">
-                                <div class="hover-contents">
-                                    <a href="product-details.html" class="hover-image">
-                                        <img src="image/products/product-1.jpg" alt="">
+                <?php if (count($relateds)) : ?>
+                    <?php foreach ($relateds as $related) : ?>
+                        <div class="single-slide">
+                            <div class="product-card">
+                                <div class="product-header">
+                                    <a href="#" class="author">
+                                        <?= $related->brand ?  $related->brand->brand : "No author / brand" ?>
                                     </a>
-                                    <div class="hover-btns">
-                                        <a href="cart.html" class="single-btn">
-                                            <i class="fas fa-shopping-basket"></i>
-                                        </a>
-                                        <a href="wishlist.html" class="single-btn">
-                                            <i class="fas fa-heart"></i>
-                                        </a>
-                                        <a href="compare.html" class="single-btn">
-                                            <i class="fas fa-random"></i>
-                                        </a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
+                                    <h3><a href="<?= base_url('/shop' . '/' . $related->slug) ?>"><?= $related->title ?></a></h3>
+                                </div>
+                                <div class="product-card--body">
+                                    <div class="card-image">
+                                        <?php foreach ($related->product_images as $image) : ?>
+                                            <?php if ($image->is_primary) : ?>
+                                                <img src="<?= $image->image ?>" alt="Product Image">
+                                            <?php endif ?>
+                                        <?php endforeach ?>
+                                        <div class="hover-contents">
+                                            <a href="<?= base_url('/shop' . '/' . $related->slug) ?>" class="hover-image">
+                                                <?php foreach ($related->product_images as $image) : ?>
+                                                    <?php if ($image->is_primary) : ?>
+                                                        <img src="<?= $image->image ?>" alt="PRODUCT IMAGE">
+                                                    <?php endif ?>
+                                                <?php endforeach ?>
+                                            </a>
+                                            <div class="hover-btns">
+                                                <?php if (auth_user()) : ?>
+                                                    <button class="single-btn" id="__btn__add__to__cart" data-id="<?= $related->product_id ?>"><i class="fas fa-shopping-basket"></i></button>
+                                                <?php else : ?>
+                                                    <a href="<?= base_url('/auth') ?>" class="single-btn">
+                                                        <i class="fas fa-shopping-basket"></i>
+                                                    </a>
+                                                <?php endif ?>
+                                                <a href="wishlist.html" class="single-btn">
+                                                    <i class="fas fa-heart"></i>
+                                                </a>
+                                                <a href="compare.html" class="single-btn">
+                                                    <i class="fas fa-random"></i>
+                                                </a>
+                                                <a href="#" class="single-btn" id="show_detail_product" data-id="<?= $related->product_id ?>">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="price-block">
+                                        <?php if (count($related->product_discount)) : ?>
+                                            <?php foreach ($related->product_discount as $discount) : ?>
+                                                <?php if ($discount->discount_type === "PERCENTAGE") : ?>
+                                                    <span class="price"><?= format_rupiah(get_discount($related->price, $discount->discount_value)) ?></span>
+                                                    <del class="price-old"><?= format_rupiah($related->price) ?></del>
+                                                    <span class="price-discount"><?= $discount->discount_value ?>%</span>
+                                                <?php elseif ($discount->discount_type === "VALUE") : ?>
+                                                    <span class="price"><?= format_rupiah(get_less_price($related->price, $discount->discount_value)) ?></span>
+                                                    <del class="price-old"><?= format_rupiah($related->price) ?></del>
+                                                    <span class="price-discount"><?= thousandsCurrencyFormat($discount->discount_value) ?></span>
+                                                <?php else : ?>
+                                                    <span class="price"><?= format_rupiah($related->price) ?></span>
+                                                <?php endif ?>
+                                            <?php endforeach ?>
+                                        <?php else : ?>
+                                            <span class="price"><?= format_rupiah($related->price) ?></span>
+                                        <?php endif ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="price-block">
-                                <span class="price">£51.20</span>
-                                <del class="price-old">£51.20</del>
-                                <span class="price-discount">20%</span>
+                        </div>
+                    <?php endforeach ?>
+                <?php else : ?>
+                    <div class="single-slide">
+                        <div class="product-card">
+                            <div class="product-header">
+                                <a href="#" class="author">
+                                    NO PRODUCT RELATED
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="single-slide">
-                    <div class="product-card">
-                        <div class="product-header">
-                            <a href="#" class="author">
-                                Jpple
-                            </a>
-                            <h3><a href="product-details.html">Turn Your BOOK Into High Machine</a>
-                            </h3>
-                        </div>
-                        <div class="product-card--body">
-                            <div class="card-image">
-                                <img src="image/products/product-2.jpg" alt="">
-                                <div class="hover-contents">
-                                    <a href="product-details.html" class="hover-image">
-                                        <img src="image/products/product-1.jpg" alt="">
-                                    </a>
-                                    <div class="hover-btns">
-                                        <a href="cart.html" class="single-btn">
-                                            <i class="fas fa-shopping-basket"></i>
-                                        </a>
-                                        <a href="wishlist.html" class="single-btn">
-                                            <i class="fas fa-heart"></i>
-                                        </a>
-                                        <a href="compare.html" class="single-btn">
-                                            <i class="fas fa-random"></i>
-                                        </a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price-block">
-                                <span class="price">£51.20</span>
-                                <del class="price-old">£51.20</del>
-                                <span class="price-discount">20%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-slide">
-                    <div class="product-card">
-                        <div class="product-header">
-                            <a href="#" class="author">
-                                Wpple
-                            </a>
-                            <h3><a href="product-details.html">3 Ways Create Better BOOK With</a></h3>
-                        </div>
-                        <div class="product-card--body">
-                            <div class="card-image">
-                                <img src="image/products/product-3.jpg" alt="">
-                                <div class="hover-contents">
-                                    <a href="product-details.html" class="hover-image">
-                                        <img src="image/products/product-2.jpg" alt="">
-                                    </a>
-                                    <div class="hover-btns">
-                                        <a href="cart.html" class="single-btn">
-                                            <i class="fas fa-shopping-basket"></i>
-                                        </a>
-                                        <a href="wishlist.html" class="single-btn">
-                                            <i class="fas fa-heart"></i>
-                                        </a>
-                                        <a href="compare.html" class="single-btn">
-                                            <i class="fas fa-random"></i>
-                                        </a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price-block">
-                                <span class="price">£51.20</span>
-                                <del class="price-old">£51.20</del>
-                                <span class="price-discount">20%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-slide">
-                    <div class="product-card">
-                        <div class="product-header">
-                            <a href="#" class="author">
-                                Epple
-                            </a>
-                            <h3><a href="product-details.html">What You Can Learn From Bill Gates</a>
-                            </h3>
-                        </div>
-                        <div class="product-card--body">
-                            <div class="card-image">
-                                <img src="image/products/product-5.jpg" alt="">
-                                <div class="hover-contents">
-                                    <a href="product-details.html" class="hover-image">
-                                        <img src="image/products/product-4.jpg" alt="">
-                                    </a>
-                                    <div class="hover-btns">
-                                        <a href="cart.html" class="single-btn">
-                                            <i class="fas fa-shopping-basket"></i>
-                                        </a>
-                                        <a href="wishlist.html" class="single-btn">
-                                            <i class="fas fa-heart"></i>
-                                        </a>
-                                        <a href="compare.html" class="single-btn">
-                                            <i class="fas fa-random"></i>
-                                        </a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price-block">
-                                <span class="price">£51.20</span>
-                                <del class="price-old">£51.20</del>
-                                <span class="price-discount">20%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-slide">
-                    <div class="product-card">
-                        <div class="product-header">
-                            <a href="#" class="author">
-                                Hpple
-                            </a>
-                            <h3><a href="product-details.html">a Half Very Simple Things You To</a></h3>
-                        </div>
-                        <div class="product-card--body">
-                            <div class="card-image">
-                                <img src="image/products/product-6.jpg" alt="">
-                                <div class="hover-contents">
-                                    <a href="product-details.html" class="hover-image">
-                                        <img src="image/products/product-4.jpg" alt="">
-                                    </a>
-                                    <div class="hover-btns">
-                                        <a href="cart.html" class="single-btn">
-                                            <i class="fas fa-shopping-basket"></i>
-                                        </a>
-                                        <a href="wishlist.html" class="single-btn">
-                                            <i class="fas fa-heart"></i>
-                                        </a>
-                                        <a href="compare.html" class="single-btn">
-                                            <i class="fas fa-random"></i>
-                                        </a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal" class="single-btn">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price-block">
-                                <span class="price">£51.20</span>
-                                <del class="price-old">£51.20</del>
-                                <span class="price-discount">20%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endif ?>
             </div>
         </div>
     </section>

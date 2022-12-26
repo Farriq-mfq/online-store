@@ -77,22 +77,24 @@
 									<span>or</span><a href="<?= base_url("/auth") ?>">Register</a>
 								<?php endif ?>
 							</div>
-							<div class="cart-block">
-								<div class="cart-total">
-									<span class="text-number" id="load__cart__count">0</span>
-									<span class="text-item">
-										Shopping Cart
-									</span>
-									<span class="price" id="load__total__price">
-										Rp.0
-									</span>
-								</div>
-								<div class="cart-dropdown-block" id="load__cart____">
-									<div class="single-cart-block text-center">
-										Cart Empty
+							<?php if (current_url() != site_url("/cart")) : ?>
+								<div class="cart-block">
+									<div class="cart-total">
+										<span class="text-number" id="load__cart__count">0</span>
+										<span class="text-item">
+											Shopping Cart
+										</span>
+										<span class="price" id="load__total__price">
+											Rp.0
+										</span>
+									</div>
+									<div class="cart-dropdown-block" id="load__cart____">
+										<div class="single-cart-block text-center">
+											Cart Empty
+										</div>
 									</div>
 								</div>
-							</div>
+							<?php endif ?>
 						</div>
 					</div>
 				</div>
@@ -129,7 +131,8 @@
 					<div class="mobile-header-btns header-top-widget">
 						<ul class="header-links">
 							<li class="sin-link">
-								<a href="cart.html" class="cart-link link-icon"><i class="ion-bag"></i></a>
+								<a href="<?= base_url("/cart") ?>" class="cart-link link-icon"><i class="ion-bag"></i></a>
+								<span class="text-success lead" id="load__cart__count__mobile">0</span>
 							</li>
 							<li class="sin-link">
 								<a href="javascript:" class="link-icon hamburgur-icon off-canvas-btn"><i class="ion-navicon"></i></a>

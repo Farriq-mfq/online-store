@@ -58,7 +58,7 @@
                                             <a href="#" class="author">
                                                 <?= $featured->brand ?  $featured->brand->brand : "No author / brand" ?>
                                             </a>
-                                            <h3><a href="product-details.html"><?= $featured->title ?></a></h3>
+                                            <h3><a href="<?= base_url('/shop'.'/'.$featured->slug) ?>"><?= $featured->title ?></a></h3>
                                         </div>
                                         <div class="price-block">
                                             <?php if (count($featured->product_discount)) : ?>
@@ -213,7 +213,7 @@
                                             <a href="#" class="author">
                                                 <?= $featured->brand ?  $featured->brand->brand : "No author / brand" ?>
                                             </a>
-                                            <h3><a href="product-details.html"><?= $featured->title ?></a></h3>
+                                            <h3><a href="<?= base_url('/shop'.'/'.$featured->slug) ?>"><?= $featured->title ?></a></h3>
                                         </div>
                                         <div class="product-card--body">
                                             <div class="card-image">
@@ -223,7 +223,7 @@
                                                     <?php endif ?>
                                                 <?php endforeach ?>
                                                 <div class="hover-contents">
-                                                    <a href="product-details.html" class="hover-image">
+                                                    <a href="<?= base_url('/shop'.'/'.$featured->slug) ?>" class="hover-image">
                                                         <?php foreach ($featured->product_images as $image) : ?>
                                                             <?php if ($image->is_primary) : ?>
                                                                 <img src="<?= $image->image ?>" alt="PRODUCT IMAGE">
@@ -308,7 +308,7 @@
                                             <a href="#" class="author">
                                                 <?= $new->brand ?  $new->brand->brand : "No author / brand" ?>
                                             </a>
-                                            <h3><a href="product-details.html"><?= $new->title ?></a></h3>
+                                            <h3><a href="<?= base_url('/shop'.'/'.$new->slug) ?>"><?= $new->title ?></a></h3>
                                         </div>
                                         <div class="product-card--body">
                                             <div class="card-image">
@@ -318,7 +318,7 @@
                                                     <?php endif ?>
                                                 <?php endforeach ?>
                                                 <div class="hover-contents">
-                                                    <a href="product-details.html" class="hover-image">
+                                                    <a href="<?= base_url('/shop'.'/'.$new->slug) ?>" class="hover-image">
                                                         <?php foreach ($new->product_images as $image) : ?>
                                                             <?php if ($image->is_primary) : ?>
                                                                 <img src="<?= $image->image ?>" alt="PRODUCT IMAGE">
@@ -416,7 +416,7 @@
                                                 <span class="author">
                                                     <?= $offer->brand ?  $offer->brand->brand : "No author / brand" ?>
                                                 </span>
-                                                <h3><a href="product-details.html"><?= $offer->title ?></a></h3>
+                                                <h3><a href="<?= base_url('/shop'.'/'.$offer->slug) ?>"><?= $offer->title ?></a></h3>
                                             </div>
                                             <div class="product-card--body">
                                                 <div class="card-image">
@@ -426,7 +426,7 @@
                                                         <?php endif ?>
                                                     <?php endforeach ?>
                                                     <div class="hover-contents">
-                                                        <a href="product-details.html" class="hover-image">
+                                                        <a href="<?= base_url('/shop'.'/'.$offer->slug) ?>" class="hover-image">
                                                             <?php foreach ($offer->product_images as $image) : ?>
                                                                 <?php if ($image->is_primary) : ?>
                                                                     <img src="<?= $image->image ?>" alt="PRODUCT IMAGE">
@@ -535,7 +535,7 @@
                                                     <span class="author">
                                                         <?= $ct1->brand ?  $ct1->brand->brand : "No author / brand" ?>
                                                     </span>
-                                                    <h3><a href="product-details.html"><?= $ct1->title ?></a></h3>
+                                                    <h3><a href="<?= base_url('/shop'.'/'.$ct1->slug) ?>"><?= $ct1->title ?></a></h3>
                                                 </div>
                                                 <div class="price-block">
                                                     <?php if (count($ct1->product_discount)) : ?>
@@ -596,7 +596,7 @@
                                                 <span class="author">
                                                     <?= $ct2->brand ?  $ct2->brand->brand : "No author / brand" ?>
                                                 </span>
-                                                <h3><a href="product-details.html"><?= $ct2->title ?></a></h3>
+                                                <h3><a href="<?= base_url('/shop'.'/'.$ct2->slug) ?>"><?= $ct2->title ?></a></h3>
                                             </div>
                                             <div class="product-card--body">
                                                 <div class="card-image">
@@ -606,7 +606,7 @@
                                                         <?php endif ?>
                                                     <?php endforeach ?>
                                                     <div class="hover-contents">
-                                                        <a href="product-details.html" class="hover-image">
+                                                        <a href="<?= base_url('/shop'.'/'.$ct2->slug) ?>" class="hover-image">
                                                             <?php foreach ($ct2->product_images as $image) : ?>
                                                                 <?php if ($image->is_primary) : ?>
                                                                     <img src="<?= $image->image ?>" alt="PRODUCT IMAGE">
@@ -709,7 +709,7 @@
                                     <a href="#" class="author">
                                         <?= $ct3->brand ?  $ct3->brand->brand : "No author / brand" ?>
                                     </a>
-                                    <h3><a href="product-details.html"><?= $ct3->title ?></a>
+                                    <h3><a href="<?= base_url('/shop'.'/'.$ct3->slug) ?>"><?= $ct3->title ?></a>
                                     </h3>
                                 </div>
                                 <div class="price-block">

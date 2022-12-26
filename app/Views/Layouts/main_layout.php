@@ -88,6 +88,32 @@
 	<script <?= csp_script_nonce() ?>>
 		clickModal("<?= base_url("/api/data/product") ?>", "<?= base_url("/api/data/load/product") ?>");
 	</script>
+	<?php if (session()->getFlashdata("alert_success")) : ?>
+		<script <?= csp_script_nonce() ?>>
+			$.toast({
+				heading: "Information",
+				text: "<?= session()->getFlashdata("alert_success") ?>",
+				bgColor: "#62AB00",
+				textColor: "white",
+				icon: "info",
+				showHideTransition: "slide",
+				position: "bottom-left",
+			});
+		</script>
+	<?php endif ?>
+	<?php if (session()->getFlashdata("alert_error")) : ?>
+		<script <?= csp_script_nonce() ?>>
+			$.toast({
+				heading: "Information",
+				text: "<?= session()->getFlashdata("alert_error") ?>",
+				bgColor: "#BD0018",
+				textColor: "white",
+				icon: "warning",
+				showHideTransition: "slide",
+				position: "bottom-left",
+			});
+		</script>
+	<?php endif ?>
 	<?= $this->renderSection("client_script") ?>
 </body>
 

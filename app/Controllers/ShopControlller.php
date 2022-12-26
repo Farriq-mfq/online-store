@@ -9,6 +9,7 @@ use App\Models\ProductReviews;
 class ShopControlller extends BaseController
 {
     private Product $product;
+    private ProductReviews $product_reviews;
     public function __construct()
     {
         $this->product_reviews = new ProductReviews();
@@ -168,15 +169,45 @@ class ShopControlller extends BaseController
                 if ($product != null) {
                     $data['tags'] = $this->product->getTagsProduct($product->product_id);
                     $data['product'] = $product;
+                    $data['reviews'] = $this->product->getreviews($product->product_id);
+                    $data['relateds'] = $this->product->getProductRelated($product->product_id);
                     return view("client/shop/product-detail", add_data("PRoduct derta", "shop/detail", $data));
                 } else {
                     return redirect()->to("/shop");
                 }
             } catch (\Exception $e) {
+
+                dd($e);
                 return redirect()->to("/shop");
             }
         } else {
             return redirect()->to("/shop");
+        }
+    }
+
+    public function postReviews($productId)
+    {
+
+        $validate = $this->validate([
+            'star' => "required",
+            'review' => 'required'
+        ]);
+        if ($validate) {
+            $data = [
+                'rating' => $this->request->getVar('star'),
+                'review' => $this->request->getVar('review'),
+                'user_id' => auth_user_id(),
+                'product_id' => $productId
+            ];
+
+            $insert = $this->product_reviews->insert($data);
+            if ($insert) {
+                session()->setFlashdata("alert_success", "Success Post review");
+                return redirect()->back();
+            }
+        } else {
+            session()->setFlashdata('validation', $this->validator->getErrors());
+            return redirect()->back()->withInput();
         }
     }
 }

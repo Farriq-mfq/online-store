@@ -26,7 +26,7 @@ class CartController extends BaseController
             </div> 
             <div class=" single-cart-block ">
                 <div class="btn-block">
-                    <a href="cart.html" class="btn">View Cart <i class="fas fa-chevron-right"></i></a>
+                    <a href="'.base_url('/cart').'" class="btn">View Cart <i class="fas fa-chevron-right"></i></a>
                     <a href="checkout.html" class="btn btn--primary">Check Out <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
@@ -94,11 +94,11 @@ class CartController extends BaseController
         foreach ($items as $item) {
             $product = $this->product->find($item->product_id);
             $html .= '<div class="cart-product">
-            <a href="product-details.html" class="image">
+            <a href="'.base_url("/shop/")."/".$product->slug.'" class="image">
                 <img src="' . $item->product_img . '" alt="">
             </a>
             <div class="content">
-                <h3 class="title"><a href="product-details.html">' . $item->product->title . '</a></h3>
+                <h3 class="title"><a href="'.base_url("/shop")."/".$product->slug.'">' . $item->product->title . '</a></h3>
                 <p class="price"><span class="qty">' . $item->quantity . ' ×</span> ' . $this->printPrice($product) . '</p>
                 <button class="cross-btn" id="__remove__cart__action" data-id="' . $item->session_cart_id . '"><i class="fas fa-times"></i></button>
             </div>

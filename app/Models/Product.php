@@ -131,7 +131,7 @@ class Product extends Model
             return $this->join("brands", "products.brand_id=brands.brand_id")->with("product_reviews")->select("*,brands.brand as 'brand_name'")->orderBy("brand_name", "DESC")->paginate($perpage, $group);
         }
     }
-    public function getratingHigh($perpage, $group, $q = "",$ct="")
+    public function getratingHigh($perpage, $group, $q = "", $ct = "")
     {
         if (!empty($q)) {
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->like("title", "" . $q . "")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "DESC")->paginate($perpage, $group);
@@ -141,11 +141,11 @@ class Product extends Model
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "DESC")->paginate($perpage, $group);
         }
     }
-    public function getratinglow($perpage, $group, $q = "",$ct="")
+    public function getratinglow($perpage, $group, $q = "", $ct = "")
     {
         if (!empty($q)) {
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->like("title", "" . $q . "")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "ASC")->paginate($perpage, $group);
-        }else if (!empty($ct)) {
+        } else if (!empty($ct)) {
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->where("category_id", $ct)->where("status", 1)->groupBy("product_reviews.product_id")->orderBy("avg_rating", "ASC")->paginate($perpage, $group);
         } else {
             return $this->join("product_reviews", "product_reviews.product_id=products.product_id")->with("product_reviews")->select("products.*,AVG(product_reviews.rating) as 'avg_rating'")->groupBy("product_reviews.product_id")->where("status", 1)->orderBy("avg_rating", "ASC")->paginate($perpage, $group);
@@ -154,6 +154,44 @@ class Product extends Model
 
     public function getTagsProduct($idProduct)
     {
-        return $this->where("status",1)->without(['brands',"categories","product_discount","product_images"])->where('products.product_id',$idProduct)->select("products.product_id,products.status,product_tags.tag_id,tags.tag")->join("product_tags","product_tags.product_id=products.product_id")->join("tags","product_tags.tag_id=tags.tag_id")->findAll();
+        return $this->where("status", 1)->without(['brands', "categories", "product_discount", "product_images"])->where('products.product_id', $idProduct)->select("products.product_id,products.status,product_tags.tag_id,tags.tag")->join("product_tags", "product_tags.product_id=products.product_id")->join("tags", "product_tags.tag_id=tags.tag_id")->findAll();
+    }
+
+    public function getreviews($idProduct)
+    {
+        return $this->where("status", 1)->without(['brands', "categories", "product_discount", "product_images"])->where('products.product_id', $idProduct)->select("products.product_id,products.status,product_reviews.rating,users.name,product_reviews.review,product_reviews.created_at")->join("product_reviews", "product_reviews.product_id=products.product_id")->join("users", "product_reviews.user_id=users.user_id")->findAll();
+    }
+
+    public function getProductRelated($productId)
+    {
+        $product = $this->with("product_tags")->find($productId);
+        $tags = [];
+        foreach ($product->product_tags as $tag) {
+            $tags[] = $tag->tag_id;
+        }
+        if (count($tags)) {
+            $related =  $this->where('status', 1)->join("product_tags", "product_tags.product_id=products.product_id")->whereIn("product_tags.tag_id", $tags)->where("products.product_id!=", $product->product_id)->groupBy('product_tags.tag_id')->findAll();
+            return $related;
+        } else {
+            return [];
+        }
+    }
+    public function getProductintersed()
+    {
+        $carts = $this->db->table('session_cart')->select("product_id")->where('user_id', auth_user_id())->get()->getResultObject();
+        $categories = [];
+        $brands = [];
+        $pid =[];
+        foreach ($carts as $cart) {
+            $product = $this->find($cart->product_id);
+            $pid []= $cart->product_id;
+            $categories[]=$product->category_id;
+            $brands[]=$product->brand_id;
+        }
+        if(count($categories) && count($brands)){
+            return $this->whereNotIn("product_id",$pid)->whereIn("category_id",$categories)->orWhereIn('brand_id',$brands)->findAll() ;
+        }else{
+            return [];
+        }
     }
 }
