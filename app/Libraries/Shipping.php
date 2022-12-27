@@ -5,6 +5,11 @@ class Shipping
     private string $provinceEndoint = "https://api.rajaongkir.com/starter/province";
     private string $cityEndoint = "https://api.rajaongkir.com/starter/city";
     private string $costEndoint = "https://api.rajaongkir.com/starter/cost";
+    private int $origin = 349;
+    public function getOrigin():int
+    {
+        return $this->origin;
+    }
     public function get_province(?int $id = null): array | object
     {
         try {
@@ -64,7 +69,6 @@ class Shipping
     }
     public function get_cost(int $destination, int $weight, string $courier)
     {
-        $origin = 349;
         try {
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -75,7 +79,7 @@ class Shipping
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "origin=" . $origin . "&destination=" . $destination . "&weight=" . $weight . "&courier=" . $courier . "",
+                CURLOPT_POSTFIELDS => "origin=" . $this->getOrigin() . "&destination=" . $destination . "&weight=" . $weight . "&courier=" . $courier . "",
                 CURLOPT_HTTPHEADER => array(
                     "content-type: application/x-www-form-urlencoded",
                     "key:" . $this->API_KEY . ""

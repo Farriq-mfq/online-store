@@ -3,21 +3,24 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Tatter\Relations\Traits\ModelTrait;
 
 class Order extends Model
 {
+    use ModelTrait;
     protected $DBGroup          = 'default';
     protected $table            = 'orders';
     protected $primaryKey       = 'order_id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
-    protected $useSoftDeletes   = true;
+    protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["midtrans_id", "token", "user_id", "shipping_provider", "shipping_tracking", "shipping_service", "origin", "destination_origin", "status", "discount", "is_cencel", "notes", "subtotal","payment_type", "user_address_id"];
+    protected $allowedFields    = ["midtrans_id", "token", "user_id", "courier", "shipping_tracking", "shipping_service", "origin", "destination_origin", "status", "discount", "is_cencel", "notes","shipping_total", "subtotal", "payment_method", "user_address_id"];
+    protected $with = ['order_items'];
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -39,4 +42,9 @@ class Order extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getSessionEmoney()
+    {
+        return $this->db->table("session_emoney")->where('user_id',auth_user_id())->get()->getFirstRow();
+    }
 }

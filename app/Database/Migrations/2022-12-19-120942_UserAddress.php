@@ -45,6 +45,10 @@ class UserAddress extends Migration
                 "type"=>"text",
                 "null"=>true
             ],
+            "primary"=>[
+                "type"=>"boolean",
+                "default"=>false
+            ],
             "user_id"=>[
                 "type"=>"bigint"
             ],

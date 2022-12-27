@@ -49,7 +49,9 @@ $routes->group("cart", ["filter" => "user"], function ($route) {
 });
 $routes->group("checkout", ["filter" => "user"], function ($route) {
     $route->get("/", "CheckOutController::index");
-    $route->post("/", "WebCartController::order");
+    $route->post("/", "OrderController::do_order");
+    $route->post("changeaddress/(:num)", "CheckOutController::change_address/$1");
+    $route->get("complete", "CheckOutController::complete");
     // $route->delete("remove/(:num)", "WebCartController::removeCart/$1");
 });
 $routes->group("api/cart", ["filter" => "user"], function ($route) {

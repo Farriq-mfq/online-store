@@ -5,19 +5,19 @@ namespace App\Models;
 use CodeIgniter\Model;
 use Tatter\Relations\Traits\ModelTrait;
 
-class UserAddress extends Model
+class OrderItem extends Model
 {
     use ModelTrait;
     protected $DBGroup          = 'default';
-    protected $table            = 'user_address';
-    protected $primaryKey       = 'user_address_id';
+    protected $table            = 'order_items';
+    protected $primaryKey       = 'order_items_id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["firstname", "lastname", "phone", "address1", "address2", "province", "city", "postcode_zip", "address_notes", "primary", "user_id"];
-
+    protected $allowedFields    = ["order_id","product_id","quantity","discount","total"];
+    protected $with = ['products'];
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
@@ -41,17 +41,4 @@ class UserAddress extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function updatePrimary($id)
-    {
-        try {
-            $builder = $this->db->table($this->table);
-            $builder->where('user_id',auth_user_id());
-            $builder->where("user_address_id!=", $id);
-            $builder->update(["primary" => false]);
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
 }

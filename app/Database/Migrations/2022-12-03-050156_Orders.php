@@ -26,7 +26,7 @@ class Orders extends Migration
             "user_id"=>[
                 "type"=>"bigint",
             ],
-            "shipping_provider"=>[
+            "courier"=>[
                 "type"=>"varchar",
                 "constraint"=>100
             ],
@@ -70,16 +70,15 @@ class Orders extends Migration
                 "type"=> "text",
                 "null"=>true
             ],
+            "shipping_total"=>[
+                "type"=> "bigint",
+            ],
             "subtotal"=>[
                 "type"=> "bigint",
             ],
-            "payment_type"=>[
+            "payment_method"=>[
                 "type"=> "varchar",
-                "constraint"=>30
-            ],
-            "payment_provider"=>[
-                "type"=> "varchar",
-                "constraint"=>30
+                "constraint"=>50
             ],
             "user_address_id"=>[
                 "type"=>"int"

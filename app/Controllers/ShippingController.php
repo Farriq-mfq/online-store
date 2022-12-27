@@ -67,7 +67,6 @@ class ShippingController extends BaseController
                     foreach ($results->results[0]->costs as $result) {
                         $html .= '<option value="' . $result->service . '">' . $result->description . ' ' . $result->cost[0]->value . ' (' . $result->cost[0]->etd . ')</option>';
                     }
-                    // dd($this->filterCost($results->results[0]->costs,"OKE"));
                     return $html;
                 } else {
                     return $this->response->setStatusCode(400)->setJSON($this->validator->getErrors());
