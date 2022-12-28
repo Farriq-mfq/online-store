@@ -6,6 +6,7 @@ use App\Models\Admin as AdminModel;
 use App\Models\User;
 use App\Service\AuthService;
 use CodeIgniter\Config\BaseService;
+use Payment;
 use Shipping;
 
 /**
@@ -41,6 +42,14 @@ class Services extends BaseService
         }
 
         return new Shipping();
+     }
+     public static function paymentservice($getShared = true)
+     {
+        if($getShared){
+            return static::getSharedInstance("paymentservice");
+        }
+
+        return new Payment();
      }
      public static function authserviceUser($getShared = true)
      {

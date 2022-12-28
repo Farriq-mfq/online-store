@@ -14,3 +14,9 @@ use Config\Services;
             return Services::authserviceUser()->getSessionData()['user_id'];
         }
     }
+    if(!function_exists("user")){
+        function user()
+        {
+            return Services::authserviceUser()->getSessionData();
+        }
+    }

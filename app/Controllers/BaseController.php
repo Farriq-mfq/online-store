@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
 use Psr\Log\LoggerInterface;
 use Shipping;
 use Payment;
@@ -47,7 +48,7 @@ abstract class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-        helper(["data","alert","array","form","url_helper","menu_helper","auth_helper","get_shipping_helper"]);
+        helper(["data","alert","array","form","url_helper","menu_helper","auth_helper","get_shipping_helper","payment_helper"]);
         helper("string");
         helper('inflector');
         // Preload any models, libraries, etc, here.
@@ -56,6 +57,7 @@ abstract class BaseController extends Controller
         // lib
         $this->shipping = new Shipping();
         $this->payment = new Payment();
+        // dd(user());
         // dd(password_hash("user",PASSWORD_DEFAULT)); 
         // dd($this->shipping->get_city());
         // echo "<pre>";

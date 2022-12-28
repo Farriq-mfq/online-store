@@ -1,18 +1,5 @@
 <?= $this->extend("Layouts/main_layout") ?>
 <?= $this->section("client_style") ?>
-<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url('client/plugins/select2/css/select2.min.css') ?>" />
-<style <?= csp_style_nonce() ?>>
-    .radio-shipping-address {
-        /* visibility: hidden;
-        opacity: 0;
-        width: 0;
-        height: 0; */
-    }
-
-    .parent_checked .radio-shipping-address {
-        border: red solid 2px !important;
-    }
-</style>
 <?= $this->endSection() ?>
 <?= $this->section("content") ?>
 <main id="content" class="page-section inner-page-sec-padding-bottom space-db--20">
@@ -174,7 +161,7 @@
                                                     conditions</label>
                                                 <?= show_error('term_conditions') ?>
                                             </div>
-                                            <button type="submit" class="place-order w-100">Place order</button>
+                                            <button type="submit" class="place-order w-100" id="__btn__place">Place order</button>
                                         </div>
                                     </div>
                                 </div>
@@ -217,9 +204,11 @@
 <?php endif ?>
 <?= $this->endSection() ?>
 <?= $this->section("client_script") ?>
-<script <?= csp_script_nonce() ?> src="<?= base_url('client/plugins/select2/js/select2.min.js') ?>"></script>
 <script>
-    $(".select2").select2()
+    $("#__btn__place").on("click", function(e) {
+        $(this).text("Processing...");
+        $(this).attr("disabled", true)
+    })
 
     $(document).on("change", ".radio-shipping-address", function(e) {
         e.preventDefault();

@@ -15,7 +15,7 @@ class User extends Model implements AuthInterface
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["name","email","password"];
 
     // Dates
     protected $useTimestamps = false;

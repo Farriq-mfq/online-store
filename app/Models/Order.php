@@ -47,4 +47,13 @@ class Order extends Model
     {
         return $this->db->table("session_emoney")->where('user_id',auth_user_id())->get()->getFirstRow();
     }
+    public function getPaymentStatus()
+    {
+        $orders = $this->where('user_id',auth_user_id())->findAll();
+        $arr=[];
+        foreach ($orders as $order ) {
+            $arr[] = findPayment($order->midtrans_id);
+        }
+        return $arr;
+    }
 }

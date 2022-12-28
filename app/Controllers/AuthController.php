@@ -38,4 +38,9 @@ class AuthController extends BaseController
             return redirect()->to(base_url('/auth'));
         }
     }
+    public function logout()
+    {
+        Services::authserviceUser()->logout();
+        return redirect()->to('/auth');
+    }
 }

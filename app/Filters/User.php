@@ -29,7 +29,7 @@ class User implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if(!Services::authserviceUser()->authenticated()){
-            return redirect()->to(base_url("/auth/login"));
+            return redirect()->to(base_url("/auth"));
         }
     }
 

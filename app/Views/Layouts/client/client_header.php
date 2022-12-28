@@ -65,10 +65,9 @@
 										<li class="menu-item has-children">
 											<a href="javascript:void(0)">My Account <i class="fas fa-chevron-down dropdown-arrow"></i></a>
 											<ul class="sub-menu">
-												<li><a href="#">My Account</a></li>
-												<li><a href="#">Order History</a></li>
-												<li><a href="#">Transactions</a></li>
-												<li><a href="#">Downloads</a></li>
+												<li><a href="<?= base_url('/account') ?>">My Account</a></li>
+												<li><a href="<?= base_url('account?tab=orders') ?>">Transactions</a></li>
+												<li><a href="<?= base_url('account?tab=download') ?>">Downloads</a></li>
 											</ul>
 										</li>
 									</ul>
@@ -174,10 +173,9 @@
 						<li class="menu-item-has-children">
 							<a href="#">My Account <i class="fas fa-angle-down"></i></a>
 							<ul class="sub-menu">
-								<li><a href="#">My Account</a></li>
-								<li><a href="#">Order History</a></li>
-								<li><a href="#">Transactions</a></li>
-								<li><a href="#">Downloads</a></li>
+								<li><a href="<?= base_url('/account') ?>">My Account</a></li>
+								<li><a href="<?= base_url('account?tab=orders') ?>">Transactions</a></li>
+								<li><a href="<?= base_url('account?tab=download') ?>">Downloads</a></li>
 							</ul>
 						</li>
 					</ul>

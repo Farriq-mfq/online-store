@@ -52,7 +52,14 @@ $routes->group("checkout", ["filter" => "user"], function ($route) {
     $route->post("/", "OrderController::do_order");
     $route->post("changeaddress/(:num)", "CheckOutController::change_address/$1");
     $route->get("complete", "CheckOutController::complete");
-    // $route->delete("remove/(:num)", "WebCartController::removeCart/$1");
+});
+$routes->group("account", ["filter" => "user"], function ($route) {
+    $route->get("/", "AccountController::index");
+    $route->post("address", "AccountController::add_address");
+    $route->post("address/default/(:num)", "AccountController::set_address_default/$1");
+    $route->get("address/edit", "AccountController::set_address_edit");
+    $route->post("update", "AccountController::account_update");
+    $route->get("view", "AccountController::view");
 });
 $routes->group("api/cart", ["filter" => "user"], function ($route) {
     $route->get("/", "CartController::index");
@@ -64,10 +71,11 @@ $routes->group("api/cart", ["filter" => "user"], function ($route) {
 $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     $route->get('/', 'AuthController::index');
     $route->post('login', 'AuthController::login');
-    // $route->get('(:segment)', 'ProductController::detail/$1');
 });
+// auth logout
+$routes->post('auth/logout', "AuthController::logout", ["filter" => "user"]);
 
-$routes->group("api/shipping",['filter'=>'user'], function ($route) {
+$routes->group("api/shipping", ['filter' => 'user'], function ($route) {
     $route->get("city", "ShippingController::cityByprovice");
     $route->get("province", "ShippingController::getProvince");
     $route->get("cost", "ShippingController::getCost");
