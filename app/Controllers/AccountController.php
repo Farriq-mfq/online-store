@@ -21,19 +21,24 @@ class AccountController extends BaseController
     }
     public function index()
     {
-        if ($this->request->getVar("tab")) {
-            $tab = htmlentities($this->request->getVar("tab"));
-            $data['target_tab'] = $tab;
-        } else {
-            return redirect()->to('/account?tab=dashboard');
+        try {
+            if ($this->request->getVar("tab")) {
+                $tab = htmlentities($this->request->getVar("tab"));
+                $data['target_tab'] = $tab;
+            } else {
+                return redirect()->to('/account?tab=dashboard');
+            }
+            $user = new User();
+            $data['orders'] = array_values($this->order->where('user_id', auth_user_id())->findAll());
+            $data['downloads'] = $this->order->where('user_id', auth_user_id())->where("status", "SHIPPED")->findAll();
+            $data['addresses'] = $this->address->where("user_id", auth_user_id())->with('users')->findAll();
+            $data['user'] = $user->find(auth_user_id());
+            $data['payments'] = $this->order->getPaymentStatus();
+            return view('client/account/index', add_data("Account", "account/index", $data));
+        } catch (\Exception $e) {
+            session()->setFlashdata("alert_error", "Something went wrong");
+            return redirect()->back();
         }
-        $user = new User();
-        $data['orders'] = array_values($this->order->where('user_id', auth_user_id())->findAll());
-        $data['downloads'] = $this->order->where('user_id', auth_user_id())->where("status", "SHIPPED")->findAll();
-        $data['addresses'] = $this->address->where("user_id", auth_user_id())->with('users')->findAll();
-        $data['user'] = $user->find(auth_user_id());
-        $data['payments'] = $this->order->getPaymentStatus();
-        return view('client/account/index', add_data("Account", "account/index", $data));
     }
     public function add_address()
     {
@@ -184,7 +189,7 @@ class AccountController extends BaseController
                 $data['order_items'] = $this->order_item->where('order_id', $order->order_id)->findAll();
                 $data['payment'] = $this->payment->get_status($order->midtrans_id);
                 if (!isset($data['payment']->va_numbers)) {
-                    $data['emoney'] = $this->order->getSessionEmoney();
+                    $data['emoney'] = $this->order->getSessionEmoney($order->token);
                 }
                 return view('client/account/view', add_data('Checkout Complete', "checkout/complete", $data));
             } else {

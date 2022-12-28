@@ -19,6 +19,15 @@
                         <li>BANK : <strong><?= $payment->va_numbers[0]->bank ?></strong></li>
                         <li>VA NUMBER: <strong><?= $payment->va_numbers[0]->va_number ?></strong></li>
                     <?php endif ?>
+                    <?php if (isset($payment->permata_va_number)) : ?>
+                        <li>BANK : <strong>Permata</strong></li>
+                        <li>VA NUMBER: <strong><?= $payment->permata_va_number ?></strong></li>
+                    <?php endif ?>
+                    <?php if ($payment->payment_type == "echannel") : ?>
+                        <li>BANK : <strong>Mandiri</strong></li>
+                        <li>Bill Key: <strong><?= $payment->bill_key ?></strong></li>
+                        <li>Biller Code: <strong><?= $payment->biller_code ?></strong></li>
+                    <?php endif ?>
                     <?php if (isset($emoney)) : ?>
                         <li>
                             <h5>QR CODE PAYMENT</h5>

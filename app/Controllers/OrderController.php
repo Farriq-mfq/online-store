@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\ShoppingCart;
 use App\Models\UserAddress;
 use BANK;
+use Config\Encryption;
 use Config\Services;
 use EMONEY;
 
@@ -215,7 +216,7 @@ class OrderController extends BaseController
                     case 'e_money':
                         switch ($provider) {
                             case 'qris':
-                                return $this->payment->e_money(EMONEY::QRIS, $payload, auth_user_id());
+                                return $this->payment->e_money(EMONEY::QRIS, $payload, auth_user_id(), $token);
                             default:
                                 return null;
                         }
@@ -229,6 +230,67 @@ class OrderController extends BaseController
             }
         } catch (\Exception $e) {
             return null;
+        }
+    }
+
+    public function cencel($id)
+    {
+        if ($id) {
+            try {
+                $order = $this->order->find(htmlentities($id));
+                if ($order->status === "WAITING") {
+                    $payment = $this->payment->get_status($order->midtrans_id);
+                    $pay_cencel = $this->pay_cencel($payment, $order);
+                    if ($pay_cencel) {
+                        $cencel = $this->order->update($id, ['is_cencel' => true]);
+                        if ($cencel) {
+                            session()->setFlashdata('alert_success', "Cenceled Success");
+                            return redirect()->back();
+                        }
+                    } else {
+                        session()->setFlashdata('alert_error', "Failed Cencel");
+                        return redirect()->back();
+                    }
+                }
+            } catch (\Exception $e) {
+                session()->setFlashdata('alert_error', "Failed Cencel");
+                return redirect()->back();
+            }
+        } else {
+            return redirect()->back();
+        }
+    }
+    public function pay_cencel($payment, $order)
+    {
+        switch ($payment->transaction_status) {
+            case 'settlement':
+                $data_refund = array(
+                    'refund_key' => "REFUND_" . auth_user_id() . uniqid(),
+                    'amount' => (int) $order->subtotal,
+                    'reason' => 'Cencel BY ' . user()['name']
+                );
+                return $this->payment->payment_refund($order->midtrans_id, $data_refund);
+            case 'pending':
+                return $this->payment->payment_cencel($order->midtrans_id);
+            default:
+                return $this->payment->payment_cencel($order->midtrans_id);
+        }
+    }
+    public function done($id)
+    {
+        if ($id) {
+            try {
+                $done = $this->order->update(htmlentities($id), ['status' => "DONE"]);
+                if ($done) {
+                    session()->setFlashdata('alert_success', "Thank you");
+                    return redirect()->back();
+                }
+            } catch (\Exception $e) {
+                session()->setFlashdata('alert_error', "Failed to change status");
+                return redirect()->back();
+            }
+        } else {
+            return redirect()->back();
         }
     }
 }

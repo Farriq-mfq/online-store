@@ -25,6 +25,9 @@ class SessionEmoney extends Migration
                 "type"=>"varchar",
                 "constraint"=>255,
             ],
+            "order_id"=>[
+                "type"=>"bigint",
+            ],
             "user_id"=>[
                 "type"=>"bigint",
             ],

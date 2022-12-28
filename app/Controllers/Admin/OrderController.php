@@ -8,6 +8,6 @@ class OrderController extends BaseController
 {
     public function index()
     {
-        //
+        return view('admin/order/index',add_data("All order",'order/index'));
     }
 }

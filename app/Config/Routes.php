@@ -53,6 +53,10 @@ $routes->group("checkout", ["filter" => "user"], function ($route) {
     $route->post("changeaddress/(:num)", "CheckOutController::change_address/$1");
     $route->get("complete", "CheckOutController::complete");
 });
+$routes->group("order", ["filter" => "user"], function ($route) {
+    $route->post("cencel/(:num)", "OrderController::cencel/$1");
+    $route->post("done/(:num)", "OrderController::done/$1");
+});
 $routes->group("account", ["filter" => "user"], function ($route) {
     $route->get("/", "AccountController::index");
     $route->post("address", "AccountController::add_address");
@@ -186,6 +190,14 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $categories_route->post("/", "OfferController::store");
         $categories_route->put("/", "OfferController::update");
         $categories_route->get("edit", "OfferController::get_update_offer");
+    });
+    /* order routes */
+    $route->group("order", function ($categories_route) {
+        $categories_route->get("/", "OrderController::index");
+        // $categories_route->delete("(:num)", "OfferController::remove/$1");
+        // $categories_route->post("/", "OfferController::store");
+        // $categories_route->put("/", "OfferController::update");
+        // $categories_route->get("edit", "OfferController::get_update_offer");
     });
     /* Errors Routes */
     $route->group("error", function ($categories_route) {

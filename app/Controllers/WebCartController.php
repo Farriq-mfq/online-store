@@ -17,10 +17,15 @@ class WebCartController extends BaseController
     }
     public function index()
     {
-        $data['carts'] = $this->cart->where('user_id', auth_user_id())->with('products')->findAll();
-        $data['total_cart'] = $this->cart->getTotalCart();
-        $data['interested'] = $this->product->getProductintersed();
-        return view("client/cart/index", add_data("Shopping Cart", "cart/index", $data));
+        try {
+            $data['carts'] = $this->cart->where('user_id', auth_user_id())->with('products')->findAll();
+            $data['total_cart'] = $this->cart->getTotalCart();
+            $data['interested'] = $this->product->getProductintersed();
+            return view("client/cart/index", add_data("Shopping Cart", "cart/index", $data));
+        } catch (\Exception $e) {
+            session()->setFlashdata("alert_error", "Something went wrong");
+            return redirect()->back();
+        }
     }
 
     public function updateCart()

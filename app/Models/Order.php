@@ -43,9 +43,9 @@ class Order extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getSessionEmoney()
+    public function getSessionEmoney($token)
     {
-        return $this->db->table("session_emoney")->where('user_id',auth_user_id())->get()->getFirstRow();
+        return $this->db->table("session_emoney")->where('user_id',auth_user_id())->where('order_id',$token)->get()->getFirstRow();
     }
     public function getPaymentStatus()
     {

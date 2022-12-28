@@ -83,34 +83,44 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="order-complete-message text-center">
-                    <div class="__progresss <?php if ($order->status == "REJECT") : ?>cencel<?php endif ?>">
-                        <div class="__progress_item <?php if ($order->status == "WAITING" || $order->status == "PROCESS" || $order->status == "SHIPPED" || $order->status == "DONE") : ?>active<?php endif ?> <?php if ($order->status == "WAITING") : ?>current<?php endif ?>">
-                            <div class="__icon_wrapper">
-                                <i class="fa fa-clock"></i>
+                <?php if ($order->is_cencel) : ?>
+                    <div class="order-complete-message text-center">
+                        <h3>Your Order Has been Cencel</h3>
+                    </div>
+                <?php elseif ($payment->transaction_status == "expire") : ?>
+                    <div class="order-complete-message text-center">
+                        <h3>Payment Expired</h3>
+                    </div>
+                <?php else : ?>
+                    <div class="order-complete-message text-center">
+                        <div class="__progresss <?php if ($order->status == "REJECT") : ?>cencel<?php endif ?>">
+                            <div class="__progress_item <?php if ($order->status == "WAITING" || $order->status == "PROCESS" || $order->status == "SHIPPED" || $order->status == "DONE") : ?>active<?php endif ?> <?php if ($order->status == "WAITING") : ?>current<?php endif ?>">
+                                <div class="__icon_wrapper">
+                                    <i class="fa fa-clock"></i>
+                                </div>
+                                <span class="__title_progress">Waiting</span>
                             </div>
-                            <span class="__title_progress">Waiting</span>
-                        </div>
-                        <div class="__progress_item <?php if ($order->status == "PROCESS" || $order->status == "SHIPPED" || $order->status == "DONE") : ?>active<?php endif ?> <?php if ($order->status == "PROCESS") : ?>current<?php endif ?>">
-                            <div class="__icon_wrapper">
-                                <i class="fa fa-spinner"></i>
+                            <div class="__progress_item <?php if ($order->status == "PROCESS" || $order->status == "SHIPPED" || $order->status == "DONE") : ?>active<?php endif ?> <?php if ($order->status == "PROCESS") : ?>current<?php endif ?>">
+                                <div class="__icon_wrapper">
+                                    <i class="fa fa-spinner"></i>
+                                </div>
+                                <span class="__title_progress">Process</span>
                             </div>
-                            <span class="__title_progress">Process</span>
-                        </div>
-                        <div class="__progress_item <?php if ($order->status == "SHIPPED" || $order->status == "DONE") : ?>active<?php endif ?> <?php if ($order->status == "SHIPPED") : ?>current<?php endif ?>">
-                            <div class="__icon_wrapper">
-                                <i class="fas fa-shipping-fast"></i>
+                            <div class="__progress_item <?php if ($order->status == "SHIPPED" || $order->status == "DONE") : ?>active<?php endif ?> <?php if ($order->status == "SHIPPED") : ?>current<?php endif ?>">
+                                <div class="__icon_wrapper">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <span class="__title_progress">Shipped</span>
                             </div>
-                            <span class="__title_progress">Shipped</span>
-                        </div>
-                        <div class="__progress_item <?php if ($order->status == "DONE") : ?>active<?php endif ?> <?php if ($order->status == "DONE") : ?>current<?php endif ?>">
-                            <div class="__icon_wrapper">
-                                <i class="fa fa-check"></i>
+                            <div class="__progress_item <?php if ($order->status == "DONE") : ?>active<?php endif ?> <?php if ($order->status == "DONE") : ?>current<?php endif ?>">
+                                <div class="__icon_wrapper">
+                                    <i class="fa fa-check"></i>
+                                </div>
+                                <span class="__title_progress">Done</span>
                             </div>
-                            <span class="__title_progress">Done</span>
                         </div>
                     </div>
-                </div>
+                <?php endif ?>
                 <ul class="order-details-list">
                     <li>Order Number: <strong><?= $order->token ?></strong></li>
                     <li>Date: <strong><?= $order->created_at ?></strong></li>
@@ -122,6 +132,15 @@
                     <?php if (isset($payment->va_numbers)) : ?>
                         <li>BANK : <strong><?= $payment->va_numbers[0]->bank ?></strong></li>
                         <li>VA NUMBER: <strong><?= $payment->va_numbers[0]->va_number ?></strong></li>
+                    <?php endif ?>
+                    <?php if (isset($payment->permata_va_number)) : ?>
+                        <li>BANK : <strong>Permata</strong></li>
+                        <li>VA NUMBER: <strong><?= $payment->permata_va_number ?></strong></li>
+                    <?php endif ?>
+                    <?php if ($payment->payment_type == "echannel") : ?>
+                        <li>BANK : <strong>Mandiri</strong></li>
+                        <li>Bill Key: <strong><?= $payment->bill_key ?></strong></li>
+                        <li>Biller Code: <strong><?= $payment->biller_code ?></strong></li>
                     <?php endif ?>
                     <?php if (isset($emoney)) : ?>
                         <li>
@@ -166,9 +185,24 @@
                         </tfoot>
                     </table>
                 </div>
-                <?php if ($order->status == "WAITING" || $order->status == "PROCESS") : ?>
+                <?php if (!$order->is_cencel) : ?>
+                    <?php if ($payment->transaction_status != "expire" && $payment->transaction_status != "cancel") : ?>
+                        <?php if ($order->status == "WAITING") : ?>
+                            <div class="d-flex justify-content-center">
+                                <form action="<?= base_url('order/cencel/' . $order->order_id) ?>" method="POST" onsubmit="return confirm('Confirm Your action !')">
+                                    <?= csrf_field() ?>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm mt-2">Cencel</button>
+                                </form>
+                            </div>
+                        <?php endif ?>
+                    <?php endif ?>
+                <?php endif ?>
+                <?php if ($order->status == "SHIPPED") : ?>
                     <div class="d-flex justify-content-center">
-                        <button class="btn btn-outline-danger btn-sm mt-2">Cencel</button>
+                        <form action="<?= base_url('order/done/' . $order->order_id) ?>" method="POST" onsubmit="return confirm('Confirm Your action !')">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="btn btn-outline-success btn-sm mt-2">Done</button>
+                        </form>
                     </div>
                 <?php endif ?>
             </div>

@@ -23,11 +23,16 @@ class CheckOutController extends BaseController
     }
     public function index()
     {
-        $data['addresses'] = $this->address->where("user_id", auth_user_id())->with('users')->findAll();
-        $data['carts'] = $this->cart->where("user_id", auth_user_id())->with("products")->findAll();
-        $data['total_cart'] = $this->cart->getTotalCart();
-        $data['total_weight'] = $this->cart->getWeightProduct() != null ? $this->cart->getWeightProduct()->total_weight : 0;
-        return view('client/checkout/index', add_data('checkout', "checkout/index", $data));
+        try {
+            $data['addresses'] = $this->address->where("user_id", auth_user_id())->with('users')->findAll();
+            $data['carts'] = $this->cart->where("user_id", auth_user_id())->with("products")->findAll();
+            $data['total_cart'] = $this->cart->getTotalCart();
+            $data['total_weight'] = $this->cart->getWeightProduct() != null ? $this->cart->getWeightProduct()->total_weight : 0;
+            return view('client/checkout/index', add_data('checkout', "checkout/index", $data));
+        } catch (\Exception $e) {
+            session()->setFlashdata("alert_error", "Something went wrong");
+            return redirect()->back();
+        }
     }
     public function change_address($id)
     {
@@ -54,7 +59,7 @@ class CheckOutController extends BaseController
                 $data['order_items'] = $this->order_item->where('order_id', $order->order_id)->findAll();
                 $data['payment'] = $this->payment->get_status($order->midtrans_id);
                 if (!isset($data['payment']->va_numbers)) {
-                    $data['emoney'] = $this->order->getSessionEmoney();
+                    $data['emoney'] = $this->order->getSessionEmoney($order->token);
                 }
                 return view('client/checkout/complete', add_data('Checkout Complete', "checkout/complete", $data));
             } else {
