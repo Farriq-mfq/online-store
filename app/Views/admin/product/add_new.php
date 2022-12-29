@@ -68,7 +68,7 @@
                             <?= show_error("price") ?>
                         </div>
                         <div class="form-group">
-                            <label for="weight" required>Weight</label>
+                            <label for="weight" required>Weight (gram)</label>
                             <input type="number" min="0" class="form-control <?= show_class_error("weight") ?>" name="weight" id="weight" value="<?= set_value("weight") ?>">
                             <?= show_error("weight") ?>
                         </div>

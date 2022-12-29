@@ -79,7 +79,7 @@
                             <div class="card-body">
                                 <div class="d-flex">
                                     <p class="d-flex flex-column">
-                                        <span class="text-bold text-lg"><?= $detail_visitor['total_thisweek'] ?></span>
+                                        <span class="text-bold text-lg"><?= thousandsCurrencyFormat($detail_visitor['total_thisweek']) ?></span>
                                         <span>Visitors Over Time</span>
                                     </p>
                                     <p class="ml-auto d-flex flex-column text-right">
@@ -232,13 +232,19 @@
                             <div class="card-body">
                                 <div class="d-flex">
                                     <p class="d-flex flex-column">
-                                        <span class="text-bold text-lg">$18,230.00</span>
+                                        <span class="text-bold text-lg">Rp.<?= thousandsCurrencyFormat($report_sales['total_this_year']) ?></span>
                                         <span>Sales Over Time</span>
                                     </p>
                                     <p class="ml-auto d-flex flex-column text-right">
-                                        <span class="text-success">
-                                            <i class="fas fa-arrow-up"></i> 33.1%
-                                        </span>
+                                        <?php if ($report_sales['percentage_this_year'] > $report_sales['percentage_last_year']) : ?>
+                                            <span class="text-success">
+                                                <i class="fas fa-arrow-up"></i> <?= $report_sales['percentage_this_year'] ?>%
+                                            </span>
+                                        <?php else : ?>
+                                            <span class="text-danger">
+                                                <i class="fas fa-arrow-down"></i> <?= $report_sales['percentage_last_year'] ?>%
+                                            </span>
+                                        <?php endif ?>
                                         <span class="text-muted">Since last month</span>
                                     </p>
                                 </div>
@@ -347,66 +353,71 @@
 
         var $salesChart = $('#sales-chart')
         // eslint-disable-next-line no-unused-vars
-        var salesChart = new Chart($salesChart, {
-            type: 'bar',
-            data: {
-                labels: ['JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-                datasets: [{
-                        backgroundColor: '#007bff',
-                        borderColor: '#007bff',
-                        data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
-                    },
-                    {
-                        backgroundColor: '#ced4da',
-                        borderColor: '#ced4da',
-                        data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
-                    }
-                ]
-            },
-            options: {
-                maintainAspectRatio: false,
-                tooltips: {
-                    mode: mode,
-                    intersect: intersect
-                },
-                hover: {
-                    mode: mode,
-                    intersect: intersect
-                },
-                legend: {
-                    display: false
-                },
-                scales: {
-                    yAxes: [{
-                        // display: false,
-                        gridLines: {
-                            display: true,
-                            lineWidth: '4px',
-                            color: 'rgba(0, 0, 0, .2)',
-                            zeroLineColor: 'transparent'
-                        },
-                        ticks: $.extend({
-                            beginAtZero: true,
-
-                            // Include a dollar sign in the ticks
-                            callback: function(value) {
-                                if (value >= 1000) {
-                                    value /= 1000
-                                    value += 'k'
-                                }
-
-                                return '$' + value
+        $.get({
+            url: "<?= admin_url("/api/home/getsales_today") ?>",
+            success: (data) => {
+                var salesChart = new Chart($salesChart, {
+                    type: 'bar',
+                    data: {
+                        labels: data.key,
+                        datasets: [{
+                                backgroundColor: '#007bff',
+                                borderColor: '#007bff',
+                                data: data.this_year
+                            },
+                            {
+                                backgroundColor: '#ced4da',
+                                borderColor: '#ced4da',
+                                data: data.last_year
                             }
-                        }, ticksStyle)
-                    }],
-                    xAxes: [{
-                        display: true,
-                        gridLines: {
+                        ]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        tooltips: {
+                            mode: mode,
+                            intersect: intersect
+                        },
+                        hover: {
+                            mode: mode,
+                            intersect: intersect
+                        },
+                        legend: {
                             display: false
                         },
-                        ticks: ticksStyle
-                    }]
-                }
+                        scales: {
+                            yAxes: [{
+                                // display: false,
+                                gridLines: {
+                                    display: true,
+                                    lineWidth: '4px',
+                                    color: 'rgba(0, 0, 0, .2)',
+                                    zeroLineColor: 'transparent'
+                                },
+                                ticks: $.extend({
+                                    beginAtZero: true,
+
+                                    // Include a dollar sign in the ticks
+                                    callback: function(value) {
+                                        if (value >= 1000) {
+                                            value /= 1000
+                                            value += 'k'
+                                        }
+
+                                        return 'Rp.' + value
+                                    }
+                                }, ticksStyle)
+                            }],
+                            xAxes: [{
+                                display: true,
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: ticksStyle
+                            }]
+                        }
+                    }
+                })
             }
         })
 

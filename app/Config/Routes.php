@@ -99,6 +99,7 @@ $routes->group("api/data", function ($route) {
 $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() . "Admin", "filter" => ["admin-auth", "roles-auth"]], function ($route) {
     $route->get("/", "HomeController::index");
     $route->get("api/home/getvisitor_today", "HomeController::apiGetVisitorToday");
+    $route->get("api/home/getsales_today", "HomeController::apiGetSalesToday");
     /* PRODUCT ROUTES */
     $route->group("product", function ($route) {
         $route->get("/", "ProductController::index");

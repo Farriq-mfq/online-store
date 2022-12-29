@@ -19,14 +19,14 @@ class HomeController extends BaseController
     {
         $data['total_order'] = $this->order->countAllResults();
         $data['total_visitor'] = $this->visitor->countAllResults();
-        $data['detail_visitor'] = $this->getdetailvisitorcount();
+        $data['detail_visitor'] = $this->visitor->getdetailvisitorcount();
+        $data['report_sales'] = $this->order->report();
         return view('admin/home_view', add_data("Home", "/index", $data));
     }
 
     public function apiGetVisitorToday()
     {
         if ($this->request->isAJAX()) {
-            $day = [];
             $thisweek = [];
             $last_week = [];
             $data_last_week = $this->visitor->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 14 DAY) AND date_sub(CURRENT_DATE,INTERVAL 7 DAY)")->orderBy("DAYOFWEEK(created_at)")->findAll();
@@ -35,30 +35,25 @@ class HomeController extends BaseController
                 $thisweek[] = isset($visitors[$i]) ? $visitors[$i]->total : '0';
                 $last_week[] = isset($data_last_week[$i]) ? $data_last_week[$i]->total : '0';
             }
-            return $this->response->setJSON(['key' => $day, 'this_week' => $thisweek, 'last_week' => $last_week]);
+            return $this->response->setJSON(['this_week' => $thisweek, 'last_week' => $last_week]);
         }
     }
-    protected function getdetailvisitorcount()
+    public function apiGetSalesToday()
     {
-        $data_last_week = $this->visitor->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 14 DAY) AND date_sub(CURRENT_DATE,INTERVAL 7 DAY)")->orderBy("DAYOFWEEK(created_at)")->findAll();
-        $data_this_week = $this->visitor->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 7 DAY) AND CURRENT_DATE")->orderBy("DAYOFWEEK(created_at)")->findAll();
-        $total_all_visitor = $this->visitor->countAllResults();
-        $total_lastweek = 0;
-        foreach ($data_last_week as $last_week) {
-            $total_lastweek += $last_week->total;
+        if ($this->request->isAJAX()) {
+            $month = [];
+            $thisyear = [];
+            $lastyear = [];
+            $data_sales_this_year = $this->order->report()['detail_by_month_this_year'];
+            $detail_by_month_last_year = $this->order->report()['detail_by_month_last_year'];
+            foreach ($data_sales_this_year as $sales) {
+                $month[] = $sales->month;
+                $thisyear[] = $sales->total_permonth;
+            }
+            foreach ($detail_by_month_last_year as $sales) {
+                $lastyear[] = $sales->total_permonth;
+            }
+            return $this->response->setJSON(['this_year' => $thisyear,'last_year'=>$lastyear, 'key' => $month]);
         }
-        $total_thisweek = 0;
-        foreach ($data_this_week as $this_week) {
-            $total_thisweek += $this_week->total;
-        }
-
-        $percentage_last_week = floor($total_lastweek / $total_all_visitor * 100);
-        $percentage_this_week = floor($total_thisweek / $total_all_visitor * 100);
-        return [
-            'percentage_thisweek' => $percentage_this_week,
-            'percentage_lastweek' => $percentage_last_week,
-            'total_thisweek'=>$total_thisweek,
-            'total_lastweek'=>$total_lastweek,
-        ];
     }
 }
