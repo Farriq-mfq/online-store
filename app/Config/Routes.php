@@ -61,6 +61,7 @@ $routes->group("account", ["filter" => "user"], function ($route) {
     $route->get("/", "AccountController::index");
     $route->post("address", "AccountController::add_address");
     $route->post("address/default/(:num)", "AccountController::set_address_default/$1");
+    $route->post("address/remove/(:num)", "AccountController::remove_address/$1");
     $route->get("address/edit", "AccountController::set_address_edit");
     $route->post("update", "AccountController::account_update");
     $route->get("view", "AccountController::view");
@@ -75,6 +76,7 @@ $routes->group("api/cart", ["filter" => "user"], function ($route) {
 $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     $route->get('/', 'AuthController::index');
     $route->post('login', 'AuthController::login');
+    $route->post('register', 'AuthController::register');
 });
 // auth logout
 $routes->post('auth/logout', "AuthController::logout", ["filter" => "user"]);

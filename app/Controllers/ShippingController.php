@@ -43,7 +43,7 @@ class ShippingController extends BaseController
                 $html = "";
                 $html .= "<option value=''>Select City</option>";
                 foreach (array_values($filter) as $c) {
-                    $html .= '<option value="' . $c->city_id . '">' . $c->city_name . '</option>';
+                    $html .= '<option value="' . $c->city_id . '">' . $c->type . ' ' . $c->city_name . '</option>';
                 }
                 return $html;
             } catch (\Exception $e) {
@@ -88,7 +88,7 @@ class ShippingController extends BaseController
             try {
                 if ($validate) {
                     $results = $this->shipping->get_cost($this->request->getVar("destination"), $this->request->getVar("weight"), $this->request->getVar("courier"));
-                    return ''.format_rupiah($this->shipping->filterCost($results->results[0]->costs,$this->request->getVar('service'))[0]->cost[0]->value).'';
+                    return '' . format_rupiah($this->shipping->filterCost($results->results[0]->costs, $this->request->getVar('service'))[0]->cost[0]->value) . '';
                 } else {
                     return $this->response->setStatusCode(400)->setJSON($this->validator->getErrors());
                 }
@@ -109,7 +109,7 @@ class ShippingController extends BaseController
             try {
                 if ($validate) {
                     $results = $this->shipping->get_cost($this->request->getVar("destination"), $this->request->getVar("weight"), $this->request->getVar("courier"));
-                    return ''.format_rupiah($this->cart->getGrandTotal($this->shipping->filterCost($results->results[0]->costs,$this->request->getVar('service'))[0]->cost[0]->value)).'';
+                    return '' . format_rupiah($this->cart->getGrandTotal($this->shipping->filterCost($results->results[0]->costs, $this->request->getVar('service'))[0]->cost[0]->value)) . '';
                 } else {
                     return $this->response->setStatusCode(400)->setJSON($this->validator->getErrors());
                 }

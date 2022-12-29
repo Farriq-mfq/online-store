@@ -77,7 +77,8 @@ class AccountController extends BaseController
                 'province' => $this->request->getVar("province"),
                 'postcode_zip' => $this->request->getVar("postcode_zip"),
                 'address_notes' => $this->request->getVar("address_notes"),
-                'user_id' => auth_user_id()
+                'user_id' => auth_user_id(),
+                'primary' => count($this->address->where('user_id', auth_user_id())->findAll()) ? false : true
             ];
             if ($this->request->getVar('__id_address')) {
 
@@ -127,6 +128,21 @@ class AccountController extends BaseController
             } else {
                 return $this->response->setStatusCode(400)->setJSON(['validation' => $this->validator->getErrors()]);
             }
+        }
+    }
+    public function remove_address($id)
+    {
+        try {
+            if ($this->address->find($id)->primary != "1") {
+                $this->address->delete($id);
+                session()->setFlashdata("alert_success", "Success Delete Address");
+            } else {
+                session()->setFlashdata("alert_error", "Failed Delete Address");
+            }
+            return redirect()->back();
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back();
         }
     }
 

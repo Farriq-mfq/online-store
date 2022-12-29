@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Service\AuthService;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -12,6 +13,7 @@ use EMONEY;
 use Psr\Log\LoggerInterface;
 use Shipping;
 use Payment;
+
 /**
  * Class BaseController
  *
@@ -49,7 +51,7 @@ abstract class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-        helper(["data","alert","array","form","url_helper","menu_helper","auth_helper","get_shipping_helper","payment_helper"]);
+        helper(["data", "alert", "array", "form", "url_helper", "menu_helper", "auth_helper", "get_shipping_helper", "payment_helper"]);
         helper("string");
         helper('inflector');
         // Preload any models, libraries, etc, here.
@@ -67,7 +69,7 @@ abstract class BaseController extends Controller
         // );
         // dd($this->payment->payment_refund("163aceeb98ec56",$prm));
         // echo "<pre>";
-        // print_r($this->shipping->get_cost(2,4,"jne"));
+        // dd($this->shipping->get_city());
         // echo "</pre>";
         // return;
     }

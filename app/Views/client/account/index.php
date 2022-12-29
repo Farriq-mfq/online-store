@@ -139,9 +139,13 @@
                                                 <?php if (!$address->primary) : ?>
                                                     <form action="<?= base_url('account/address/default/' . $address->user_address_id) ?>" method="POST">
                                                         <?= csrf_field() ?>
-                                                        <button type="submit" class="btn btn--primary col-md-6" id="__change__address__modal">Use as default address</button>
+                                                        <button type="submit" class="btn btn--primary col-md-6" >Use as default address</button>
                                                     </form>
                                                 <?php endif ?>
+                                                <form action="<?= base_url('account/address/remove/' . $address->user_address_id) ?>" method="POST" onsubmit="return confirm('Confirm Your Action !')">
+                                                    <?= csrf_field() ?>
+                                                    <button type="submit" class="btn btn-danger col-md-6">Delete Address</button>
+                                                </form>
                                             </div>
                                         </div>
                                     <?php endforeach ?>
