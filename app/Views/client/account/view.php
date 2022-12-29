@@ -127,7 +127,7 @@
                     <li>Total: <strong><?= format_rupiah($order->subtotal) ?></strong></li>
                     <li>Payment Method: <strong><?= $order->payment_method ?></strong></li>
                     <li>Order Status: <strong><?= $order->status ?></strong></li>
-                    <li>Tracking: <strong><?= $order->shipping_tracking == NULL  ? "-" : $order->shipping_tracking ?></strong></li>
+                    <li>Tracking: <strong><?= $order->shipping_tracking == NULL  ? "-" : '<a href="'.base_url('/order/tracking/'.$order->shipping_tracking).'" target="_blank" class="text-primary">'.$order->shipping_tracking.'</a>' ?></strong></li>
                     <li>Payment Status: <strong><?= $payment->transaction_status ?></strong></li>
                     <?php if (isset($payment->va_numbers)) : ?>
                         <li>BANK : <strong><?= $payment->va_numbers[0]->bank ?></strong></li>
@@ -145,7 +145,7 @@
                     <?php if (isset($emoney)) : ?>
                         <li>
                             <h5>QR CODE PAYMENT</h5>
-                            <img src="<?= $emoney->url ?>" alt="QR CODE SCAN PAY">
+                            <img height="300px" width="300px" src="<?= $emoney->url ?>" alt="QR CODE SCAN PAY">
                         </li>
                     <?php endif ?>
                 </ul>

@@ -194,10 +194,16 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
     /* order routes */
     $route->group("order", function ($categories_route) {
         $categories_route->get("/", "OrderController::index");
-        // $categories_route->delete("(:num)", "OfferController::remove/$1");
-        // $categories_route->post("/", "OfferController::store");
-        // $categories_route->put("/", "OfferController::update");
-        // $categories_route->get("edit", "OfferController::get_update_offer");
+        $categories_route->post("accept/(:num)", "OrderController::accept/$1");
+        $categories_route->get("view/(:segment)", "OrderController::view_detail/$1");
+        $categories_route->post("tracking/(:num)", "OrderController::tracking_add/$1");
+        $categories_route->post("pdf/(:num)", "OrderController::generate_pdf/$1");
+        $categories_route->post("reject/(:num)", "OrderController::reject/$1");
+        $categories_route->get("waiting", "OrderController::waiting");
+        $categories_route->get("process", "OrderController::process");
+        $categories_route->get("shipped", "OrderController::shipped");
+        $categories_route->get("done", "OrderController::done");
+        $categories_route->get("reject", "OrderController::reject_view");
     });
     /* Errors Routes */
     $route->group("error", function ($categories_route) {

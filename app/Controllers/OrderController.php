@@ -8,7 +8,6 @@ use App\Models\OrderItem;
 use App\Models\ShoppingCart;
 use App\Models\UserAddress;
 use BANK;
-use Config\Encryption;
 use Config\Services;
 use EMONEY;
 
@@ -242,7 +241,7 @@ class OrderController extends BaseController
                     $payment = $this->payment->get_status($order->midtrans_id);
                     $pay_cencel = $this->pay_cencel($payment, $order);
                     if ($pay_cencel) {
-                        $cencel = $this->order->update($id, ['is_cencel' => true]);
+                        $cencel = $this->order->update($id, ['is_cencel' => true,'status'=>"REJECT"]);
                         if ($cencel) {
                             session()->setFlashdata('alert_success', "Cenceled Success");
                             return redirect()->back();

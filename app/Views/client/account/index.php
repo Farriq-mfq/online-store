@@ -128,7 +128,7 @@
                                         <div class="myaccount-content mt-2 <?php if ($address->primary) : ?>border-success<?php endif ?>">
                                             <h3>Address</h3>
                                             <address>
-                                                <p><strong><?= $address->user->name ?></strong></p>
+                                                <p><strong><?= $address->firstname ?> <?= $address->lastname ?></strong>
                                                 <p><?= $address->address1 ?>, <br>
                                                     <?= getCity($address->city)->city_name ?>, <?= getProvince($address->province)->province ?> <?= $address->postcode_zip ?></p>
                                                 <p>Phone: <?= $address->phone ?></p>

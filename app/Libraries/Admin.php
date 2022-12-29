@@ -17,7 +17,7 @@ class Admin {
         $data['process'] = $this->order->where('status',"PROCESS")->countAllResults();
         $data['shipped'] = $this->order->where('status',"SHIPPED")->countAllResults();
         $data['done'] = $this->order->where('status',"DONE")->countAllResults();
-        $data['rejected'] = $this->order->where('status',"REJECTED")->countAllResults();
+        $data['rejected'] = $this->order->where('status',"REJECT")->countAllResults();
         return view("widget/order_menu",$data);
     }
 }

@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use EMONEY;
 use Psr\Log\LoggerInterface;
 use Shipping;
 use Payment;
@@ -59,7 +60,12 @@ abstract class BaseController extends Controller
         $this->payment = new Payment();
         // dd(user());
         // dd(password_hash("user",PASSWORD_DEFAULT)); 
-        // dd($this->shipping->get_city());
+        // $prm = array(
+        //     'refund_key' => 'order1-ref1',
+        //     'amount' => 21000,
+        //     'reason' => 'Item out of stock'
+        // );
+        // dd($this->payment->payment_refund("163aceeb98ec56",$prm));
         // echo "<pre>";
         // print_r($this->shipping->get_cost(2,4,"jne"));
         // echo "</pre>";

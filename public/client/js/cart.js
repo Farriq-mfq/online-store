@@ -31,6 +31,21 @@ function addToCart(url, urlload, loadCount, loadTotalPrice) {
           });
         }
       },
+      error: (data) => {
+        $(this).html($original);
+        $(this).attr("disabled", false);
+        if (data.responseJSON) {
+          $.toast({
+            heading: "Information",
+            text: data.responseJSON.error,
+            bgColor: "#DF4857",
+            textColor: "white",
+            icon: "info",
+            showHideTransition: "slide",
+            position: "bottom-left",
+          });
+        }
+      },
     });
   });
 }

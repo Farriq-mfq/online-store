@@ -80,12 +80,12 @@ class Payment
             throw $e;
         }
     }
-    public function e_money(EMONEY $emoney, array $params, int $userID, int $orderId)
+    public function e_money(EMONEY $emoney, array $params, int $userID, string $orderId)
     {
         try {
             $expired = date("Y-m-d H:i:s");
-            $query = "SELECT * FROM session_emoney WHERE user_id=? AND expired >= ?";
-            $check = $this->db->query($query, [1, $expired])->getFirstRow();
+            $query = "SELECT * FROM session_emoney WHERE user_id=? AND order_id=? AND expired >= ?";
+            $check = $this->db->query($query, [$userID,$orderId, $expired])->getFirstRow();
             if ($check == null) {
                 switch ($emoney->value) {
                     case 'qris':
@@ -96,7 +96,7 @@ class Payment
                             ]
                         ];
                         $result =  \Midtrans\CoreApi::charge(array_merge($qris, ["transaction_details" => $params]));
-                        $query = "INSERT INTO `session_emoney`(`name`, `method`, `url`,`user_id`,`order_id`, `expired`) VALUES (?,?,?,?,??)";
+                        $query = "INSERT INTO `session_emoney`(`name`, `method`, `url`,`user_id`,`order_id`, `expired`) VALUES (?,?,?,?,?,?)";
                         $this->db->query($query, [$result->actions[0]->name, $result->actions[0]->method, $result->actions[0]->url, $userID, $orderId, $result->expire_time]);
                         return $result;
                         /* NO SERVICE */

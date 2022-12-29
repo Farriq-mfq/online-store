@@ -26,8 +26,8 @@ class CartController extends BaseController
             </div> 
             <div class=" single-cart-block ">
                 <div class="btn-block">
-                    <a href="'.base_url('/cart').'" class="btn">View Cart <i class="fas fa-chevron-right"></i></a>
-                    <a href="'.base_url('/checkout').'" class="btn btn--primary">Check Out <i class="fas fa-chevron-right"></i></a>
+                    <a href="' . base_url('/cart') . '" class="btn">View Cart <i class="fas fa-chevron-right"></i></a>
+                    <a href="' . base_url('/checkout') . '" class="btn btn--primary">Check Out <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
             ';
@@ -50,35 +50,39 @@ class CartController extends BaseController
                     $id = htmlentities($this->request->getVar('id'));
                     $qty = $this->request->getVar('qty') ?  htmlentities($this->request->getVar('qty')) : 1;
                     $product = $this->product->find($id);
-                    $check_product_exist = $this->cart->where("user_id", auth_user_id())->where("product_id", $id)->first();
-                    if ($product->product_discount) {
-                        if ($product->product_discount[0]->discount_type === "PERCENTAGE") {
-                            $price = get_discount($product->price, $product->product_discount[0]->discount_value);
-                        } elseif ($product->product_discount[0]->discount_type === "VALUE") {
-                            $price = get_less_price($product->price, $product->product_discount[0]->discount_value);
+                    if ($product->stock > 0) {
+                        $check_product_exist = $this->cart->where("user_id", auth_user_id())->where("product_id", $id)->first();
+                        if ($product->product_discount) {
+                            if ($product->product_discount[0]->discount_type === "PERCENTAGE") {
+                                $price = get_discount($product->price, $product->product_discount[0]->discount_value);
+                            } elseif ($product->product_discount[0]->discount_type === "VALUE") {
+                                $price = get_less_price($product->price, $product->product_discount[0]->discount_value);
+                            } else {
+                                $price = $product->price;
+                            }
                         } else {
                             $price = $product->price;
                         }
+                        if ($check_product_exist != null) {
+                            $total_qty =  $check_product_exist->quantity + $qty;
+                            $this->cart->update($check_product_exist->session_cart_id, [
+                                'quantity' => $total_qty,
+                                'total' => $price * $total_qty,
+                            ]);
+                        } else {
+                            $this->cart->insert([
+                                "user_id" => auth_user_id(),
+                                'product_id' => $id,
+                                'quantity' => $qty,
+                                'price' => $price,
+                                'total' => $price * $qty,
+                                'product_img' => $product->product_images[0]->image,
+                            ]);
+                        }
+                        return $this->response->setStatusCode(200)->setJSON(['success' => true]);
                     } else {
-                        $price = $product->price;
+                        return $this->response->setStatusCode(400)->setJSON(['error' => 'product out of stock']);
                     }
-                    if ($check_product_exist != null) {
-                        $total_qty =  $check_product_exist->quantity + $qty;
-                        $this->cart->update($check_product_exist->session_cart_id, [
-                            'quantity' => $total_qty,
-                            'total' => $price * $total_qty,
-                        ]);
-                    } else {
-                        $this->cart->insert([
-                            "user_id" => auth_user_id(),
-                            'product_id' => $id,
-                            'quantity' => $qty,
-                            'price' => $price,
-                            'total' => $price * $qty,
-                            'product_img' => $product->product_images[0]->image,
-                        ]);
-                    }
-                    return $this->response->setStatusCode(200)->setJSON(['success' => true]);
                 } else {
                     return $this->response->setStatusCode(400)->setJSON($this->validator->getErrors());
                 }
@@ -94,11 +98,11 @@ class CartController extends BaseController
         foreach ($items as $item) {
             $product = $this->product->find($item->product_id);
             $html .= '<div class="cart-product">
-            <a href="'.base_url("/shop/")."/".$product->slug.'" class="image">
+            <a href="' . base_url("/shop/") . "/" . $product->slug . '" class="image">
                 <img src="' . $item->product_img . '" alt="">
             </a>
             <div class="content">
-                <h3 class="title"><a href="'.base_url("/shop")."/".$product->slug.'">' . $item->product->title . '</a></h3>
+                <h3 class="title"><a href="' . base_url("/shop") . "/" . $product->slug . '">' . $item->product->title . '</a></h3>
                 <p class="price"><span class="qty">' . $item->quantity . ' ×</span> ' . $this->printPrice($product) . '</p>
                 <button class="cross-btn" id="__remove__cart__action" data-id="' . $item->session_cart_id . '"><i class="fas fa-times"></i></button>
             </div>

@@ -189,7 +189,7 @@ class AccountController extends BaseController
                 $data['order_items'] = $this->order_item->where('order_id', $order->order_id)->findAll();
                 $data['payment'] = $this->payment->get_status($order->midtrans_id);
                 if (!isset($data['payment']->va_numbers)) {
-                    $data['emoney'] = $this->order->getSessionEmoney($order->token);
+                    $data['emoney'] = $this->order->getSessionEmoneyByUser($order->token);
                 }
                 return view('client/account/view', add_data('Checkout Complete', "checkout/complete", $data));
             } else {

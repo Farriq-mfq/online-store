@@ -34,7 +34,8 @@
                                             <div class="myaccount-content mt-2 parent_checked">
                                                 <h3>Address</h3>
                                                 <address>
-                                                    <p><strong><?= $address->user->name ?></strong></p>
+                                                    <p><strong><?= $address->firstname ?> <?= $address->lastname ?></strong>
+                                                    </p>
                                                     <p><?= $address->address1 ?>, <br>
                                                         <?= getCity($address->city)->city_name ?>, <?= getProvince($address->province)->province ?> <?= $address->postcode_zip ?></p>
                                                     <p>Phone: <?= $address->phone ?></p>
@@ -180,15 +181,17 @@
             <div class="modal-content">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <?php foreach ($addresses as $address) : ?>
-                    <?php if (!$address->primary) : ?>
+                    <?php if ($address->primary == 0) : ?>
+
                         <form action="<?= base_url("checkout/changeaddress/" . $address->user_address_id) ?>" method="POST">
                             <?= csrf_field() ?>
                             <div class="myaccount-content mt-2 parent_checked">
                                 <h3>Address</h3>
                                 <address>
-                                    <p><strong><?= $address->user->name ?></strong></p>
+                                    <p><strong><?= $address->firstname ?> <?= $address->lastname ?></strong>
+                                    </p>
                                     <p><?= $address->address1 ?>, <br>
-                                        <?= getCity($address->city)->city_name ?>, <?= getCity($address->province)->province ?> <?= $address->postcode_zip ?></p>
+                                        <?= getCity($address->city)->city_name ?>, <?= getProvince($address->province)->province ?> <?= $address->postcode_zip ?></p>
                                     <p>Phone: <?= $address->phone ?></p>
                                 </address>
                                 <div class="d-grid gap-2">
@@ -259,6 +262,10 @@
                     $("#__load__shipping____option").load("<?= base_url("/api/shipping/cost") ?>", `destination=<?= $address->city ?>&weight=<?= $total_weight ?>&courier=${$(this).val()}`)
                 })
                 $("#__load__shipping____option").change(function(e) {
+                    const original = $("#__btn__place").html();
+                    $("#__btn__place").text("Calculating...");
+                    $("#__btn__place").attr("disabled", true)
+
                     $("#__load__shipping__price").text("Calculating...")
                     $("#__load__shipping__price").load("<?= base_url("api/shipping/get_price") ?>", `service=${$(this).val()}&destination=<?= $address->city ?>&weight=<?= $total_weight ?>&courier=${$("#__load__delivery__").val()}`, function(data, status) {
                         if (status == 'error') {
@@ -270,6 +277,8 @@
                         if (status == 'error') {
                             $("#__load__shipping__grand__total").text("-")
                         }
+                        $("#__btn__place").text(original);
+                        $("#__btn__place").attr("disabled", false)
                     })
                 })
             <?php endif ?>
@@ -314,6 +323,9 @@
         })
 
         $("#__load__shipping____option").change(function(e) {
+            const original = $("#__btn__place").html();
+            $("#__btn__place").text("Calculating...");
+            $("#__btn__place").attr("disabled", true)
             $("#__load__shipping__price").text("Calculating...")
             $("#__load__shipping__price").load("<?= base_url("api/shipping/get_price") ?>", `service=${$(this).val()}&destination=${$("#__load__city__").val()}&weight=<?= $total_weight ?>&courier=${$("#__load__delivery__").val()}`, function(data, status) {
                 if (status == 'error') {
@@ -325,6 +337,8 @@
                 if (status == 'error') {
                     $("#__load__shipping__grand__total").text("-")
                 }
+                $("#__btn__place").text(original);
+                $("#__btn__place").attr("disabled", false)
             })
         })
     <?php endif ?>
