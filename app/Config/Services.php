@@ -8,6 +8,7 @@ use App\Service\AuthService;
 use CodeIgniter\Config\BaseService;
 use Payment;
 use Shipping;
+use UniqueVisitor;
 
 /**
  * Services Configuration file.
@@ -35,36 +36,45 @@ class Services extends BaseService
      * }
      */
 
-     public static function shippingservice($getShared = true)
-     {
-        if($getShared){
+    public static function shippingservice($getShared = true)
+    {
+        if ($getShared) {
             return static::getSharedInstance("shippingservice");
         }
 
         return new Shipping();
-     }
-     public static function paymentservice($getShared = true)
-     {
-        if($getShared){
+    }
+    public static function paymentservice($getShared = true)
+    {
+        if ($getShared) {
             return static::getSharedInstance("paymentservice");
         }
 
         return new Payment();
-     }
-     public static function authserviceUser($getShared = true)
-     {
-        if($getShared){
+    }
+    public static function authserviceUser($getShared = true)
+    {
+        if ($getShared) {
             return static::getSharedInstance("authserviceUser");
         }
 
-        return new AuthService($_ENV["USER_TOKEN_NAME"],User::class);
-     }
-     public static function authserviceAdmin($getShared = true)
-     {
-        if($getShared){
+        return new AuthService($_ENV["USER_TOKEN_NAME"], User::class);
+    }
+    public static function authserviceAdmin($getShared = true)
+    {
+        if ($getShared) {
             return static::getSharedInstance("authserviceAdmin");
         }
 
-        return new AuthService($_ENV["ADMIN_TOKEN_NAME"],AdminModel::class);
-     }
+        return new AuthService($_ENV["ADMIN_TOKEN_NAME"], AdminModel::class);
+    }
+
+    public static function uniqueVisitorService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance("uniqueVisitorService");
+        }
+
+        return new UniqueVisitor();
+    }
 }

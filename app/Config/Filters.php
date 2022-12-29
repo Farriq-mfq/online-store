@@ -8,6 +8,7 @@ use App\Filters\Adminguest;
 use App\Filters\Roles;
 use App\Filters\User;
 use App\Filters\UserGuest;
+use App\Filters\Visitor;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -34,6 +35,7 @@ class Filters extends BaseConfig
         "user"          => User::class,
         "roles-auth"          => Roles::class,
         'user-guest'         => UserGuest::class,
+        'visitor'         => Visitor::class,
     ];
 
     /**

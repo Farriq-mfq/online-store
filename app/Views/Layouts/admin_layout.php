@@ -156,6 +156,7 @@
 <script src="<?= base_url("/admin/plugins/jquery-validation/jquery.validate.min.js") ?>"></script>
 <script src="<?= base_url("/admin/plugins/jquery-validation/additional-methods.min.js") ?>"></script>
 <script src="<?= base_url("/admin/plugins/daterangepicker/daterangepicker.js") ?>"></script>
+<script src="<?= base_url("/admin/plugins/chart.js/Chart.min.js") ?>"></script>
 <script>
   // custom label
   $("label[required]").each((index)=>{

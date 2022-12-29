@@ -37,7 +37,7 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 /* USER ROUTES */
-$routes->group("shop", function ($route) {
+$routes->group("shop", ['filter' => 'visitor'], function ($route) {
     $route->get('/', 'ShopControlller::index');
     $route->get('(:segment)', 'ShopControlller::detail/$1');
     $route->post('(:segment)/review', 'ShopControlller::postReviews/$1');
@@ -87,7 +87,7 @@ $routes->group("api/shipping", ['filter' => 'user'], function ($route) {
     $route->get("get_grand_price", "ShippingController::getGrand");
 });
 
-$routes->get("/", "Home::index");
+$routes->get("/", "Home::index", ['filter' => 'visitor']);
 
 $routes->group("api/data", function ($route) {
     $route->get("product", "ApiController::get_product");
@@ -98,6 +98,7 @@ $routes->group("api/data", function ($route) {
 /* ADMIN ROUTES */
 $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() . "Admin", "filter" => ["admin-auth", "roles-auth"]], function ($route) {
     $route->get("/", "HomeController::index");
+    $route->get("api/home/getvisitor_today", "HomeController::apiGetVisitorToday");
     /* PRODUCT ROUTES */
     $route->group("product", function ($route) {
         $route->get("/", "ProductController::index");

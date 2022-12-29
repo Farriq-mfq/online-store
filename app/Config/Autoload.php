@@ -68,6 +68,7 @@ class Autoload extends AutoloadConfig
         "Shipping"=>APPPATH."Libraries/Shipping.php",
         "Payment"=>APPPATH."Libraries/Payment.php",
         "Auth"=>APPPATH."Service/AuthService.php",
+        "UniqueVisitor"=>APPPATH."Libraries/UniqueVisitor.php",
     ];
 
     /**

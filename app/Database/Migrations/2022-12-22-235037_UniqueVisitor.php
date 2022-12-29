@@ -18,14 +18,6 @@ class UniqueVisitor extends Migration
                 "constraint" => 50,
                 "unique" => true
             ],
-            "country" => [
-                "type" => "varchar",
-                "constraint" => 50
-            ],
-            "city" => [
-                "type" => "varchar",
-                "constraint" => 50
-            ],
             'created_at datetime default current_timestamp',
         ]);
         $this->forge->addKey("visit_id", true);
