@@ -3,8 +3,10 @@
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-lg-3 ">
-					<a href="index-2.html" class="site-brand">
-						<img src="image/logo.png" alt="">
+					<a href="<?= base_url() ?>" class="site-brand">
+						<?php if ($website) : ?>
+							<img src="<?= $website->logo ?>" alt="">
+						<?php endif ?>
 					</a>
 				</div>
 				<div class="col-lg-3">
@@ -13,8 +15,9 @@
 							<i class="fas fa-headphones-alt"></i>
 						</div>
 						<div class="text">
-							<p>Free Support 24/7</p>
-							<p class="font-weight-bold number">+01-202-555-0181</p>
+							<?= $website ? html_entity_decode($website->support_content) : "" ?>
+							<!-- <p>Free Support 24/7</p>
+							<p class="font-weight-bold number">+01-202-555-0181</p> -->
 						</div>
 					</div>
 				</div>

@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-12">
                             <h4>
-                                <i class="fas fa-globe"></i> AdminLTE, Inc.
+                                <i class="fas fa-globe"></i> Pustok, Inc.
                                 <small class="float-right">Date: <?= date("d/m/Y", strtotime($order->created_at)) ?></small>
                             </h4>
                         </div>

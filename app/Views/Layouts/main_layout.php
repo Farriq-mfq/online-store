@@ -7,13 +7,13 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Pustok - Book Store HTML Template</title>
+
+	<?= view_cell("\App\Libraries\Client::renderTitle", ['title' => $title]) ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Use Minified Plugins Version For Fast Page Load -->
 	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/plugins.css") ?>" />
 	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/main.css") ?>" />
 	<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url("/client/css/jquery.toast.css") ?>" />
-	<link rel="shortcut icon" type="image/x-icon" href="<?= base_url("/client/image/favicon.ico") ?>">
+	<?= view_cell("\App\Libraries\Client::renderFavicon") ?>
 	<?= $this->renderSection("client_style") ?>
 
 </head>
@@ -72,7 +72,7 @@
 	<!--=================================
     Footer Area
 ===================================== -->
-	<?= $this->include("/Layouts/client/client_footer") ?>
+	<?= view_cell("\App\Libraries\Client::renderFooter") ?>
 	<!-- Use Minified Plugins Version For Fast Page Load -->
 	<script src="<?= base_url("/client/js/plugins.js") ?>"></script>
 	<script src="<?= base_url("/client/js/ajax-mail.js") ?>"></script>

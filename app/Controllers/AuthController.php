@@ -77,7 +77,7 @@ class AuthController extends BaseController
                 'email' => $this->request->getVar('email_register'),
                 'password' => $this->request->getVar('password_register'),
             ];
-            $register = Services::authserviceUser()->register($register_data);
+            $register = Services::authserviceUser()->register($register_data,'users');
             if ($register) {
                 session()->setFlashdata('alert_success', "Register SuccessFully :)");
                 return redirect()->to('/auth');

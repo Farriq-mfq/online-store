@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\UserAddress;
+use App\Models\Website;
 use mPDF;
 use Mpdf\Mpdf as MpdfMpdf;
 
@@ -119,7 +120,7 @@ class OrderController extends BaseController
             $validate = $this->validate(['tracking' => 'required']);
             if ($validate) {
                 try {
-                    $done = $this->order->update(htmlentities($id), ['shipping_tracking' => $this->request->getVar('tracking'),'status'=>"SHIPPED"]);
+                    $done = $this->order->update(htmlentities($id), ['shipping_tracking' => $this->request->getVar('tracking'), 'status' => "SHIPPED"]);
                     if ($done) {
                         alert("Shipping Tracking success", "success");
                         return redirect()->back();

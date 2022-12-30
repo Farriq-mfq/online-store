@@ -5,8 +5,14 @@ class Shipping
     private string $provinceEndoint = "https://api.rajaongkir.com/starter/province";
     private string $cityEndoint = "https://api.rajaongkir.com/starter/city";
     private string $costEndoint = "https://api.rajaongkir.com/starter/cost";
-    private int $origin = 349;
-    public function getOrigin():int
+    private int $origin;
+    public function __construct()
+    {
+        $db = db_connect();
+        $website = $db->table('website')->get()->getFirstRow();
+        $this->origin = $website ? $website->shipping_origin : 0;
+    }
+    public function getOrigin(): int
     {
         return $this->origin;
     }
@@ -79,7 +85,7 @@ class Shipping
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "origin=" . $this->getOrigin() . "&destination=" . $destination . "&weight=" . $weight . "&courier=" . $courier . "",
+                CURLOPT_POSTFIELDS => "origin=" . $this->origin . "&destination=" . $destination . "&weight=" . $weight . "&courier=" . $courier . "",
                 CURLOPT_HTTPHEADER => array(
                     "content-type: application/x-www-form-urlencoded",
                     "key:" . $this->API_KEY . ""

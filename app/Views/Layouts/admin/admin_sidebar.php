@@ -174,6 +174,14 @@ use Config\Services;
         </li>
         <li class="nav-header">MANAGEMENT API</li>
         <li class="nav-header">MANAGEMENT WEBSITE</li>
+        <li class="nav-item">
+          <a href="<?= admin_url("/website") ?>" class="nav-link <?= $active_page == "website/index" ? "active" : "" ?>">
+            <i class="nav-icon fas fa-cog"></i>
+            <p>
+              Website Setting
+            </p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

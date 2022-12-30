@@ -105,10 +105,10 @@ class AuthService
     {
         return $this->session->get($this->token_name) ? $this->getSessionData() == null ? false : true : false;
     }
-    public function register($data)
+    public function register($data,$table)
     {
         try {
-            $query = "INSERT INTO `users`(`name`, `email`, `password`) VALUES (?,?,?)";
+            $query = "INSERT INTO `$table`(`name`, `email`, `password`) VALUES (?,?,?)";
             $insert = $this->db->query($query, [$data['name'], $data['email'], password_hash($data['password'], PASSWORD_DEFAULT)]);
             if ($insert) {
                 return true;

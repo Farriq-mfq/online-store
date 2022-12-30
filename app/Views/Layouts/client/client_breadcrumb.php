@@ -4,8 +4,11 @@
         <div class="breadcrumb-contents">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
-                    <li class="breadcrumb-item active">Shop</li>
+                    <?php foreach ($breadcrumbs as $breadcrumb) : ?>
+                        <?php if ($breadcrumb != "/" && $breadcrumb != "index") : ?>
+                            <li class="breadcrumb-item active"><?= strtoupper($breadcrumb) ?></li>
+                        <?php endif ?>
+                    <?php endforeach ?>
                 </ol>
             </nav>
         </div>

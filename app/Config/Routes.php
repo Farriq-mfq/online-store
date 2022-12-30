@@ -164,54 +164,59 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $categories_route->get("get", "CategoryController::get_update_category");
     });
     /* tags routes */
-    $route->group("tags", function ($categories_route) {
-        $categories_route->get("/", "TagsController::index");
-        $categories_route->delete("(:num)", "TagsController::remove/$1");
-        $categories_route->post("/", "TagsController::store");
-        $categories_route->put("/", "TagsController::update");
-        $categories_route->get("get", "TagsController::get_update_tags");
+    $route->group("tags", function ($tags_route) {
+        $tags_route->get("/", "TagsController::index");
+        $tags_route->delete("(:num)", "TagsController::remove/$1");
+        $tags_route->post("/", "TagsController::store");
+        $tags_route->put("/", "TagsController::update");
+        $tags_route->get("get", "TagsController::get_update_tags");
     });
     /* slider routes */
-    $route->group("slider", function ($categories_route) {
-        $categories_route->get("/", "SliderController::index");
-        $categories_route->delete("(:num)", "SliderController::remove/$1");
-        $categories_route->post("/", "SliderController::store");
-        $categories_route->put("/", "SliderController::update");
-        $categories_route->get("edit", "SliderController::edit");
+    $route->group("slider", function ($slider_route) {
+        $slider_route->get("/", "SliderController::index");
+        $slider_route->delete("(:num)", "SliderController::remove/$1");
+        $slider_route->post("/", "SliderController::store");
+        $slider_route->put("/", "SliderController::update");
+        $slider_route->get("edit", "SliderController::edit");
     });
     /* banner routes */
-    $route->group("banner", function ($categories_route) {
-        $categories_route->get("/", "BannerController::index");
-        $categories_route->delete("(:num)", "BannerController::remove/$1");
-        $categories_route->post("/", "BannerController::store");
-        $categories_route->put("/", "BannerController::update");
-        $categories_route->get("edit", "BannerController::edit");
+    $route->group("banner", function ($banner_route) {
+        $banner_route->get("/", "BannerController::index");
+        $banner_route->delete("(:num)", "BannerController::remove/$1");
+        $banner_route->post("/", "BannerController::store");
+        $banner_route->put("/", "BannerController::update");
+        $banner_route->get("edit", "BannerController::edit");
     });
     /* offer routes */
-    $route->group("offer", function ($categories_route) {
-        $categories_route->get("/", "OfferController::index");
-        $categories_route->delete("(:num)", "OfferController::remove/$1");
-        $categories_route->post("/", "OfferController::store");
-        $categories_route->put("/", "OfferController::update");
-        $categories_route->get("edit", "OfferController::get_update_offer");
+    $route->group("offer", function ($offer_route) {
+        $offer_route->get("/", "OfferController::index");
+        $offer_route->delete("(:num)", "OfferController::remove/$1");
+        $offer_route->post("/", "OfferController::store");
+        $offer_route->put("/", "OfferController::update");
+        $offer_route->get("edit", "OfferController::get_update_offer");
     });
     /* order routes */
-    $route->group("order", function ($categories_route) {
-        $categories_route->get("/", "OrderController::index");
-        $categories_route->post("accept/(:num)", "OrderController::accept/$1");
-        $categories_route->get("view/(:segment)", "OrderController::view_detail/$1");
-        $categories_route->post("tracking/(:num)", "OrderController::tracking_add/$1");
-        $categories_route->post("pdf/(:num)", "OrderController::generate_pdf/$1");
-        $categories_route->post("reject/(:num)", "OrderController::reject/$1");
-        $categories_route->get("waiting", "OrderController::waiting");
-        $categories_route->get("process", "OrderController::process");
-        $categories_route->get("shipped", "OrderController::shipped");
-        $categories_route->get("done", "OrderController::done");
-        $categories_route->get("reject", "OrderController::reject_view");
+    $route->group("order", function ($order_route) {
+        $order_route->get("/", "OrderController::index");
+        $order_route->post("accept/(:num)", "OrderController::accept/$1");
+        $order_route->get("view/(:segment)", "OrderController::view_detail/$1");
+        $order_route->post("tracking/(:num)", "OrderController::tracking_add/$1");
+        $order_route->post("pdf/(:num)", "OrderController::generate_pdf/$1");
+        $order_route->post("reject/(:num)", "OrderController::reject/$1");
+        $order_route->get("waiting", "OrderController::waiting");
+        $order_route->get("process", "OrderController::process");
+        $order_route->get("shipped", "OrderController::shipped");
+        $order_route->get("done", "OrderController::done");
+        $order_route->get("reject", "OrderController::reject_view");
     });
     /* Errors Routes */
-    $route->group("error", function ($categories_route) {
-        $categories_route->get("403", "ErrorsController::error_forbidden");
+    $route->group("error", function ($error) {
+        $error->get("403", "ErrorsController::error_forbidden");
+    });
+    /* WEBSITE ROUTES */
+    $route->group("website", function ($website) {
+        $website->get("/", "WebsiteController::index");
+        $website->post("change", "WebsiteController::change");
     });
 });
 $routes->post("/" . ADMIN_PATH . "/auth/logout", "Admin\AuthController::logout", ['filter' => "admin-auth"]);

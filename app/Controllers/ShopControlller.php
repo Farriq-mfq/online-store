@@ -171,7 +171,7 @@ class ShopControlller extends BaseController
                     $data['product'] = $product;
                     $data['reviews'] = $this->product->getreviews($product->product_id);
                     $data['relateds'] = $this->product->getProductRelated($product->product_id);
-                    return view("client/shop/product-detail", add_data("PRoduct derta", "shop/detail", $data));
+                    return view("client/shop/product-detail", add_data($product->title, "shop/detail", $data));
                 } else {
                     return redirect()->to("/shop");
                 }
