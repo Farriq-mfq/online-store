@@ -83,13 +83,13 @@
                                         <span>Visitors Over Time</span>
                                     </p>
                                     <p class="ml-auto d-flex flex-column text-right">
-                                        <?php if ($detail_visitor['percentage_thisweek'] > $detail_visitor['percentage_lastweek']) : ?>
+                                        <?php if ($detail_visitor['increase_perweek'] > $detail_visitor['decrease_perweek']) : ?>
                                             <span class="text-success">
-                                                <i class="fas fa-arrow-up"></i> <?= $detail_visitor['percentage_thisweek'] ?>%
+                                                <i class="fas fa-arrow-up"></i> <?= $detail_visitor['increase_perweek'] ?>%
                                             </span>
                                         <?php else : ?>
                                             <span class="text-danger">
-                                                <i class="fas fa-arrow-down"></i> <?= $detail_visitor['percentage_thisweek'] ?>%
+                                                <i class="fas fa-arrow-down"></i> <?= $detail_visitor['decrease_perweek'] ?>%
                                             </span>
                                         <?php endif ?>
                                         <span class="text-muted">Since last week</span>
@@ -236,13 +236,13 @@
                                         <span>Sales Over Time</span>
                                     </p>
                                     <p class="ml-auto d-flex flex-column text-right">
-                                        <?php if ($report_sales['percentage_this_year'] > $report_sales['percentage_last_year']) : ?>
+                                        <?php if ($report_sales['increase_permonth'] > $report_sales['decrease_permonth']) : ?>
                                             <span class="text-success">
-                                                <i class="fas fa-arrow-up"></i> <?= $report_sales['percentage_this_year'] ?>%
+                                                <i class="fas fa-arrow-up"></i> <?= $report_sales['increase_permonth'] ?>%
                                             </span>
                                         <?php else : ?>
                                             <span class="text-danger">
-                                                <i class="fas fa-arrow-down"></i> <?= $report_sales['percentage_last_year'] ?>%
+                                                <i class="fas fa-arrow-down"></i> <?= $report_sales['decrease_permonth'] ?>%
                                             </span>
                                         <?php endif ?>
                                         <span class="text-muted">Since last month</span>
@@ -428,15 +428,7 @@
             success: (data) => {
                 var visitorsChart = new Chart($visitorsChart, {
                     data: {
-                        labels: [
-                            "Sunday",
-                            "Monday",
-                            "Tuesday",
-                            "Wednesday",
-                            "Thursday",
-                            "Friday",
-                            "Saturday"
-                        ],
+                        labels: data.keys,
                         datasets: [{
                                 type: 'line',
                                 data: data.this_week,

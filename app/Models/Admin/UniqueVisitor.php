@@ -14,7 +14,7 @@ class UniqueVisitor extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["ip"];
+    protected $allowedFields    = ["ip", 'created_at'];
 
     // Dates
     protected $useTimestamps = false;
@@ -41,9 +41,8 @@ class UniqueVisitor extends Model
     protected $afterDelete    = [];
     public function getdetailvisitorcount()
     {
-        $data_last_week = $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 14 DAY) AND date_sub(CURRENT_DATE,INTERVAL 7 DAY)")->orderBy("DAYOFWEEK(created_at)")->findAll();
-        $data_this_week = $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 7 DAY) AND CURRENT_DATE")->orderBy("DAYOFWEEK(created_at)")->findAll();
-        $total_all_visitor = $this->countAllResults();
+        $data_last_week = $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 13 DAY) AND date_sub(CURRENT_DATE,INTERVAL 7 DAY)")->orderBy("DAYOFWEEK(created_at)")->findAll();
+        $data_this_week = $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 6 DAY) AND CURRENT_DATE")->orderBy("DAYOFWEEK(created_at)")->findAll();
         $total_lastweek = 0;
         foreach ($data_last_week as $last_week) {
             $total_lastweek += $last_week->total;
@@ -53,13 +52,18 @@ class UniqueVisitor extends Model
             $total_thisweek += $this_week->total;
         }
 
-        $percentage_last_week = floor($total_lastweek / $total_all_visitor * 100);
-        $percentage_this_week = floor($total_thisweek / $total_all_visitor * 100);
+        $total_all_visitor = $total_lastweek + $total_thisweek;
+        $percentage_last_week = $total_all_visitor ? floor($total_lastweek / $total_all_visitor * 100) : 0;
+        $percentage_this_week =  $total_all_visitor ? floor($total_thisweek / $total_all_visitor * 100) : 0;
+        $increase_perweek =   floor(($total_thisweek - $total_lastweek) / $total_lastweek * 100);
+        $decrease_perweek =   floor(($total_lastweek - $total_thisweek) / $total_lastweek * 100);
         return [
             'percentage_thisweek' => $percentage_this_week,
             'percentage_lastweek' => $percentage_last_week,
             'total_thisweek' => $total_thisweek,
             'total_lastweek' => $total_lastweek,
+            'increase_perweek' => $increase_perweek,
+            'decrease_perweek' => $decrease_perweek,
         ];
     }
 }

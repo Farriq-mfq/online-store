@@ -101,7 +101,12 @@
                                                         <td><?= $order->token ?></td>
                                                         <td><?= $order->created_at ?></td>
                                                         <td><?= $order->status ?></td>
-                                                        <td><a href="<?= base_url('/checkout/complete?token=' . $order->token) ?>" class="btn">Download</a></td>
+                                                        <td>
+                                                            <form action="<?= base_url('/order/download/' . $order->order_id) ?>" method="POST">
+                                                                <?= csrf_field() ?>
+                                                                <button type="submit" class="btn">Download</button>
+                                                            </form>
+                                                        </td>
                                                     </tr>
                                                 <?php endforeach ?>
                                             </tbody>

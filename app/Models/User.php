@@ -44,4 +44,16 @@ class User extends Model implements AuthInterface
     {
         return $this->db->getFieldData($this->table);
     }
+    public function report()
+    {
+        $this_week = $this->select('created_at,count(*) as "total_user_register",DAYNAME(created_at) as "day"')->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 6 DAY) AND CURRENT_DATE")->groupBy('DAYNAME(created_at)')->findAll();
+        $last_week = $this->select('created_at,count(*) as "total_user_register",DAYNAME(created_at) as "day"')->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 13 DAY) AND date_sub(CURRENT_DATE,INTERVAL 7 DAY)")->groupBy('DAYNAME(created_at)')->findAll();
+        $total_all_user = $this->countAllResults();
+        // $percentage_this_week 
+        return [
+            'this_week'=>$this_week,
+            'last_week'=>$last_week,
+            'total_all_user'=>$total_all_user
+        ];
+    }
 }

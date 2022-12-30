@@ -56,6 +56,7 @@ $routes->group("checkout", ["filter" => "user"], function ($route) {
 $routes->group("order", ["filter" => "user"], function ($route) {
     $route->post("cencel/(:num)", "OrderController::cencel/$1");
     $route->post("done/(:num)", "OrderController::done/$1");
+    $route->post("download/(:num)", "OrderController::generate_pdf/$1");
 });
 $routes->group("account", ["filter" => "user"], function ($route) {
     $route->get("/", "AccountController::index");
@@ -215,6 +216,11 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
     });
     /* WEBSITE ROUTES */
     $route->group("website", function ($website) {
+        $website->get("/", "WebsiteController::index");
+        $website->post("change", "WebsiteController::change");
+    });
+    /* reports */
+    $route->group("report", function ($website) {
         $website->get("/", "WebsiteController::index");
         $website->post("change", "WebsiteController::change");
     });

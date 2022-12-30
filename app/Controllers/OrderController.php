@@ -241,7 +241,7 @@ class OrderController extends BaseController
                     $payment = $this->payment->get_status($order->midtrans_id);
                     $pay_cencel = $this->pay_cencel($payment, $order);
                     if ($pay_cencel) {
-                        $cencel = $this->order->update($id, ['is_cencel' => true,'status'=>"REJECT"]);
+                        $cencel = $this->order->update($id, ['is_cencel' => true, 'status' => "REJECT"]);
                         if ($cencel) {
                             session()->setFlashdata('alert_success', "Cenceled Success");
                             return redirect()->back();
@@ -291,5 +291,21 @@ class OrderController extends BaseController
         } else {
             return redirect()->back();
         }
+    }
+    public function generate_pdf($id)
+    {
+        $mpdf = new \Mpdf\Mpdf();
+        $order = $this->order->with(['user_address', 'users'])->where('order_id', $id)->where('user_id',auth_user_id())->first();
+        $data['order'] = $order;
+        $data['order_items'] = $this->order_item->with('products')->where('order_id', $order->order_id)->findAll();
+        $data['payment'] = $this->payment->get_status($order->midtrans_id);
+        $data['address'] = $this->address->with('users')->find($order->user_address_id);
+        if (!isset($data['payment']->va_numbers)) {
+            $data['emoney'] = $this->order->getSessionEmoney($order->token);
+        }
+        $html = view('pdf/invoice', $data);
+        $mpdf->WriteHTML($html);
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output($order->token . '.pdf', 'D');
     }
 }

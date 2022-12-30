@@ -107,6 +107,7 @@ use Config\Services;
               </a>
             </li>
           </ul>
+        </li>
         <li class="nav-header">MASTER</li>
         <li class="nav-item">
           <a href="<?= admin_url("/brands") ?>" class="nav-link <?= $active_page == "brands/index" ? "active" : "" ?>">
@@ -171,6 +172,36 @@ use Config\Services;
               Special Offers
             </p>
           </a>
+        </li>
+        <li class="nav-header">Reports</li>
+        <li class="nav-item <?= str_contains($active_page, "product") ? "menu-open" : "" ?>">
+          <a href="#" class="nav-link <?= str_contains($active_page, "product") ? "active" : "" ?>">
+            <i class="nav-icon fas fa-book"></i>
+            <p>
+              Reports
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?= admin_url("/product") ?>" class="nav-link <?= $active_page == "product/index" ? "active" : "" ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Product Sales</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= admin_url("/product/new") ?>" class="nav-link <?= $active_page == "product/new" ? "active" : "" ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Visitor perweek</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= admin_url("/product/inventories") ?>" class="nav-link <?= $active_page == "product/inventories" ? "active" : "" ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>User registration Reports</p>
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="nav-header">MANAGEMENT API</li>
         <li class="nav-header">MANAGEMENT WEBSITE</li>

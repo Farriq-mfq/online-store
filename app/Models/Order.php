@@ -63,7 +63,6 @@ class Order extends Model
 
     public function report()
     {
-        $total_sales = $this->without('order_items')->where('status', "PROCESS")->orWhere('status', "SHIPPED")->orWhere('status', "DONE")->select("SUM(subtotal) as 'sales_total'")->first()->sales_total;
         $detail_by_month_this_year = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at)")->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 1 YEAR) AND CURRENT_DATE")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
         $detail_by_month_last_year = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at)")->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 2 YEAR) AND date_sub(CURRENT_DATE,INTERVAL 1 YEAR)")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
         $total_this_year = 0;
@@ -74,9 +73,12 @@ class Order extends Model
         foreach ($detail_by_month_last_year as $v) {
             $total_last_year += $v->total_permonth;
         }
+        $total_sales = $total_this_year + $total_last_year;
+        $percentage_this_year =  $total_sales ?  floor($total_this_year / $total_sales * 100) : 0;
+        $percentage_last_year =  $total_sales ?  floor($total_last_year / $total_sales * 100) : 0;
+        $increase_permonth =   floor(($total_this_year - $total_last_year) / $total_last_year * 100);
+        $decrease_permonth =   floor(($total_last_year - $total_this_year) / $total_last_year * 100);
 
-        $percentage_this_year =  floor($total_this_year / $total_sales * 100);
-        $percentage_last_year =  floor($total_last_year / $total_sales * 100);
         return [
             'total_sales' => $total_sales,
             'total_this_year' => $total_this_year,
@@ -84,7 +86,9 @@ class Order extends Model
             'detail_by_month_this_year' => $detail_by_month_this_year,
             'detail_by_month_last_year' => $detail_by_month_last_year,
             'percentage_this_year' => $percentage_this_year,
-            'percentage_last_year' => $percentage_last_year
+            'percentage_last_year' => $percentage_last_year,
+            'increase_permonth' => $increase_permonth,
+            'decrease_permonth' => $decrease_permonth
         ];
     }
 }
