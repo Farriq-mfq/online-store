@@ -186,7 +186,7 @@ use Config\Services;
             <li class="nav-item">
               <a href="<?= admin_url("/report") ?>" class="nav-link <?= $active_page == "report/index" ? "active" : "" ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Product Sales</p>
+                <p>Income Report</p>
               </a>
             </li>
             <li class="nav-item">
@@ -201,9 +201,14 @@ use Config\Services;
                 <p>User registration Reports</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="<?= admin_url("/report/product_sales") ?>" class="nav-link <?= $active_page == "report/product_sales" ? "active" : "" ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Product Sales Report</p>
+              </a>
+            </li>
           </ul>
         </li>
-        <li class="nav-header">MANAGEMENT API</li>
         <li class="nav-header">MANAGEMENT WEBSITE</li>
         <li class="nav-item">
           <a href="<?= admin_url("/website") ?>" class="nav-link <?= $active_page == "website/index" ? "active" : "" ?>">

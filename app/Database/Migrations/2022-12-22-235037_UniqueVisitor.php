@@ -16,7 +16,6 @@ class UniqueVisitor extends Migration
             "ip" => [
                 "type" => "varchar",
                 "constraint" => 50,
-                "unique" => true
             ],
             'created_at datetime default current_timestamp',
         ]);

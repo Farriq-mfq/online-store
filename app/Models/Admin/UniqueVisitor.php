@@ -66,12 +66,20 @@ class UniqueVisitor extends Model
             'decrease_perweek' => $decrease_perweek,
         ];
     }
-    public function getVisitorByMonth($month = null)
+    public function getVisitorByMonth($year = null, $month = null)
     {
-        if($month == null){
-            return $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total',MONTHNAME(created_at) as 'month'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("MONTH(created_at)=MONTH(CURRENT_DATE)")->orderBy("DAYOFWEEK(created_at)")->findAll();
-        }else{
-            return $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total',MONTHNAME(created_at) as 'month'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("MONTH(created_at)=MONTH(".$month.")")->orderBy("DAYOFWEEK(created_at)")->findAll();
+        if ($month == null && $year == null) {
+            return $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total',MONTHNAME(created_at) as 'month',YEAR(created_at) as 'year'")->groupBy("day")->where("MONTH(created_at)=MONTH(CURRENT_DATE)")->orderBy("DAYOFWEEK(created_at)")->findAll();
+        } else {
+            return $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total',MONTHNAME(created_at) as 'month',YEAR(created_at) as 'year'")->groupBy("day")->where("MONTHNAME(created_at)='".$month."'")->where("YEAR(created_at)= '".$year."'")->orderBy("DAYOFWEEK(created_at)")->findAll();
         }
+    }
+    public function gerYearFilter()
+    {
+        return $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total',MONTHNAME(created_at) as 'month',YEAR(created_at) as 'year'")->groupBy("year")->orderBy("DAYOFWEEK(created_at)")->findAll();
+    }
+    public function gerMonthFilter()
+    {
+        return $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total',MONTHNAME(created_at) as 'month',YEAR(created_at) as 'year'")->groupBy("month")->orderBy("DAYOFWEEK(created_at)")->findAll();
     }
 }

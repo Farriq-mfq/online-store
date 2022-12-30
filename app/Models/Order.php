@@ -107,7 +107,13 @@ class Order extends Model
         if ($year == null) {
             return $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("YEAR(CURRENT_DATE)=YEAR(created_at)")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
         } else {
-            return $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where(" ". $year ."=YEAR(created_at)")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
+            return $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where(" " . $year . "=YEAR(created_at)")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
         }
+    }
+
+    public function productSales()
+    {
+        $q = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->join("order_items",'order_items.order_id=orders.order_id',"RIGHT")->findAll();
+        dd($q);
     }
 }

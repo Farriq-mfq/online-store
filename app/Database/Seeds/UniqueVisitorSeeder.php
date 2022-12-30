@@ -20,8 +20,8 @@ class UniqueVisitorSeeder extends Seeder
     }
     public function run()
     {
-        for ($i = 0; $i < 111111; $i++) {
-            $this->db->table('unique_visitor')->insert(['ip' => "102da232ds212.44.145." . $i,'created_at'=>$this->randomDate("2022-12-23","2022-12-30")]);
+        for ($i = 0; $i < 11; $i++) {
+            $this->db->table('unique_visitor')->insert(['ip' => "132ds212.44.145." . $i,'created_at'=>$this->randomDate("2021-03-23","2021-04-30")]);
         }
     }
 }

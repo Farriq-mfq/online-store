@@ -5,14 +5,14 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <form action="<?= admin_url('/report/generate/visitor/pdf?year=' . $selected_year . '&month=' . $selected_month . '') ?>" method="POST">
+                <form action="<?= admin_url('/report/generate/user/pdf?year=' . $selected_year . '&month=' . $selected_month . '') ?>" method="POST">
                     <?= csrf_field() ?>
                     <button class="btn btn-success" type="submit">
                         <i class="fas fa-print"></i>
                         Download PDF / Print
                     </button>
                 </form>
-                <form action="<?= admin_url("/report/visitor") ?>" method="GET" class="mt-2">
+                <form action="<?= admin_url("/report/user_regis") ?>" method="GET" class="mt-2">
                     <div class="form-group ">
                         <label for=""> Filter Month</label>
                         <select name="month" class="form-control <?= show_class_error('month') ?>">
@@ -41,17 +41,17 @@
                     </div>
                 </form>
                 <h4 class="mt-4">Information of increase or decrease</h4>
-                <p class="ml-auto d-flex flex-column text-left mt-3">
-                    <?php if ($detail_visitor['increase_perweek'] > $detail_visitor['decrease_perweek']) : ?>
+                <p>
+                    <?php if ($detail_user_report['increst_percent'] > $detail_user_report['decrest_percent']) : ?>
                         <span class="text-success">
-                            <i class="fas fa-arrow-up"></i> <?= $detail_visitor['increase_perweek'] ?>%
+                            <i class="fas fa-arrow-up"></i> <?= $detail_user_report['increst_percent'] ?>%
                         </span>
                     <?php else : ?>
                         <span class="text-danger">
-                            <i class="fas fa-arrow-down"></i> <?= $detail_visitor['decrease_perweek'] ?>%
+                            <i class="fas fa-arrow-down"></i> <?= $detail_user_report['decrest_percent'] ?>%
                         </span>
                     <?php endif ?>
-                    <span class="text-muted">Since last week</span>
+                    <span class="text-muted">Since last month</span>
                 </p>
             </div>
             <div class="card-body">
@@ -59,13 +59,13 @@
                     <thead>
                         <tr>
                             <th>Day</th>
-                            <th>Total Visitor</th>
+                            <th>User Registration</th>
                             <th>Month</th>
                             <th>Year</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($getVisitorByMonth as $v) : ?>
+                        <?php foreach ($getUserbyMonth as $v) : ?>
                             <tr>
                                 <td><?= $v->day ?></td>
                                 <td><?= thousandsCurrencyFormat($v->total) ?></td>

@@ -223,7 +223,11 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
     $route->group("report", function ($website) {
         $website->get("/", "ReportController::product_sales_report");
         $website->get("visitor", "ReportController::visitor_perweek");
+        $website->get("user_regis", "ReportController::user_registration");
         $website->post("generate/sales/pdf", "ReportController::generete_pdf_report_sales");
+        $website->post("generate/visitor/pdf", "ReportController::generete_pdf_report_visitor");
+        $website->post("generate/user/pdf", "ReportController::generete_pdf_report_user");
+        $website->get("product_sales", "ReportController::product_report");
     });
 });
 $routes->post("/" . ADMIN_PATH . "/auth/logout", "Admin\AuthController::logout", ['filter' => "admin-auth"]);
