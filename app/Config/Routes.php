@@ -221,8 +221,9 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
     });
     /* reports */
     $route->group("report", function ($website) {
-        $website->get("/", "WebsiteController::index");
-        $website->post("change", "WebsiteController::change");
+        $website->get("/", "ReportController::product_sales_report");
+        $website->get("visitor", "ReportController::visitor_perweek");
+        $website->post("generate/sales/pdf", "ReportController::generete_pdf_report_sales");
     });
 });
 $routes->post("/" . ADMIN_PATH . "/auth/logout", "Admin\AuthController::logout", ['filter' => "admin-auth"]);

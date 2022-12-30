@@ -66,4 +66,12 @@ class UniqueVisitor extends Model
             'decrease_perweek' => $decrease_perweek,
         ];
     }
+    public function getVisitorByMonth($month = null)
+    {
+        if($month == null){
+            return $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total',MONTHNAME(created_at) as 'month'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("MONTH(created_at)=MONTH(CURRENT_DATE)")->orderBy("DAYOFWEEK(created_at)")->findAll();
+        }else{
+            return $this->select("DAYNAME(created_at) as 'day',COUNT(*) as 'total',MONTHNAME(created_at) as 'month'")->groupBy("day")->where('date_format(created_at,"%Y-%m")', date("Y-m"))->where("MONTH(created_at)=MONTH(".$month.")")->orderBy("DAYOFWEEK(created_at)")->findAll();
+        }
+    }
 }

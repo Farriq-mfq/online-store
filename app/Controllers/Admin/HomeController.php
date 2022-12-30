@@ -22,8 +22,6 @@ class HomeController extends BaseController
         $data['total_visitor'] = $this->visitor->countAllResults();
         $data['detail_visitor'] = $this->visitor->getdetailvisitorcount();
         $data['report_sales'] = $this->order->report();
-        $user = new ModelsUser();
-        // dd($this->order->report());
         return view('admin/home_view', add_data("Home", "/index", $data));
     }
 

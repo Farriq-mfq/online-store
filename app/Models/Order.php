@@ -63,8 +63,8 @@ class Order extends Model
 
     public function report()
     {
-        $detail_by_month_this_year = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at)")->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 1 YEAR) AND CURRENT_DATE")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
-        $detail_by_month_last_year = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at)")->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 2 YEAR) AND date_sub(CURRENT_DATE,INTERVAL 1 YEAR)")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
+        $detail_by_month_this_year = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 1 YEAR) AND CURRENT_DATE")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
+        $detail_by_month_last_year = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("date_format(created_at,'%Y-%m-%d') BETWEEN date_sub(CURRENT_DATE,INTERVAL 2 YEAR) AND date_sub(CURRENT_DATE,INTERVAL 1 YEAR)")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
         $total_this_year = 0;
         foreach ($detail_by_month_this_year as $v) {
             $total_this_year += $v->total_permonth;
@@ -74,10 +74,13 @@ class Order extends Model
             $total_last_year += $v->total_permonth;
         }
         $total_sales = $total_this_year + $total_last_year;
+        $total_this_permonth = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("month(created_at)=month(CURRENT_DATE)")->where('YEAR(CURRENT_DATE) = YEAR(created_at)')->first();
+        $total_last_permonth = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("month(created_at)=month(date_sub(CURRENT_DATE,INTERVAL 1 MONTH))")->where('YEAR(CURRENT_DATE) = YEAR(created_at)')->first();
         $percentage_this_year =  $total_sales ?  floor($total_this_year / $total_sales * 100) : 0;
         $percentage_last_year =  $total_sales ?  floor($total_last_year / $total_sales * 100) : 0;
-        $increase_permonth =   floor(($total_this_year - $total_last_year) / $total_last_year * 100);
-        $decrease_permonth =   floor(($total_last_year - $total_this_year) / $total_last_year * 100);
+        // increst
+        $increase_permonth =   floor(($total_this_permonth->total_permonth - $total_last_permonth->total_permonth) / $total_last_permonth->total_permonth * 100);
+        $decrease_permonth =   floor(($total_last_permonth->total_permonth - $total_this_permonth->total_permonth) / $total_last_permonth->total_permonth * 100);
 
         return [
             'total_sales' => $total_sales,
@@ -87,8 +90,24 @@ class Order extends Model
             'detail_by_month_last_year' => $detail_by_month_last_year,
             'percentage_this_year' => $percentage_this_year,
             'percentage_last_year' => $percentage_last_year,
+            'total_this_permonth' => $total_this_permonth,
+            'total_last_permonth' => $total_last_permonth,
             'increase_permonth' => $increase_permonth,
             'decrease_permonth' => $decrease_permonth
         ];
+    }
+
+    public function getFilterYear()
+    {
+        return $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("YEAR(created_at) as 'year'")->groupBy('year')->findAll();
+    }
+
+    public function getReportByYear($year = null)
+    {
+        if ($year == null) {
+            return $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("YEAR(CURRENT_DATE)=YEAR(created_at)")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
+        } else {
+            return $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where(" ". $year ."=YEAR(created_at)")->groupBy('MONTHNAME(created_at)')->orderBy('month', "ASC")->findAll();
+        }
     }
 }

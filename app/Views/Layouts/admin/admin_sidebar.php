@@ -174,8 +174,8 @@ use Config\Services;
           </a>
         </li>
         <li class="nav-header">Reports</li>
-        <li class="nav-item <?= str_contains($active_page, "product") ? "menu-open" : "" ?>">
-          <a href="#" class="nav-link <?= str_contains($active_page, "product") ? "active" : "" ?>">
+        <li class="nav-item <?= str_contains($active_page, "report") ? "menu-open" : "" ?>">
+          <a href="#" class="nav-link <?= str_contains($active_page, "report") ? "active" : "" ?>">
             <i class="nav-icon fas fa-book"></i>
             <p>
               Reports
@@ -184,19 +184,19 @@ use Config\Services;
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?= admin_url("/product") ?>" class="nav-link <?= $active_page == "product/index" ? "active" : "" ?>">
+              <a href="<?= admin_url("/report") ?>" class="nav-link <?= $active_page == "report/index" ? "active" : "" ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Product Sales</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= admin_url("/product/new") ?>" class="nav-link <?= $active_page == "product/new" ? "active" : "" ?>">
+              <a href="<?= admin_url("/report/visitor") ?>" class="nav-link <?= $active_page == "report/visitor" ? "active" : "" ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Visitor perweek</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= admin_url("/product/inventories") ?>" class="nav-link <?= $active_page == "product/inventories" ? "active" : "" ?>">
+              <a href="<?= admin_url("/report/user_regis") ?>" class="nav-link <?= $active_page == "report/user" ? "active" : "" ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>User registration Reports</p>
               </a>
