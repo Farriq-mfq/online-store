@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sales Print</title>
     <style>
         /*!
  * Modified bootstrap.css for mPDF styling by Kartik Visweswaran
@@ -6768,140 +6768,130 @@
                 display: none !important;
             }
         }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table caption {
+            font-size: 1.5em;
+            margin: .5em 0 .75em;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            table caption {
+                font-size: 1.3em;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+
+            table td::before {
+                /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        /* general styling */
+        body {
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.25;
+        }
     </style>
 </head>
 
 <body>
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-
-
-                    <!-- Main content -->
-                    <div class="invoice p-3 mb-3">
-                        <!-- title row -->
-                        <div class="row">
-                            <div class="col-12">
-                                <h4>
-                                    <i class="fas fa-globe"></i> Pustok, Inc.
-
-                                    <small class="float-right">Date: <?= date("d/m/Y", strtotime($order->created_at)) ?></small>
-                                </h4>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- info row -->
-                        <div class="row invoice-info mb-2">
-                            <div class="col-sm-4 invoice-col">
-                                To
-                                <address>
-                                    <strong><?= $address->firstname ?> <?= $address->lastname ?></strong><br>
-                                    <?= $address->address1 ?>, <?= getCity($address->city)->city_name ?> <?= getProvince($address->province)->province ?><br>
-                                    <?php if (!empty($address->address2)) : ?>
-                                        <?= $address->address2 ?>, <?= getCity($address->city)->city_name ?> <?= getProvince($address->province)->province ?><br>
-                                    <?php endif ?>
-                                    Phone: <?= $address->phone ?><br>
-                                    Email: <?= $address->user->email ?>
-                                </address>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 invoice-col">
-                                <b>Invoice #INVOICE_<?= $order->token ?></b><br>
-                                <br>
-                                <b>Order ID:</b> <?= $order->token  ?><br>
-                                <b>Order Status:</b> <?= $order->status  ?><br>
-                                <b>Payment Status:</b> <?= $payment->transaction_status  ?><br>
-                                <?php if ($payment->transaction_status === "settlement") : ?>
-                                    <b>Payment success time:</b> <?= $payment->settlement_time  ?><br>
-                                <?php endif ?>
-                                <b>Shipping Tracking:</b> <?= $order->shipping_tracking == null ? '-' : $order->shipping_tracking ?><br>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-
-                        <!-- Table row -->
-                        <div class="row">
-                            <div class="col-12 table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Qty</th>
-                                            <th>Product</th>
-                                            <th>Subtotal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $total = 0 ?>
-                                        <?php foreach ($order_items as $item) : ?>
-                                            <?php $total += $item->total ?>
-                                            <tr>
-                                                <td><?= $item->quantity ?></td>
-                                                <td><?= $item->product->title ?></td>
-                                                <td><?= format_rupiah($item->total) ?></td>
-                                            </tr>
-                                        <?php endforeach ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-
-                        <div class="row">
-                            <!-- accepted payments column -->
-                            <div class="col-6">
-                                <p class="lead">Payment Methods:</p>
-                                <?php if (isset($payment->va_numbers)) : ?>
-                                    <p>BANK : <strong><?= $payment->va_numbers[0]->bank ?></strong></p>
-                                    <p>VA NUMBER: <strong><?= $payment->va_numbers[0]->va_number ?></strong></p>
-                                <?php endif ?>
-                                <?php if (isset($payment->permata_va_number)) : ?>
-                                    <p>BANK : <strong>Permata</strong></p>
-                                    <p>VA NUMBER: <strong><?= $payment->permata_va_number ?></strong></p>
-                                <?php endif ?>
-                                <?php if ($payment->payment_type == "echannel") : ?>
-                                    <p>BANK : <strong>Mandiri</strong></p>
-                                    <p>Bill Key: <strong><?= $payment->bill_key ?></strong></p>
-                                    <p>Biller Code: <strong><?= $payment->biller_code ?></strong></p>
-                                <?php endif ?>
-                                <?php if (isset($emoney)) : ?>
-                                    <p>
-                                    <h5>QR CODE PAYMENT</h5>
-                                    <img height="200px" width="200px" src="<?= $emoney->url ?>" alt="QR CODE SCAN PAY">
-                                    </p>
-                                <?php endif ?>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-6">
-
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tr>
-                                            <th style="width:50%">Subtotal:</th>
-                                            <td><?= format_rupiah($total) ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Shipping:</th>
-                                            <td><?= format_rupiah($order->shipping_total) ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total:</th>
-                                            <td><?= format_rupiah($order->subtotal) ?></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                    <!-- /.invoice -->
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
+    <table>
+        <caption style="margin-bottom: 20px;">PRODUCT SALES REPORT - PRINT DATE <?= date("Y/m/d", strtotime(date("Y-m-d"))) ?></caption>
+        <thead>
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Sales</th>
+                <th scope="col">Month</th>
+                <th scope="col">Years</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($product_sales_report as $v) : ?>
+                <tr>
+                    <td><?= $v['product_title'] ?></td>
+                    <td><?= format_rupiah($v['price']) ?></td>
+                    <td><?php if ($v['increst'] > $v['decrest']) : ?>
+                            <span class="text-success">
+                                <?= $v['increst'] ?>%
+                            </span>
+                        <?php else : ?>
+                            <span class="text-danger">
+                                <?= $v['decrest'] ?>%
+                            </span>
+                        <?php endif ?>
+                        <?= thousandsCurrencyFormat($v['sold_this']) ?> Sold
+                    </td>
+                    <td><?= $v['month'] ?></td>
+                    <td><?= $v['year'] ?></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
 </body>
 
 </html>

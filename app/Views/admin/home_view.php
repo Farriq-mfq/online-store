@@ -15,7 +15,7 @@
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="<?= admin_url('/order') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url('/report') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -23,14 +23,84 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3><?= $count_all['brand'] ?></h3>
 
-                        <p>Bounce Rate</p>
+                        <p>Brands</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="ion ion-grid"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-purple">
+                    <div class="inner">
+                        <h3><?= $count_all['categories'] ?></h3>
+
+                        <p>Categories</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-grid"></i>
+                    </div>
+                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-indigo">
+                    <div class="inner">
+                        <h3><?= $count_all['tags'] ?></h3>
+
+                        <p>Tags</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-grid"></i>
+                    </div>
+                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-lightblue">
+                    <div class="inner">
+                        <h3><?= $count_all['slider'] ?></h3>
+
+                        <p>Sliders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-image"></i>
+                    </div>
+                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-lime">
+                    <div class="inner">
+                        <h3><?= $count_all['banner'] ?></h3>
+
+                        <p>Banners</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-image"></i>
+                    </div>
+                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-teal">
+                    <div class="inner">
+                        <h3><?= $count_all['offer'] ?></h3>
+
+                        <p>Special Offers</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-image"></i>
+                    </div>
+                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -38,14 +108,14 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3><?= $count_all['users'] ?></h3>
 
                         <p>User Registrations</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url('/report/user_regis') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -115,108 +185,55 @@
                         <!-- /.card -->
 
                         <div class="card">
-                            <div class="card-header border-0">
-                                <h3 class="card-title">Products</h3>
+                            <div class="card-header border-transparent">
+                                <h3 class="card-title">Latest Orders</h3>
+
                                 <div class="card-tools">
-                                    <a href="#" class="btn btn-tool btn-sm">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-tool btn-sm">
-                                        <i class="fas fa-bars"></i>
-                                    </a>
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="card-body table-responsive p-0">
-                                <table class="table table-striped table-valign-middle">
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Sales</th>
-                                            <th>More</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                                Some Product
-                                            </td>
-                                            <td>$13 USD</td>
-                                            <td>
-                                                <small class="text-success mr-1">
-                                                    <i class="fas fa-arrow-up"></i>
-                                                    12%
-                                                </small>
-                                                12,000 Sold
-                                            </td>
-                                            <td>
-                                                <a href="#" class="text-muted">
-                                                    <i class="fas fa-search"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                                Another Product
-                                            </td>
-                                            <td>$29 USD</td>
-                                            <td>
-                                                <small class="text-warning mr-1">
-                                                    <i class="fas fa-arrow-down"></i>
-                                                    0.5%
-                                                </small>
-                                                123,234 Sold
-                                            </td>
-                                            <td>
-                                                <a href="#" class="text-muted">
-                                                    <i class="fas fa-search"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                                Amazing Product
-                                            </td>
-                                            <td>$1,230 USD</td>
-                                            <td>
-                                                <small class="text-danger mr-1">
-                                                    <i class="fas fa-arrow-down"></i>
-                                                    3%
-                                                </small>
-                                                198 Sold
-                                            </td>
-                                            <td>
-                                                <a href="#" class="text-muted">
-                                                    <i class="fas fa-search"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                                Perfect Item
-                                                <span class="badge bg-danger">NEW</span>
-                                            </td>
-                                            <td>$199 USD</td>
-                                            <td>
-                                                <small class="text-success mr-1">
-                                                    <i class="fas fa-arrow-up"></i>
-                                                    63%
-                                                </small>
-                                                87 Sold
-                                            </td>
-                                            <td>
-                                                <a href="#" class="text-muted">
-                                                    <i class="fas fa-search"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table m-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($latest_order as $lo) : ?>
+                                                <tr>
+                                                    <td><a href="<?= admin_url('/order/view/' . $lo->token) ?>"><?= $lo->token ?></a></td>
+                                                    <?php if ($lo->status == "WAITING") : ?>
+                                                        <td><span class="badge badge-warning"><?= $lo->status ?></span></td>
+                                                    <?php elseif ($lo->status == "PROCESS") : ?>
+                                                        <td><span class="badge badge-info"><?= $lo->status ?></span></td>
+                                                    <?php elseif ($lo->status == "SHIPPED") : ?>
+                                                        <td><span class="badge badge-success"><?= $lo->status ?></span></td>
+                                                    <?php elseif ($lo->status == "DONE") : ?>
+                                                        <td><span class="badge badge-primary"><?= $lo->status ?></span></td>
+                                                    <?php elseif ($lo->status == "REJECT") : ?>
+                                                        <td><span class="badge badge-danger"><?= $lo->status ?></span></td>
+                                                    <?php endif ?>
+                                                </tr>
+                                            <?php endforeach ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.table-responsive -->
                             </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer clearfix">
+                                <a href="<?= admin_url('/order') ?>" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+                            </div>
+                            <!-- /.card-footer -->
                         </div>
                         <!-- /.card -->
                     </div>
@@ -266,58 +283,6 @@
                             </div>
                         </div>
                         <!-- /.card -->
-
-                        <div class="card">
-                            <div class="card-header border-0">
-                                <h3 class="card-title">Online Store Overview</h3>
-                                <div class="card-tools">
-                                    <a href="#" class="btn btn-sm btn-tool">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-tool">
-                                        <i class="fas fa-bars"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                    <p class="text-success text-xl">
-                                        <i class="ion ion-ios-refresh-empty"></i>
-                                    </p>
-                                    <p class="d-flex flex-column text-right">
-                                        <span class="font-weight-bold">
-                                            <i class="ion ion-android-arrow-up text-success"></i> 12%
-                                        </span>
-                                        <span class="text-muted">CONVERSION RATE</span>
-                                    </p>
-                                </div>
-                                <!-- /.d-flex -->
-                                <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                    <p class="text-warning text-xl">
-                                        <i class="ion ion-ios-cart-outline"></i>
-                                    </p>
-                                    <p class="d-flex flex-column text-right">
-                                        <span class="font-weight-bold">
-                                            <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
-                                        </span>
-                                        <span class="text-muted">SALES RATE</span>
-                                    </p>
-                                </div>
-                                <!-- /.d-flex -->
-                                <div class="d-flex justify-content-between align-items-center mb-0">
-                                    <p class="text-danger text-xl">
-                                        <i class="ion ion-ios-people-outline"></i>
-                                    </p>
-                                    <p class="d-flex flex-column text-right">
-                                        <span class="font-weight-bold">
-                                            <i class="ion ion-android-arrow-down text-danger"></i> 1%
-                                        </span>
-                                        <span class="text-muted">REGISTRATION RATE</span>
-                                    </p>
-                                </div>
-                                <!-- /.d-flex -->
-                            </div>
-                        </div>
                     </div>
                     <!-- /.col-md-6 -->
                 </div>

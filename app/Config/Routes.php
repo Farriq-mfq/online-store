@@ -227,6 +227,7 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $website->post("generate/sales/pdf", "ReportController::generete_pdf_report_sales");
         $website->post("generate/visitor/pdf", "ReportController::generete_pdf_report_visitor");
         $website->post("generate/user/pdf", "ReportController::generete_pdf_report_user");
+        $website->post("generate/product_sales/pdf", "ReportController::generete_pdf_report_product_sales");
         $website->get("product_sales", "ReportController::product_report");
     });
 });

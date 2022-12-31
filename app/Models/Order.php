@@ -111,9 +111,41 @@ class Order extends Model
         }
     }
 
-    public function productSales()
+    public function productSales($month = null, $year = null)
     {
-        $q = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->join("order_items",'order_items.order_id=orders.order_id',"RIGHT")->findAll();
-        dd($q);
+        if ($month == null && $year == null) {
+            $this_month = $this->without('order_items')->where('orders.status!=', "WAITING")->where('orders.status!=', "REJECT")->join("order_items", 'order_items.order_id=orders.order_id', "RIGHT")->select('order_items.total,order_items.product_id,orders.created_at,products.title,products.price,orders.token,order_items.order_items_id,order_items.quantity,sum(order_items.quantity) as "total_sales",monthname(orders.created_at) as "month",YEAR(orders.created_at) as "year"')->where('month(orders.created_at)=month(CURRENT_DATE)')->where('year(orders.created_at)=year(CURRENT_DATE)')->groupBy('products.product_id')->join('products', 'products.product_id=order_items.product_id')->findAll();
+            $last_month = $this->without('order_items')->where('orders.status!=', "WAITING")->where('orders.status!=', "REJECT")->join("order_items", 'order_items.order_id=orders.order_id', "RIGHT")->select('order_items.total,order_items.product_id,orders.created_at,products.title,products.price,orders.token,order_items.order_items_id,order_items.quantity,sum(order_items.quantity) as "total_sales",monthname(orders.created_at) as "month"')->where('month(orders.created_at)=month(date_sub(CURRENT_DATE,INTERVAL 1 MONTH))')->where('year(orders.created_at)=year(CURRENT_DATE)')->groupBy('products.product_id')->join('products', 'products.product_id=order_items.product_id')->findAll();
+        } else {
+            $this_month = $this->without('order_items')->where('orders.status!=', "WAITING")->where('orders.status!=', "REJECT")->join("order_items", 'order_items.order_id=orders.order_id', "RIGHT")->select('order_items.total,order_items.product_id,orders.created_at,products.title,products.price,orders.token,order_items.order_items_id,order_items.quantity,sum(order_items.quantity) as "total_sales",monthname(orders.created_at) as "month",YEAR(orders.created_at) as "year"')->where('monthname(orders.created_at)="' . $month . '"')->where('year(orders.created_at)="' . $year . '"')->groupBy('products.product_id')->join('products', 'products.product_id=order_items.product_id')->findAll();
+            // dd($this->db->showLastQuery());
+            $last_month = $this->without('order_items')->where('orders.status!=', "WAITING")->where('orders.status!=', "REJECT")->join("order_items", 'order_items.order_id=orders.order_id', "RIGHT")->select('order_items.total,order_items.product_id,orders.created_at,products.title,products.price,orders.token,order_items.order_items_id,order_items.quantity,sum(order_items.quantity) as "total_sales",monthname(orders.created_at) as "month"')->where('month(orders.created_at)="' . date("m", strtotime($month)) - 1 . '"')->where('year(orders.created_at)="' . $year . '"')->groupBy('products.product_id')->join('products', 'products.product_id=order_items.product_id')->findAll();
+        }
+        $data = [];
+        foreach ($this_month as $key => $dt) {
+            $ls =  isset($last_month[$key]) ? $last_month[$key] : null;
+            $last_sl = isset($ls->total_sales) ? $ls->total_sales : 0;
+            $data[] = [
+                'product_title' => $dt->title,
+                'month' => $dt->month,
+                'sold_this' => $dt->total_sales,
+                'price' => $dt->price,
+                'created_at' => $dt->created_at,
+                'sold_last' => $last_sl,
+                'increst' => $last_sl != null && $dt->total_sales != 0 ? floor(($dt->total_sales - $last_sl) / $last_sl * 100) : 0,
+                'decrest' => $last_sl != null && $dt->total_sales != 0 ? floor(($last_sl - $dt->total_sales) / $last_sl * 100) : 0,
+                'year' => $dt->year
+            ];
+        }
+        return $data;
+    }
+
+    public function month_filter_product_sales()
+    {
+        return $this->without('order_items')->where('orders.status!=', "WAITING")->where('orders.status!=', "REJECT")->join("order_items", 'order_items.order_id=orders.order_id', "RIGHT")->select('monthname(orders.created_at) as "month"')->groupBy('month')->findAll();
+    }
+    public function year_filter_product_sales()
+    {
+        return $this->without('order_items')->where('orders.status!=', "WAITING")->where('orders.status!=', "REJECT")->join("order_items", 'order_items.order_id=orders.order_id', "RIGHT")->select('YEAR(orders.created_at) as "year"')->groupBy('year')->findAll();
     }
 }

@@ -34,8 +34,21 @@ class ReportController extends BaseController
     }
     public function product_report()
     {
-        dd($this->order->productSales());
-        return view('admin/report/product', add_data("Product Sales Report", "report/product_sales"));
+        $data['month_filter'] = $this->order->month_filter_product_sales();
+        $data['year_filter'] = $this->order->year_filter_product_sales();
+        $data['selected_month'] = $this->request->getVar('month') ?  htmlentities($this->request->getVar('month')) : "";
+        $data['selected_year'] = $this->request->getVar('year') ? htmlentities($this->request->getVar('year')) : "";
+        if (array_key_exists('month', $this->request->getVar()) && array_key_exists('year', $this->request->getVar())) {
+            if ($this->validate(['month' => 'required', 'year' => 'required'])) {
+                $data['product_sales_report'] = $this->order->productSales(htmlentities($this->request->getVar('month')), htmlentities($this->request->getVar('year')));
+            } else {
+                session()->setFlashdata('validation', $this->validator->getErrors());
+                $data['product_sales_report'] = $this->order->productSales();
+            }
+        } else {
+            $data['product_sales_report'] = $this->order->productSales();
+        }
+        return view('admin/report/product', add_data("Product Sales Report", "report/product_sales", $data));
     }
     public function visitor_perweek()
     {
@@ -128,5 +141,28 @@ class ReportController extends BaseController
         $mpdf->WriteHTML($html);
         $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('user-report-' . date("Y-m-d") . '.pdf', 'I');
+    }
+    public function generete_pdf_report_product_sales()
+    {
+        $mpdf = new \Mpdf\Mpdf();
+
+        $data['month_filter'] = $this->order->month_filter_product_sales();
+        $data['year_filter'] = $this->order->year_filter_product_sales();
+        $data['selected_month'] = $this->request->getVar('month') ?  htmlentities($this->request->getVar('month')) : "";
+        $data['selected_year'] = $this->request->getVar('year') ? htmlentities($this->request->getVar('year')) : "";
+        if (array_key_exists('month', $this->request->getVar()) && array_key_exists('year', $this->request->getVar())) {
+            if ($this->validate(['month' => 'required', 'year' => 'required'])) {
+                $data['product_sales_report'] = $this->order->productSales(htmlentities($this->request->getVar('month')), htmlentities($this->request->getVar('year')));
+            } else {
+                session()->setFlashdata('validation', $this->validator->getErrors());
+                $data['product_sales_report'] = $this->order->productSales();
+            }
+        } else {
+            $data['product_sales_report'] = $this->order->productSales();
+        }
+        $html = view('pdf/product_sales_report', $data);
+        $mpdf->WriteHTML($html);
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('product-sales-report-' . date("Y-m-d") . '.pdf', 'I');
     }
 }

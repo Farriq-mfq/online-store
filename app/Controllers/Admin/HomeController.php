@@ -4,7 +4,13 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Admin\UniqueVisitor;
+use App\Models\Banner;
+use App\Models\Brands;
+use App\Models\Categories;
+use App\Models\Offer;
 use App\Models\Order;
+use App\Models\Slider;
+use App\Models\Tags;
 use App\Models\User as ModelsUser;
 
 class HomeController extends BaseController
@@ -22,6 +28,23 @@ class HomeController extends BaseController
         $data['total_visitor'] = $this->visitor->countAllResults();
         $data['detail_visitor'] = $this->visitor->getdetailvisitorcount();
         $data['report_sales'] = $this->order->report();
+        $data['latest_order'] = $this->order->limit(6)->orderBy('created_at', "DESC")->findAll();
+        $user = new ModelsUser();
+        $banner = new Banner();
+        $categories = new Categories();
+        $tags = new Tags();
+        $slider = new Slider();
+        $brand = new Brands();
+        $offer = new Offer();
+        $data['count_all'] = [
+            'brand'=>$brand->countAllResults(),
+            'banner' => $banner->countAllResults(),
+            'tags' => $tags->countAllResults(),
+            'categories' => $categories->countAllResults(),
+            'slider' => $slider->countAllResults(),
+            'offer' => $offer->countAllResults(),
+            'users' => $user->countAllResults()
+        ];
         return view('admin/home_view', add_data("Home", "/index", $data));
     }
 

@@ -30,8 +30,7 @@ class UniqueVisitor
     }
     public function insert_unique_visitor()
     {
-        $check = "SELECT * FROM unique_visitor WHERE ip=? AND created_at=CURRENT_TIMESTAMP LIMIT 1";
-        // dd($check);
+        $check = "SELECT * FROM unique_visitor WHERE ip=? AND date_format(created_at,'%y-%m-%d')=CURRENT_DATE LIMIT 1";
         if ($this->db->query($check, [$this->getUserIP()])->getFirstRow() == null) {
             $insertQ =  "INSERT INTO `unique_visitor`(`ip`) VALUES (?)";
             $this->db->query($insertQ, [$this->getUserIP()]);
