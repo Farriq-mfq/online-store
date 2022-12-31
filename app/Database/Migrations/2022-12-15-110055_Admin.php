@@ -9,25 +9,33 @@ class Admin extends Migration
     public function up()
     {
         $this->forge->addField([
-            "admin_id"=>[
-                "type"=>"bigint",
-                "auto_increment"=>true
+            "admin_id" => [
+                "type" => "bigint",
+                "auto_increment" => true
             ],
-            "name"=>[
-                "type"=>"varchar",
-                "constraint"=>150,
+            "name" => [
+                "type" => "varchar",
+                "constraint" => 150,
             ],
-            "email"=>[
-                "type"=>"varchar",
-                "constraint"=>150,
-                "unique"=>true
+            "email" => [
+                "type" => "varchar",
+                "constraint" => 150,
+                "unique" => true
             ],
-            "password"=>[
-                "type"=>"varchar",
-                "constraint"=>255,
+            "password" => [
+                "type" => "varchar",
+                "constraint" => 255,
             ],
+            "role" => [
+                'type' => "enum",
+                "constraint" => [
+                    "DEV",
+                    "ADMIN"
+                ],
+                "default" => "ADMIN"
+            ]
         ]);
-        $this->forge->addKey("admin_id",true);
+        $this->forge->addKey("admin_id", true);
         $this->forge->createTable("admin");
     }
 

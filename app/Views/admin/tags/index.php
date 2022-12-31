@@ -116,7 +116,7 @@
 <?php if (session()->getFlashdata("update_id")) : ?>
     <script>
         const input_method = $(document.createElement("input")).attr("type", "hidden").attr("name", "_method").attr("id", "ID_METHOD").attr("value", "PUT")
-        const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "tags_id").attr("value", "<?= session()->getFlashdata("update_id") ?>")
+        const input_id = $(document.createElement("input")).attr("type", "hidden").attr("name", "tag_id").attr("value", "<?= session()->getFlashdata("update_id") ?>")
         $("#tags_form").append(input_id)
         $("#tags_form").append(input_method)
         $(".modal-title").text("Update tags")

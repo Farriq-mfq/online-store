@@ -4,7 +4,7 @@ use Config\Services;
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link text-center">
+  <a href="#" class="brand-link text-center">
     <span class="brand-text font-bold">PANEL ADMIN</span>
   </a>
 
@@ -14,6 +14,9 @@ use Config\Services;
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="info">
         <a href="#" class="d-block"><?= Services::authserviceAdmin()->getSessionData()['email'] ?></a>
+        <?php if (admin()['role'] == 'DEV') : ?>
+          <span class="text-white">DEVELOPER MODE</span>
+        <?php endif ?>
       </div>
     </div>
 
@@ -218,6 +221,17 @@ use Config\Services;
             </p>
           </a>
         </li>
+        <?php if (admin()['role'] == 'DEV') : ?>
+          <li class="nav-header">MANAGEMENT ADMIN</li>
+          <li class="nav-item">
+            <a href="<?= admin_url("/list/admin") ?>" class="nav-link <?= $active_page == "list/admin/index" ? "active" : "" ?>">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                List Admin
+              </p>
+            </a>
+          </li>
+        <?php endif ?>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

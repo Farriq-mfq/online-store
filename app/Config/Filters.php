@@ -5,6 +5,7 @@ namespace Config;
 use App\Database\Migrations\Users;
 use App\Filters\Admin;
 use App\Filters\Adminguest;
+use App\Filters\Developer;
 use App\Filters\Roles;
 use App\Filters\User;
 use App\Filters\UserGuest;
@@ -36,6 +37,7 @@ class Filters extends BaseConfig
         "roles-auth"          => Roles::class,
         'user-guest'         => UserGuest::class,
         'visitor'         => Visitor::class,
+        'dev' => Developer::class
     ];
 
     /**

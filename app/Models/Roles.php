@@ -2,22 +2,19 @@
 
 namespace App\Models;
 
-use App\Interface\AuthInterface;
 use CodeIgniter\Model;
 
-class Admin extends Model implements AuthInterface
+class Roles extends Model
 {
-    use \Tatter\Relations\Traits\ModelTrait;
     protected $DBGroup          = 'default';
-    protected $table            = 'admin';
-    protected $primaryKey       = 'admin_id';
+    protected $table            = 'roles';
+    protected $primaryKey       = 'role_id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name","email","password"];
-    protected $with = ['roles'];
+    protected $allowedFields    = ["role","admin_id"];
 
     // Dates
     protected $useTimestamps = false;
@@ -42,8 +39,4 @@ class Admin extends Model implements AuthInterface
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-    public function getFieldData()
-    {
-        return $this->db->getFieldData($this->table);
-    }
 }

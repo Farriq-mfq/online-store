@@ -220,15 +220,26 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $website->post("change", "WebsiteController::change");
     });
     /* reports */
-    $route->group("report", function ($website) {
-        $website->get("/", "ReportController::product_sales_report");
-        $website->get("visitor", "ReportController::visitor_perweek");
-        $website->get("user_regis", "ReportController::user_registration");
-        $website->post("generate/sales/pdf", "ReportController::generete_pdf_report_sales");
-        $website->post("generate/visitor/pdf", "ReportController::generete_pdf_report_visitor");
-        $website->post("generate/user/pdf", "ReportController::generete_pdf_report_user");
-        $website->post("generate/product_sales/pdf", "ReportController::generete_pdf_report_product_sales");
-        $website->get("product_sales", "ReportController::product_report");
+    $route->group("report", function ($report) {
+        $report->get("/", "ReportController::product_sales_report");
+        $report->get("visitor", "ReportController::visitor_perweek");
+        $report->get("user_regis", "ReportController::user_registration");
+        $report->post("generate/sales/pdf", "ReportController::generete_pdf_report_sales");
+        $report->post("generate/visitor/pdf", "ReportController::generete_pdf_report_visitor");
+        $report->post("generate/user/pdf", "ReportController::generete_pdf_report_user");
+        $report->post("generate/product_sales/pdf", "ReportController::generete_pdf_report_product_sales");
+        $report->get("product_sales", "ReportController::product_report");
+    });
+
+    /* ADD NEW ADMIN ROUTES */
+    $route->group("list/admin", ['filter' => ['admin-auth','dev']], function ($admin) {
+        $admin->get("/", "Admin\AdminController::index");
+        $admin->post("/", "Admin\AdminController::create");
+        $admin->delete("(:num)", "Admin\AdminController::remove/$1");
+        $admin->get("get", "Admin\AdminController::get_update_admin");
+        $admin->put("/", "Admin\AdminController::update");
+        $admin->post("roles/add/(:num)", "Admin\AdminController::add_roles/$1");
+        $admin->delete("roles/remove/(:num)", "Admin\AdminController::remove_roles/$1");
     });
 });
 $routes->post("/" . ADMIN_PATH . "/auth/logout", "Admin\AuthController::logout", ['filter' => "admin-auth"]);

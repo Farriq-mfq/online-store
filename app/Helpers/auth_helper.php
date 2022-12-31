@@ -20,3 +20,9 @@ use Config\Services;
             return Services::authserviceUser()->getSessionData();
         }
     }
+    if(!function_exists("admin")){
+        function admin()
+        {
+            return Services::authserviceAdmin()->getSessionData();
+        }
+    }
