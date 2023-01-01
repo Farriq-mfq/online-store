@@ -55,8 +55,8 @@ class UniqueVisitor extends Model
         $total_all_visitor = $total_lastweek + $total_thisweek;
         $percentage_last_week = $total_all_visitor ? floor($total_lastweek / $total_all_visitor * 100) : 0;
         $percentage_this_week =  $total_all_visitor ? floor($total_thisweek / $total_all_visitor * 100) : 0;
-        $increase_perweek =   floor(($total_thisweek - $total_lastweek) / $total_lastweek * 100);
-        $decrease_perweek =   floor(($total_lastweek - $total_thisweek) / $total_lastweek * 100);
+        $increase_perweek =   $total_lastweek > 0 && $total_thisweek > 0 ? floor(($total_thisweek - $total_lastweek) / $total_lastweek * 100) : 0;
+        $decrease_perweek =   $total_lastweek > 0 && $total_thisweek > 0 ? floor(($total_lastweek - $total_thisweek) / $total_lastweek * 100) : 0;
         return [
             'percentage_thisweek' => $percentage_this_week,
             'percentage_lastweek' => $percentage_last_week,

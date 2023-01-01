@@ -221,6 +221,39 @@ use Config\Services;
             </p>
           </a>
         </li>
+        <li class="nav-header">EMAIL MANAGEMENT</li>
+        <li class="nav-item">
+          <a href="<?= admin_url("/mail") ?>" class="nav-link <?= $active_page == "mail/index" ? "active" : "" ?>">
+            <i class="nav-icon fas fa-envelope"></i>
+            <p>
+              SMTP Setting
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= admin_url("/mail/send/testing") ?>" class="nav-link <?= $active_page == "mail/testing" ? "active" : "" ?>">
+            <i class="nav-icon fas fa-envelope"></i>
+            <p>
+              Email Testing
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= admin_url("/mail/send/promo") ?>" class="nav-link <?= $active_page == "mail/promo" ? "active" : "" ?>">
+            <i class="nav-icon fas fa-envelope"></i>
+            <p>
+              Email Promo
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= admin_url("/mail/template") ?>" class="nav-link <?= $active_page == "mail/template" ? "active" : "" ?>">
+            <i class="nav-icon fas fa-envelope"></i>
+            <p>
+              Email Template
+            </p>
+          </a>
+        </li>
         <?php if (admin()['role'] == 'DEV') : ?>
           <li class="nav-header">MANAGEMENT ADMIN</li>
           <li class="nav-item">

@@ -62,6 +62,8 @@
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-outlined">Login</button>
                             </div>
+                            <a href="<?= base_url('/auth/reset') ?>">Forgot password</a>
+
                         </div>
                     </div>
                 </form>

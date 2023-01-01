@@ -10,6 +10,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use EMONEY;
+use Mail;
 use Psr\Log\LoggerInterface;
 use Shipping;
 use Payment;
@@ -47,6 +48,7 @@ abstract class BaseController extends Controller
      */
     protected Shipping $shipping;
     protected Payment $payment;
+    protected Mail $mail;
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -60,6 +62,8 @@ abstract class BaseController extends Controller
         // lib
         $this->shipping = new Shipping();
         $this->payment = new Payment();
+        $this->mail = new Mail();
+        // $this->mail->sendResetlink("bonjames020@gmail.com","http://localhost:8080/DEV_ADMIN/mail/template");
         // dd(user());
         // dd(password_hash("user",PASSWORD_DEFAULT)); 
         // $prm = array(

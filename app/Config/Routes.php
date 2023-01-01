@@ -78,6 +78,10 @@ $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     $route->get('/', 'AuthController::index');
     $route->post('login', 'AuthController::login');
     $route->post('register', 'AuthController::register');
+    $route->get('reset', 'AuthController::resetPassword');
+    $route->post('reset/send', 'AuthController::resetPasswordSend');
+    $route->get('verification', 'AuthController::verif');
+    $route->post('password/change/(:segment)', 'AuthController::change_password/$1');
 });
 // auth logout
 $routes->post('auth/logout', "AuthController::logout", ["filter" => "user"]);
@@ -232,7 +236,7 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
     });
 
     /* ADD NEW ADMIN ROUTES */
-    $route->group("list/admin", ['filter' => ['admin-auth','dev']], function ($admin) {
+    $route->group("list/admin", ['filter' => ['admin-auth', 'dev']], function ($admin) {
         $admin->get("/", "Admin\AdminController::index");
         $admin->post("/", "Admin\AdminController::create");
         $admin->delete("(:num)", "Admin\AdminController::remove/$1");
@@ -240,6 +244,20 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $admin->put("/", "Admin\AdminController::update");
         $admin->post("roles/add/(:num)", "Admin\AdminController::add_roles/$1");
         $admin->delete("roles/remove/(:num)", "Admin\AdminController::remove_roles/$1");
+    });
+    $route->group("mail", ['filter' => ['admin-auth', 'dev']], function ($mail) {
+        $mail->get("/", "Admin\MailController::index");
+        $mail->post("/", "Admin\MailController::add");
+    });
+    $route->get("mail/send/promo", "MailController::promo");
+    $route->get("mail/send/testing", "MailController::testing");
+    $route->post("mail/send/testing", "MailController::run_test");
+    $route->group("mail/template", function ($template) {
+        $template->get('/', "EmailTempalteController::index");
+        $template->get('get', "EmailTempalteController::get_update_template");
+        $template->post('/', "EmailTempalteController::store");
+        $template->put('/', "EmailTempalteController::update");
+        $template->delete('(:num)', "EmailTempalteController::remove/$1");
     });
 });
 $routes->post("/" . ADMIN_PATH . "/auth/logout", "Admin\AuthController::logout", ['filter' => "admin-auth"]);

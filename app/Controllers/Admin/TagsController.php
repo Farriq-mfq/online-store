@@ -21,9 +21,9 @@ class TagsController extends BaseController
     {
         try {
             $this->tags->delete($id);
-            alert("Success delete Brands", "success");
+            alert("Success delete Tags", "success");
         } catch (\Exception $e) {
-            alert("Failed delete Brands", "error");
+            alert("Failed delete Tags", "error");
         }
         return redirect()->back();
     }

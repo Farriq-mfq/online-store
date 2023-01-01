@@ -79,8 +79,8 @@ class Order extends Model
         $percentage_this_year =  $total_sales ?  floor($total_this_year / $total_sales * 100) : 0;
         $percentage_last_year =  $total_sales ?  floor($total_last_year / $total_sales * 100) : 0;
         // increst
-        $increase_permonth =   floor(($total_this_permonth->total_permonth - $total_last_permonth->total_permonth) / $total_last_permonth->total_permonth * 100);
-        $decrease_permonth =   floor(($total_last_permonth->total_permonth - $total_this_permonth->total_permonth) / $total_last_permonth->total_permonth * 100);
+        $increase_permonth =   $total_last_permonth->total_permonth > 0 && $total_this_permonth->total_permonth > 0 ? floor(($total_this_permonth->total_permonth - $total_last_permonth->total_permonth) / $total_last_permonth->total_permonth * 100) : 0;
+        $decrease_permonth =   $total_last_permonth->total_permonth > 0 && $total_this_permonth->total_permonth > 0 ? floor(($total_last_permonth->total_permonth - $total_this_permonth->total_permonth) / $total_last_permonth->total_permonth * 100) : 0;
 
         return [
             'total_sales' => $total_sales,
