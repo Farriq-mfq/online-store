@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Models\User as ModelsUser;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -25,10 +26,10 @@ class User implements FilterInterface
      *
      * @return mixed
      */
-    
+
     public function before(RequestInterface $request, $arguments = null)
     {
-        if(!Services::authserviceUser()->authenticated()){
+        if (!Services::authserviceUser()->authenticated()) {
             return redirect()->to(base_url("/auth"));
         }
     }

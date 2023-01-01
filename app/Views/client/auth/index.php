@@ -40,6 +40,12 @@
                 </form>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                <?php if (session()->getFlashdata("not_verif")) : ?>
+                    <form action="<?= base_url("auth/resend/email/confirmation/" . session()->getFlashdata("not_verif")) ?>" method="POST" class="mb-3">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="btn-sm btn btn-success">Resend Email Confirmation</button>
+                    </form>
+                <?php endif ?>
                 <form action="<?= base_url('/auth/login') ?>" method="POST">
                     <?= csrf_field() ?>
                     <div class="login-form">

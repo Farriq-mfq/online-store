@@ -79,7 +79,7 @@
 	<script src="<?= base_url("/client/js/jquery.toast.js") ?>"></script>
 	<script src="<?= base_url("/client/js/custom.js") ?>"></script>
 	<script src="<?= base_url("/client/js/client.js") ?>"></script>
-	<?php if (auth_user()) : ?>
+	<?php if (auth_user() && user()['email_verification'] != '0') : ?>
 		<script src="<?= base_url("/client/js/cart.js") ?>"></script>
 		<script <?= csp_script_nonce() ?>>
 			loadCart("<?= base_url("/api/cart") ?>", "<?= base_url("/api/cart/count") ?>", "<?= base_url("/api/cart/total_price") ?>");

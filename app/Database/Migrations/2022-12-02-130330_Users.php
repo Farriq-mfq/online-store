@@ -22,6 +22,10 @@ class Users extends Migration
                 "constraint" => 150,
                 "unique" => true
             ],
+            'email_verification' => [
+                'type' => "boolean",
+                'default' => false
+            ],
             "password" => [
                 "type" => "varchar",
                 "constraint" => 255,

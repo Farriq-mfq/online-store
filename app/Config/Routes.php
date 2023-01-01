@@ -82,6 +82,8 @@ $routes->group("auth", ["filter" => "user-guest"], function ($route) {
     $route->post('reset/send', 'AuthController::resetPasswordSend');
     $route->get('verification', 'AuthController::verif');
     $route->post('password/change/(:segment)', 'AuthController::change_password/$1');
+    $route->get('email/verification', 'AuthController::email_verif');
+    $route->post('resend/email/confirmation/(:num)', 'AuthController::resend_email_confirmation/$1');
 });
 // auth logout
 $routes->post('auth/logout', "AuthController::logout", ["filter" => "user"]);

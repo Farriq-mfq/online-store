@@ -37,7 +37,7 @@ class Filters extends BaseConfig
         "roles-auth"          => Roles::class,
         'user-guest'         => UserGuest::class,
         'visitor'         => Visitor::class,
-        'dev' => Developer::class
+        'dev' => Developer::class,
     ];
 
     /**

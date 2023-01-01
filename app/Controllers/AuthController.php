@@ -40,8 +40,20 @@ class AuthController extends BaseController
             "email" => $this->request->getVar("email"),
             "password" => $this->request->getVar("password"),
         ];
-        if (Services::authserviceUser()->attempt($credentials)) {
-            return redirect()->to(base_url("/shop"));
+        $checkEmail = $this->user->where('email', $this->request->getVar('email'))->first();
+        if ($checkEmail != null) {
+            if ($checkEmail->email_verification != '0') {
+                if (Services::authserviceUser()->attempt($credentials)) {
+                    return redirect()->to(base_url("/shop"));
+                } else {
+                    session()->setFlashdata('error_login', "Invalid email or password");
+                    return redirect()->to(base_url('/auth'));
+                }
+            } else {
+                session()->setFlashdata('not_verif', $checkEmail->user_id);
+                session()->setFlashdata('error_login', "Your Email Not Confirmation");
+                return redirect()->to(base_url('/auth'));
+            }
         } else {
             session()->setFlashdata('error_login', "Invalid email or password");
             return redirect()->to(base_url('/auth'));
@@ -59,10 +71,11 @@ class AuthController extends BaseController
                 'rules' => "required|min_length[5]",
             ],
             "email_register" => [
-                'rules' => "required|valid_email",
+                'rules' => "required|valid_email|is_unique[users.email]",
                 'errors' => [
                     'required' => 'The email field is required.',
-                    'valid_email' => 'The email must be email'
+                    'valid_email' => 'The email must be email',
+                    'is_unique' => "This Email already Registred",
                 ]
             ],
             "password_register" => [
@@ -84,12 +97,42 @@ class AuthController extends BaseController
             $register_data = [
                 'name' => $this->request->getVar('name'),
                 'email' => $this->request->getVar('email_register'),
-                'password' => $this->request->getVar('password_register'),
+                'password' => password_hash($this->request->getVar('password_register'), PASSWORD_DEFAULT),
             ];
-            $register = Services::authserviceUser()->register($register_data, 'users');
+            $register = $this->user->insert($register_data);
             if ($register) {
-                session()->setFlashdata('alert_success', "Register SuccessFully :)");
-                return redirect()->to('/auth');
+                $user = $this->user->find($register);
+                if ($user != null) {
+                    $code = uniqid() . $user->user_id . rand(0, 1000);
+                    $date = date_create(date("Y-m-d H:i:s"));
+                    date_add($date, date_interval_create_from_date_string("1 days"));
+                    $data = [
+                        'code' => $code,
+                        'expired' => date_format($date, "Y-m-d H:i:s"),
+                        'type' => "CONFIRM_EMAIL_USER",
+                        'user_id' => $user->user_id
+                    ];
+                    $checkResetifexist = $this->reset->where('user_id', $user->user_id)->where('type', "CONFIRM_EMAIL_USER")->first();
+                    if ($checkResetifexist == null) {
+                        $insert_id = $this->reset->insert($data);
+                        $reset = $this->reset->find($insert_id);
+                        if ($reset != null) {
+                            if ($this->mail->sendEmailRegister(base_url('auth/email/verification?code=' . randomhash($code)), $user->email, $user->name)) {
+                                session()->setFlashdata('alert_success', "Register SuccessFully :)");
+                                return redirect()->to('/auth');
+                            } else {
+                                session()->setFlashdata('alert_error', "Register Failed :(");
+                                return redirect()->to('/auth');
+                            }
+                        } else {
+                            session()->setFlashdata('alert_error', "Register Failed :(");
+                            return redirect()->to('/auth');
+                        }
+                    } else {
+                        session()->setFlashdata('alert_error', "Register Failed :(");
+                        return redirect()->to('/auth');
+                    }
+                }
             } else {
                 session()->setFlashdata('alert_error', "Register Failed :(");
                 return redirect()->to('/auth');
@@ -161,11 +204,48 @@ class AuthController extends BaseController
                     session()->setFlashdata('alert_error', "Link expired");
                     return redirect()->back();
                 } else {
-                    // $delete = $this->reset->delete($reset->reset_id);
-                    // if ($delete) {
                     $data['code'] = $code;
                     return view('client/auth/change', add_data('Change Password', '', $data));
-                    // }
+                }
+            } else {
+                session()->setFlashdata('alert_error', "Link expired");
+                return redirect()->back();
+            }
+        } else {
+            return redirect()->back();
+        }
+    }
+    public function email_verif()
+    {
+        if ($this->request->getVar('code')) {
+            $code = htmlentities($this->request->getVar('code'));
+            $current_date = date('Y-m-d H:i:s');
+            $enc = Services::encrypter();
+            $dec_code = $enc->decrypt(hex2bin($code));
+            $reset = $this->reset->where('code', $dec_code)->first();
+            if ($reset != null) {
+                if ($current_date > $reset->expired) {
+                    session()->setFlashdata('alert_error', "Link expired");
+                    return redirect()->back();
+                } else {
+                    $user = $this->user->find($reset->user_id);
+
+                    if ($user != null) {
+                        if ($user->email_verification == "0") {
+                            $update = $this->user->update($reset->user_id, ['email_verification' => true]);
+                            if ($update) {
+                                $this->reset->delete($reset->reset_id);
+                                session()->setFlashdata('alert_success', "Email Verification Success");
+                                return redirect()->to("/auth");
+                            }
+                        } else {
+                            session()->setFlashdata('alert_error', "Verification Failed");
+                            return redirect()->back();
+                        }
+                    } else {
+                        session()->setFlashdata('alert_error', "Verification Failed");
+                        return redirect()->back();
+                    }
                 }
             } else {
                 session()->setFlashdata('alert_error', "Link expired");
@@ -217,6 +297,65 @@ class AuthController extends BaseController
         } else {
             session()->setFlashdata('validation', $this->validator->getErrors());
             return redirect()->back();
+        }
+    }
+
+    public function resend_email_confirmation($id)
+    {
+        $checkreset_link = $this->reset->where('user_id', $id)->where("type", "CONFIRM_EMAIL_USER")->first();
+        $code = uniqid() . $id . rand(0, 1000);
+        $date = date_create(date("Y-m-d H:i:s"));
+        date_add($date, date_interval_create_from_date_string("1 days"));
+        $data = [
+            'code' => $code,
+            'expired' => date_format($date, "Y-m-d H:i:s"),
+            'type' => "CONFIRM_EMAIL_USER",
+            'user_id' => $id
+        ];
+        $user = $this->user->find($id);
+        $current_date = date('Y-m-d H:i:s');
+        if ($checkreset_link == null) {
+            $insert_id = $this->reset->insert($data);
+            $reset = $this->reset->find($insert_id);
+            if ($reset != null) {
+                if ($this->mail->sendEmailRegister(base_url('auth/email/verification?code=' . randomhash($code)), $user->email, $user->name)) {
+                    session()->setFlashdata('alert_success', "Resend SuccessFully :)");
+                    return redirect()->to('/auth');
+                } else {
+                    session()->setFlashdata('alert_error', "Resend Failed :(");
+                    return redirect()->to('/auth');
+                }
+            } else {
+                session()->setFlashdata('alert_error', "Resend Failed :(");
+                return redirect()->to('/auth');
+            }
+        } else {
+            if ($current_date > $checkreset_link->expired) {
+                $this->reset->delete($checkreset_link->reset_id);
+                $insert_id = $this->reset->insert($data);
+                $reset = $this->reset->find($insert_id);
+                if ($reset != null) {
+                    if ($this->mail->sendEmailRegister(base_url('auth/email/verification?code=' . randomhash($code)), $user->email, $user->name)) {
+                        session()->setFlashdata('alert_success', "Resend SuccessFully :)");
+                        return redirect()->to('/auth');
+                    } else {
+                        session()->setFlashdata('alert_error', "Resend Failed :(");
+                        return redirect()->to('/auth');
+                    }
+                } else {
+                    session()->setFlashdata('alert_error', "Resend Failed :(");
+                    return redirect()->to('/auth');
+                }
+                return redirect()->back();
+            } else {
+                if ($this->mail->sendEmailRegister(base_url('auth/email/verification?code=' . randomhash($checkreset_link->code)), $user->email, $user->name)) {
+                    session()->setFlashdata('alert_success', "Resend SuccessFully :)");
+                    return redirect()->to('/auth');
+                } else {
+                    session()->setFlashdata('alert_error', "Resend Failed :(");
+                    return redirect()->to('/auth');
+                }
+            }
         }
     }
 }

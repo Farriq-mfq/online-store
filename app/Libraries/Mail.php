@@ -41,7 +41,6 @@ class Mail
     public function sendResetlink($email, $link)
     {
         try {
-
             $template = $this->template->where('type', "RESET_PASSWORD_USER")->get()->getFirstRow();
             if ($template != null) {
                 $website = $this->db->table('website')->get()->getFirstRow();
@@ -58,7 +57,25 @@ class Mail
             return false;
         }
     }
-
+    public function sendEmailRegister($link, $email, $name)
+    {
+        try {
+            $template = $this->template->where('type', "CONFIRM_EMAIL_USER")->get()->getFirstRow();
+            if ($template != null) {
+                $website = $this->db->table('website')->get()->getFirstRow();
+                $this->smtp->setFrom($template->from_email, $template->from_name);
+                $this->smtp->setTo($email);
+                $this->smtp->setSubject("Confirmation Email");
+                $html = str_replace(["%link%", "%logo%", "%user%"], [$link, $website->logo, $name], html_entity_decode($template->content));
+                $this->smtp->setMessage($html);
+                return $this->smtp->send(true);
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
     public function sendRegisterValidate()
     {
     }
