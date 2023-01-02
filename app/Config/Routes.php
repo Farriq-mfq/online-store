@@ -254,12 +254,17 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
     $route->get("mail/send/promo", "MailController::promo");
     $route->get("mail/send/testing", "MailController::testing");
     $route->post("mail/send/testing", "MailController::run_test");
+    $route->get("mail/grab", "MailController::grab_email_db");
+    $route->post("mail/send/promo", "MailController::send_promo");
     $route->group("mail/template", function ($template) {
         $template->get('/', "EmailTempalteController::index");
         $template->get('get', "EmailTempalteController::get_update_template");
         $template->post('/', "EmailTempalteController::store");
         $template->put('/', "EmailTempalteController::update");
         $template->delete('(:num)', "EmailTempalteController::remove/$1");
+    });
+    $route->group("backup", function ($backup) {
+        $backup->get('/', "BackupController::index");
     });
 });
 $routes->post("/" . ADMIN_PATH . "/auth/logout", "Admin\AuthController::logout", ['filter' => "admin-auth"]);

@@ -222,4 +222,24 @@ class Mail
             return false;
         }
     }
+
+    public function sendPromoEmail($link,$email,$subject)
+    {
+        try {
+            $template = $this->template->where('type', "PROMO")->get()->getFirstRow();
+            if ($template != null) {
+                $website = $this->db->table('website')->get()->getFirstRow();
+                $this->smtp->setFrom($template->from_email, $template->from_name);
+                $this->smtp->setTo($email);
+                $this->smtp->setSubject($subject);
+                $html = str_replace(["%link%", "%logo%", "%user%"], [$link, $website->logo, $email], html_entity_decode($template->content));
+                $this->smtp->setMessage($html);
+                return $this->smtp->send(true);
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

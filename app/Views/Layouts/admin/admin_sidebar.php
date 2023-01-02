@@ -264,6 +264,15 @@ use Config\Services;
               </p>
             </a>
           </li>
+          <li class="nav-header">MANAGEMENT DATABASE</li>
+          <li class="nav-item">
+            <a href="<?= admin_url("/backup") ?>" class="nav-link <?= $active_page == "backup/index" ? "active" : "" ?>">
+              <i class="nav-icon fas fa-database"></i>
+              <p>
+                Backup Database
+              </p>
+            </a>
+          </li>
         <?php endif ?>
       </ul>
     </nav>

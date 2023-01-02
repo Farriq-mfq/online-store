@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\SMTP;
+use App\Models\User;
 
 class MailController extends BaseController
 {
@@ -20,7 +21,7 @@ class MailController extends BaseController
 
     public function promo()
     {
-        return 'send';
+        return view('admin/mail/promo', add_data("Promo Mail", 'mail/promo'));
     }
     public function add()
     {
@@ -43,7 +44,7 @@ class MailController extends BaseController
                 'port' => (int) $this->request->getVar('port'),
                 'crypto' => $this->request->getVar('crypto'),
                 'type' => $this->request->getVar('type'),
-                'useragent'=>$this->request->getVar('useragent')
+                'useragent' => $this->request->getVar('useragent')
             ];
             if ($this->smtp->find() != null) {
                 $this->smtp->update(null, $data);
@@ -67,13 +68,36 @@ class MailController extends BaseController
     {
         if ($this->request->isAJAX()) {
             if ($this->validate(['email' => 'required|valid_email'])) {
-                if($this->mail->sendTesting($this->request->getVar('email'))){
+                if ($this->mail->sendTesting($this->request->getVar('email'))) {
                     return $this->response->setJSON(['success' => true]);
-                }else{
+                } else {
                     return $this->response->setJSON(['success' => false]);
                 }
             } else {
                 return $this->response->setStatusCode(400)->setJSON(['validation' => $this->validator->getErrors()]);
+            }
+        }
+    }
+    public function grab_email_db()
+    {
+        if ($this->request->isAJAX()) {
+            $model_user = new User();
+            $all_user = $model_user->select('email')->findAll();
+            return $this->response->setJSON(['data' => $all_user]);
+        }
+    }
+
+    public function send_promo()
+    {
+        if ($this->request->isAJAX()) {
+            if ($this->validate(['email' => 'required|valid_email', 'link' => 'required', 'subject' => 'required'])) {
+                if ($this->mail->sendPromoEmail($this->request->getVar('link'), $this->request->getVar('email'), $this->request->getVar('subject'))) {
+                    return $this->response->setStatusCode(200)->setJSON(['success' => true]);
+                } else {
+                    return $this->response->setStatusCode(200)->setJSON(['success' => false]);
+                }
+            } else {
+                return $this->response->setStatusCode(200)->setJSON(['success' => false]);
             }
         }
     }
