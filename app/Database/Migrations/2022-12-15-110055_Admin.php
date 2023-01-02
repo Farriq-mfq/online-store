@@ -26,6 +26,10 @@ class Admin extends Migration
                 "type" => "varchar",
                 "constraint" => 255,
             ],
+            'email_verification' => [
+                'type' => "boolean",
+                'default' => false
+            ],
             "role" => [
                 'type' => "enum",
                 "constraint" => [

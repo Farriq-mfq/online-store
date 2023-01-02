@@ -3,8 +3,9 @@
 <?= $this->section("content") ?>
 <section class="content">
     <div class="container-fluid">
+        <h4>Order Overview</h4>
         <div class="row">
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
@@ -15,11 +16,81 @@
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="<?= admin_url('/report') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url('/order') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3><?= thousandsCurrencyFormat($order_done) ?></h3>
+
+                        <p>Order done</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <a href="<?= admin_url('/order/done') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3><?= thousandsCurrencyFormat($order_waiting) ?></h3>
+
+                        <p>Order Waiting</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <a href="<?= admin_url('/order/waiting') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <!-- small box -->
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3><?= thousandsCurrencyFormat($order_process) ?></h3>
+
+                        <p>Order Process</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <a href="<?= admin_url('/order/process') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3><?= thousandsCurrencyFormat($order_shipped) ?></h3>
+
+                        <p>Order Shipped</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <a href="<?= admin_url('/order/shipped') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3><?= thousandsCurrencyFormat($order_reject) ?></h3>
+
+                        <p>Order Reject</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <a href="<?= admin_url('/order/reject') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
@@ -30,10 +101,14 @@
                     <div class="icon">
                         <i class="ion ion-grid"></i>
                     </div>
-                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url("/brands") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
+            <!-- ./col -->
+        </div>
+        <h4>Overview</h4>
+        <div class="row">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-purple">
                     <div class="inner">
@@ -44,10 +119,10 @@
                     <div class="icon">
                         <i class="ion ion-grid"></i>
                     </div>
-                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url("/categories") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-indigo">
                     <div class="inner">
@@ -58,10 +133,10 @@
                     <div class="icon">
                         <i class="ion ion-grid"></i>
                     </div>
-                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url("/tags") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-lightblue">
                     <div class="inner">
@@ -72,10 +147,10 @@
                     <div class="icon">
                         <i class="ion ion-image"></i>
                     </div>
-                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url("/slider") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-lime">
                     <div class="inner">
@@ -86,10 +161,10 @@
                     <div class="icon">
                         <i class="ion ion-image"></i>
                     </div>
-                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url("/banner") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-teal">
                     <div class="inner">
@@ -100,11 +175,11 @@
                     <div class="icon">
                         <i class="ion ion-image"></i>
                     </div>
-                    <a href="<?= admin_url("/report/visitor") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="<?= admin_url("/offer") ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
@@ -119,7 +194,7 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-3 col-12">
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
@@ -133,7 +208,6 @@
                     <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- ./col -->
         </div>
         <div class="content">
             <div class="container-fluid">
@@ -143,7 +217,7 @@
                             <div class="card-header border-0">
                                 <div class="d-flex justify-content-between">
                                     <h3 class="card-title">Online Store Visitors</h3>
-                                    <a href="javascript:void(0);">View Report</a>
+                                    <a href="<?= admin_url('/report/visitor') ?>">View Report</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -243,7 +317,7 @@
                             <div class="card-header border-0">
                                 <div class="d-flex justify-content-between">
                                     <h3 class="card-title">Sales</h3>
-                                    <a href="javascript:void(0);">View Report</a>
+                                    <a href="<?= admin_url("/report") ?>">View Report</a>
                                 </div>
                             </div>
                             <div class="card-body">

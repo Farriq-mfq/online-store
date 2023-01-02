@@ -63,6 +63,7 @@ abstract class BaseController extends Controller
         $this->shipping = new Shipping();
         $this->payment = new Payment();
         $this->mail = new Mail();
+        // dd($this->mail->sendOrderReceived("dsf","bonjames020@gmail.com",1));
         // $this->mail->sendResetlink("bonjames020@gmail.com","http://localhost:8080/DEV_ADMIN/mail/template");
         // dd(user());
         // dd(password_hash("user",PASSWORD_DEFAULT)); 

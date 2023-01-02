@@ -51,6 +51,8 @@ class AdminController extends BaseController
             ];
             $register = Services::authserviceAdmin()->register($register_data, 'admin');
             if ($register) {
+                $admin = $this->admin->where('email', $this->request->getVar('email'))->first();
+                $this->mail->sendConfirmAdmin($this->request->getVar('email'), admin_url('/auth/verify?code=' . randomhash($admin->admin_id)), $admin->name);
                 alert("Register SuccessFully :)", 'success');
                 return redirect()->back();
             } else {
@@ -180,6 +182,34 @@ class AdminController extends BaseController
         } catch (\Exception $e) {
             alert("Delete Admin Roles Failed :(", 'error');
             return redirect()->back();
+        }
+    }
+
+    public function verify()
+    {
+        if ($this->request->getVar('code')) {
+            $code = htmlentities($this->request->getVar('code'));
+            $enc = Services::encrypter();
+            $id = $enc->decrypt(hex2bin($code));
+            $admin = $this->admin->find($id);
+            if ($admin != null) {
+                if ($admin->email_verification == '0') {
+                    $update = $this->admin->update($id, ['email_verification' => true]);
+                    if ($update) {
+                        session()->setFlashdata("verifed_success", "Confirm email success");
+                        return redirect()->to(admin_url('/auth/login'));
+                    }
+                } else {
+                    session()->setFlashdata("verifed_error", "Email already confirm");
+                    return redirect()->to(admin_url('/auth/login'));
+                }
+            } else {
+                session()->setFlashdata("verifed_error", "Confirm email failed");
+                return redirect()->to(admin_url('/auth/login'));
+            }
+        } else {
+            session()->setFlashdata("verifed_error", "Confirm email failed");
+            return redirect()->to(admin_url('/auth/login'));
         }
     }
 }

@@ -11,6 +11,12 @@
       <?php if(session()->getFlashdata('error_login')): ?>
         <p class="text-danger login-box-msg"><?= session()->getFlashdata('error_login') ?></p>
       <?php endif ?>
+      <?php if(session()->getFlashdata('verifed_success')): ?>
+        <p class="text-success login-box-msg"><?= session()->getFlashdata('verifed_success') ?></p>
+      <?php endif ?>
+      <?php if(session()->getFlashdata('verifed_error')): ?>
+        <p class="text-danger login-box-msg"><?= session()->getFlashdata('verifed_error') ?></p>
+      <?php endif ?>
 
       <form action="<?= admin_url("/auth/login") ?>" method="post">
       <?= csrf_field() ?>

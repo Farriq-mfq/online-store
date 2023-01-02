@@ -107,6 +107,7 @@ class OrderController extends BaseController
                         ];
                         $order_id = $this->order->insert($data_order);
                         if ($order_id) {
+                            $this->mail->sendOrderReceived($order_id);
                             $carts = $this->cart->where('user_id', auth_user_id())->findAll();
                             foreach ($carts as $cart) {
                                 $this->order_item->insert([
@@ -162,6 +163,7 @@ class OrderController extends BaseController
                         ];
                         $order_id = $this->order->insert($data_order);
                         if ($order_id) {
+                            $this->mail->sendOrderReceived(user()['email'],$order_id);
                             $carts = $this->cart->where('user_id', auth_user_id())->findAll();
                             foreach ($carts as $cart) {
                                 $this->order_item->insert([
@@ -243,6 +245,8 @@ class OrderController extends BaseController
                     if ($pay_cencel) {
                         $cencel = $this->order->update($id, ['is_cencel' => true, 'status' => "REJECT"]);
                         if ($cencel) {
+                            $order = $this->order->find($id);
+                            $this->mail->sendOrderReject($order->order_id);
                             session()->setFlashdata('alert_success', "Cenceled Success");
                             return redirect()->back();
                         }
@@ -281,6 +285,8 @@ class OrderController extends BaseController
             try {
                 $done = $this->order->update(htmlentities($id), ['status' => "DONE"]);
                 if ($done) {
+                    $order = $this->order->find($id);
+                    $this->mail->sendOrderdone($order->order_id);
                     session()->setFlashdata('alert_success', "Thank you");
                     return redirect()->back();
                 }

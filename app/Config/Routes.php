@@ -266,6 +266,7 @@ $routes->post("/" . ADMIN_PATH . "/auth/logout", "Admin\AuthController::logout",
 $routes->group("/" . ADMIN_PATH . "/auth", ["namespace" => $routes->getDefaultNamespace() . "Admin", "filter" => "admin-guest"], function ($route) {
     $route->get("login", "AuthController::index");
     $route->post("login", "AuthController::login");
+    $route->get("verify", "AdminController::verify");
 });
 /*
  * --------------------------------------------------------------------

@@ -25,10 +25,15 @@ class HomeController extends BaseController
     public function index()
     {
         $data['total_order'] = $this->order->countAllResults();
+        $data['order_waiting'] = $this->order->where('status', "WAITING")->countAllResults();
+        $data['order_process'] = $this->order->where('status', "PROCESS")->countAllResults();
+        $data['order_shipped'] = $this->order->where('status', "SHIPPED")->countAllResults();
+        $data['order_reject'] = $this->order->where('status', "REJECT")->countAllResults();
+        $data['order_done'] = $this->order->where('status', "DONE")->countAllResults();
         $data['total_visitor'] = $this->visitor->countAllResults();
         $data['detail_visitor'] = $this->visitor->getdetailvisitorcount();
         $data['report_sales'] = $this->order->report();
-        $data['latest_order'] = $this->order->limit(6)->orderBy('created_at', "DESC")->findAll();
+        $data['latest_order'] = $this->order->orderBy('created_at', "DESC")->findAll(6);
         $user = new ModelsUser();
         $banner = new Banner();
         $categories = new Categories();
@@ -37,7 +42,7 @@ class HomeController extends BaseController
         $brand = new Brands();
         $offer = new Offer();
         $data['count_all'] = [
-            'brand'=>$brand->countAllResults(),
+            'brand' => $brand->countAllResults(),
             'banner' => $banner->countAllResults(),
             'tags' => $tags->countAllResults(),
             'categories' => $categories->countAllResults(),

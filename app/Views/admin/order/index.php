@@ -66,7 +66,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= admin_url("/order/traking") ?>" method="POST" id="order_form">
+            <form action="<?= admin_url("/order/traking") ?>" method="POST" id="order_form" onsubmit="return confirm('Confirm your action!')">
                 <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="form-group">

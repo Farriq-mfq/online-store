@@ -36,6 +36,7 @@ class EmailTemplate extends Migration
                     "ORDER_PROCESS",
                     "ORDER_SHIPPED",
                     "ORDER_DONE",
+                    "ORDER_REJECT",
                     "CONFIRM_EMAIL_USER",
                     "CONFIRM_EMAIL_ADMIN",
                     "PROMO"

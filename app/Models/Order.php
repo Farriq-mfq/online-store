@@ -74,8 +74,8 @@ class Order extends Model
             $total_last_year += $v->total_permonth;
         }
         $total_sales = $total_this_year + $total_last_year;
-        $total_this_permonth = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("month(created_at)=month(CURRENT_DATE)")->where('YEAR(CURRENT_DATE) = YEAR(created_at)')->first();
-        $total_last_permonth = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("month(created_at)=month(date_sub(CURRENT_DATE,INTERVAL 1 MONTH))")->where('YEAR(CURRENT_DATE) = YEAR(created_at)')->first();
+        $total_this_permonth = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("month(created_at)=month(CURRENT_DATE)")->first();
+        $total_last_permonth = $this->without('order_items')->where('status!=', "WAITING")->where('status!=', "REJECT")->select("MONTHNAME(created_at) as 'month',sum(subtotal) as 'total_permonth',year(created_at) as 'year'")->where("month(created_at)=month(date_sub(CURRENT_DATE,INTERVAL 1 MONTH))")->first();
         $percentage_this_year =  $total_sales ?  floor($total_this_year / $total_sales * 100) : 0;
         $percentage_last_year =  $total_sales ?  floor($total_last_year / $total_sales * 100) : 0;
         // increst

@@ -33,14 +33,15 @@ class OrderController extends BaseController
     public function accept($id)
     {
         if ($id) {
-            $order = $this->order->find($id);
+            $order = $this->order->with('users')->find($id);
             if ($order) {
                 $update_status_order = $this->order->update($id, ['status' => "PROCESS"]);
                 if ($update_status_order) {
                     foreach ($order->order_items as $item) {
                         $product = $this->product->find($item->product_id);
-                        $this->product->update($item->product_id, ['stock' => $product->stock - 1]);
+                        $this->product->update($item->product_id, ['stock' => $product->stock - $item->quantity]);
                     }
+                    $this->mail->sendOrderProcess($order->order_id);
                     alert("Update Status", "success");
                     return redirect()->back();
                 }
@@ -63,8 +64,9 @@ class OrderController extends BaseController
                     if ($pay_cencel) {
                         $cencel = $this->order->update($id, ['is_cencel' => true, 'status' => "REJECT"]);
                         if ($cencel) {
+                            $order = $this->order->find($id);
+                            $this->mail->sendOrderReject($order->order_id);
                             alert("Cenceled Success", "success");
-
                             return redirect()->back();
                         }
                     } else {
@@ -122,6 +124,8 @@ class OrderController extends BaseController
                 try {
                     $done = $this->order->update(htmlentities($id), ['shipping_tracking' => $this->request->getVar('tracking'), 'status' => "SHIPPED"]);
                     if ($done) {
+                        $order = $this->order->find($id);
+                        $this->mail->sendOrderShipped($order->order_id);
                         alert("Shipping Tracking success", "success");
                         return redirect()->back();
                     }

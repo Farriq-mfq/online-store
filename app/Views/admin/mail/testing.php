@@ -48,7 +48,7 @@
                     swal.fire({
                         title: "Mail Error",
                         icon: "error",
-                        text: "Send mail error , please correct smtp"
+                        text: "Send mail error"
                     })
                 }
             },

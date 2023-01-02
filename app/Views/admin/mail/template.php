@@ -77,6 +77,9 @@
                             <li class="list-group-item"><b>%user%</b>  = name of user</li>
                             <li class="list-group-item"><b>%logo%</b>  = logo website</li>
                             <li class="list-group-item"><b>%link%</b>  = link website</li>
+                            <li class="list-group-item"><b>%date%</b>  = date</li>
+                            <li class="list-group-item"><b>%total%</b>  = subtotal of transaction</li>
+                            <li class="list-group-item"><b>%token%</b>  = orderId</li>
                         </ul>
                         <label required>Content</label>
                         <textarea id="summernote" name="content">
@@ -93,6 +96,7 @@
                             <option value="ORDER_PROCESS">ORDER PROCESS</option>
                             <option value="ORDER_SHIPPED">ORDER SHIPPED</option>
                             <option value="ORDER_DONE">ORDER DONE</option>
+                            <option value="ORDER_REJECT">ORDER REJECT</option>
                             <option value="CONFIRM_EMAIL_USER">CONFIRM EMAIL USER</option>
                             <option value="CONFIRM_EMAIL_ADMIN">CONFIRM EMAIL ADMIN</option>
                             <option value="PROMO">PROMO</option>
