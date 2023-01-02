@@ -265,6 +265,7 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
     });
     $route->group("backup", function ($backup) {
         $backup->get('/', "BackupController::index");
+        $backup->post('/', "BackupController::do_backup");
     });
 });
 $routes->post("/" . ADMIN_PATH . "/auth/logout", "Admin\AuthController::logout", ['filter' => "admin-auth"]);

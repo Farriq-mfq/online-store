@@ -56,6 +56,7 @@ abstract class BaseController extends Controller
         helper(["data", "alert", "array", "form", "url_helper", "menu_helper", "auth_helper", "get_shipping_helper", "payment_helper"]);
         helper("string");
         helper('inflector');
+        helper('filesystem');
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
