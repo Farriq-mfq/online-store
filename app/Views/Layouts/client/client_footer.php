@@ -34,7 +34,7 @@
 					<h3>Newsletter Subscribe</h3>
 				</div>
 				<div class="newsletter-form mb--30">
-					<form action="https://htmldemo.net/pustok/pustok/php/mail.php">
+					<form action="#">
 						<input type="email" class="form-control" placeholder="Enter Your Email Address Here...">
 						<button class="btn btn--primary w-100">Subscribe</button>
 					</form>

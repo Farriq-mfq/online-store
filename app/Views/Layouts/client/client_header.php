@@ -186,8 +186,8 @@
 			<?php endif ?>
 			<div class="off-canvas-bottom">
 				<div class="contact-list mb--10">
-					<a href="#" class="sin-contact"><i class="fas fa-mobile-alt"></i>(12345) 78790220</a>
-					<a href="#" class="sin-contact"><i class="fas fa-envelope"></i>examle@handart.com</a>
+					<a href="#" class="sin-contact"><i class="fas fa-mobile-alt"></i><?= $website ? $website->company_phone : "" ?></a>
+					<a href="#" class="sin-contact"><i class="fas fa-envelope"></i><?= $website ? $website->company_email : "" ?></a>
 				</div>
 				<div class="off-canvas-social">
 					<a href="#" class="single-icon"><i class="fab fa-facebook-f"></i></a>

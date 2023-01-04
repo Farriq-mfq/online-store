@@ -187,7 +187,6 @@ class ShopControlller extends BaseController
 
     public function postReviews($productId)
     {
-
         $validate = $this->validate([
             'star' => "required",
             'review' => 'required'

@@ -137,6 +137,14 @@ use Config\Services;
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?= admin_url("/page") ?>" class="nav-link <?= $active_page == "page/index" ? "active" : "" ?>">
+            <i class="nav-icon fas fa-list"></i>
+            <p>
+              Page Content
+            </p>
+          </a>
+        </li>
         </li>
         <li class="nav-header">MANAGEMENT ORDER</li>
         <li class="nav-item <?= str_contains($active_page, "order") ? "menu-open" : "" ?>">

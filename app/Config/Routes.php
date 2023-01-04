@@ -40,7 +40,7 @@ $routes->set404Override();
 $routes->group("shop", ['filter' => 'visitor'], function ($route) {
     $route->get('/', 'ShopControlller::index');
     $route->get('(:segment)', 'ShopControlller::detail/$1');
-    $route->post('(:segment)/review', 'ShopControlller::postReviews/$1');
+    $route->post('(:segment)/review', 'ShopControlller::postReviews/$1', ['filter' => 'user']);
 });
 $routes->group("cart", ["filter" => "user"], function ($route) {
     $route->get("/", "WebCartController::index");
@@ -177,6 +177,14 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
         $tags_route->post("/", "TagsController::store");
         $tags_route->put("/", "TagsController::update");
         $tags_route->get("get", "TagsController::get_update_tags");
+    });
+    /* page routes */
+    $route->group("page", function ($page_route) {
+        $page_route->get("/", "PageController::index");
+        // $tags_route->delete("(:num)", "TagsController::remove/$1");
+        // $tags_route->post("/", "TagsController::store");
+        // $tags_route->put("/", "TagsController::update");
+        // $tags_route->get("get", "TagsController::get_update_tags");
     });
     /* slider routes */
     $route->group("slider", function ($slider_route) {
