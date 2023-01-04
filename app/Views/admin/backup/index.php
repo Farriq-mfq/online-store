@@ -13,6 +13,12 @@
                 <p>Path : <?= $path ?></p>
                 <p>Filename : <?= $filename ?></p>
                 <form action="<?= admin_url("/backup") ?>" method="POST">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" name="replace_backup" id="replaceCheck">
+                        <label class="form-check-label" for="replaceCheck">
+                            Replace Backup
+                        </label>
+                    </div>
                     <?= csrf_field() ?>
                     <button type="submit" class="btn bg-purple"><i class="fa fa-database"></i>&nbsp;Backup</button>
                 </form>
