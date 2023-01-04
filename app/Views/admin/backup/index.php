@@ -12,6 +12,7 @@
                 <p>DBname : <?= $dbname ?></p>
                 <p>Path : <?= $path ?></p>
                 <p>Filename : <?= $filename ?></p>
+                <p>Size file in <?= $path ?> : <b><?= $total_file_size ?> bytes</b></p>
                 <form action="<?= admin_url("/backup") ?>" method="POST">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="true" name="replace_backup" id="replaceCheck">

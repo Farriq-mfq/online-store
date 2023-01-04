@@ -23,6 +23,14 @@ class BackupController extends BaseController
         $data['path'] = $this->path;
         $data['dbname'] = $this->dbname;
         $data['filename'] = $this->filename;
+        $fileSizeBackup = 0;
+        $files = glob($this->path . "*");
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                $fileSizeBackup += filesize($file);
+            }
+        }
+        $data['total_file_size'] = $fileSizeBackup;
         return view('admin/backup/index', add_data("Backup Database", 'backup/index', $data));
     }
     public function do_backup()
