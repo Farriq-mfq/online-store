@@ -15,14 +15,13 @@ enum EMONEY: string
 
 class Payment
 {
-    private string $serverKey = "SB-Mid-server-bp_Ld2gLB8ijyBJGwu_7mBfb";
     private bool $isProduction = false;
     private bool $isSanitized = false;
     private bool $is3ds  = false;
     private $db;
-    public function __construct()
+    public function __construct($serverKey)
     {
-        \Midtrans\Config::$serverKey = $this->serverKey;
+        \Midtrans\Config::$serverKey = $serverKey;
         \Midtrans\Config::$isSanitized = $this->isSanitized;
         \Midtrans\Config::$isProduction = $this->isProduction;
         \Midtrans\Config::$is3ds = $this->is3ds;

@@ -168,10 +168,10 @@ class AuthController extends BaseController
                     $reset = $this->reset->find($insert_id);
                     if ($reset != null) {
                         if ($this->mail->sendResetlink($checkEmail->email, base_url('auth/verification?code=' . randomhash($reset->code)))) {
-                            session()->setFlashdata('alert_success', "Failed reset password :)");
+                            session()->setFlashdata('alert_success', "SuccessFully send link to reset password :)");
                             return redirect()->to(base_url('auth/reset'));
                         } else {
-                            session()->setFlashdata('alert_error', "SuccessFully send link to reset password :)");
+                            session()->setFlashdata('alert_error', "Failed reset password :)");
                             return redirect()->to(base_url('auth/reset'));
                         }
                     } else {

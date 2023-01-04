@@ -58,26 +58,11 @@ abstract class BaseController extends Controller
         helper('inflector');
         helper('filesystem');
         // Preload any models, libraries, etc, here.
-
         // E.g.: $this->session = \Config\Services::session();
         // lib
-        $this->shipping = new Shipping();
-        $this->payment = new Payment();
+        $this->shipping = new Shipping($_ENV['API_RAJA_ONGKIR']);
+        $this->payment = new Payment($_ENV['SERVER_KEY_MIDTRANS']);
         $this->mail = new Mail();
-        // dd($this->mail->sendOrderReceived("dsf","bonjames020@gmail.com",1));
-        // $this->mail->sendResetlink("bonjames020@gmail.com","http://localhost:8080/DEV_ADMIN/mail/template");
-        // dd(user());
-        // dd(password_hash("user",PASSWORD_DEFAULT)); 
-        // $prm = array(
-        //     'refund_key' => 'order1-ref1',
-        //     'amount' => 21000,
-        //     'reason' => 'Item out of stock'
-        // );
-        // dd($this->payment->payment_refund("163aceeb98ec56",$prm));
-        // echo "<pre>";
-        // dd($this->shipping->get_city());
-        // echo "</pre>";
-        // return;
     }
 }
 // 

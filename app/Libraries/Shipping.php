@@ -1,16 +1,17 @@
 <?php
 class Shipping
 {
-    private string $API_KEY = "55ccf2fcf872b094d5764522261a6113";
+    private string $API_KEY;
     private string $provinceEndoint = "https://api.rajaongkir.com/starter/province";
     private string $cityEndoint = "https://api.rajaongkir.com/starter/city";
     private string $costEndoint = "https://api.rajaongkir.com/starter/cost";
     private int $origin;
-    public function __construct()
+    public function __construct($API_KEY)
     {
         $db = db_connect();
         $website = $db->table('website')->get()->getFirstRow();
         $this->origin = $website ? $website->shipping_origin : 0;
+        $this->API_KEY = $API_KEY;
     }
     public function getOrigin(): int
     {

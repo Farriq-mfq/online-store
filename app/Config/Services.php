@@ -42,7 +42,7 @@ class Services extends BaseService
             return static::getSharedInstance("shippingservice");
         }
 
-        return new Shipping();
+        return new Shipping($_ENV['API_RAJA_ONGKIR']);
     }
     public static function paymentservice($getShared = true)
     {
@@ -50,7 +50,7 @@ class Services extends BaseService
             return static::getSharedInstance("paymentservice");
         }
 
-        return new Payment();
+        return new Payment($_ENV['SERVER_KEY_MIDTRANS']);
     }
     public static function authserviceUser($getShared = true)
     {
