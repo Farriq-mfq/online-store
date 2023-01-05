@@ -3,20 +3,24 @@
 namespace App\Libraries;
 
 use App\Models\Categories;
+use App\Models\Page;
 use App\Models\Website;
 
 class Client
 {
     private Categories $categories;
     private Website $website;
+    private Page $page;
     public function __construct()
     {
         $this->categories = new Categories();
         $this->website = new Website();
+        $this->page = new Page();
     }
     public function renderHeader()
     {
         $data['categories'] = $this->categories->getCategoriesByParentId();
+        $data['pages'] = $this->page->where('status', 1)->findAll();
         $data['website'] = $this->website->first();
         return view("Layouts/client/client_header", $data);
     }

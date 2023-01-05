@@ -4,7 +4,7 @@
 			<div class=" col-xl-3 col-lg-4 col-sm-6">
 				<div class="single-footer pb--40">
 					<div class="brand-footer footer-title">
-						<img src="image/logo--footer.png" alt="">
+						<img src="<?= $website ? $website->logo : '' ?>" alt="">
 					</div>
 					<div class="footer-contact">
 						<p><span class="label">Address:</span><span class="text"><?= $website ? $website->company_address : "" ?></span></p>

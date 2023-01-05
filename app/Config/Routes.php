@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Controllers\Admin\AuthController;
+use Page;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -104,6 +105,11 @@ $routes->group("api/data", function ($route) {
 });
 
 
+/* DYNAMIC PAGE  */
+$page = new Page($routes);
+$page->renderPageDynamic();
+/* AND DYNAMIC PATH */
+
 /* ADMIN ROUTES */
 $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() . "Admin", "filter" => ["admin-auth", "roles-auth"]], function ($route) {
     $route->get("/", "HomeController::index");
@@ -181,10 +187,10 @@ $routes->group("/" . ADMIN_PATH, ["namespace" => $routes->getDefaultNamespace() 
     /* page routes */
     $route->group("page", function ($page_route) {
         $page_route->get("/", "PageController::index");
-        // $tags_route->delete("(:num)", "TagsController::remove/$1");
-        // $tags_route->post("/", "TagsController::store");
-        // $tags_route->put("/", "TagsController::update");
-        // $tags_route->get("get", "TagsController::get_update_tags");
+        $page_route->delete("(:num)", "PageController::remove/$1");
+        $page_route->post("/", "PageController::store");
+        $page_route->put("/", "PageController::update");
+        $page_route->get("get", "PageController::get_update_page");
     });
     /* slider routes */
     $route->group("slider", function ($slider_route) {

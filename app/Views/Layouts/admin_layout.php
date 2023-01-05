@@ -76,7 +76,7 @@
                 <p>Please type <b id="bold_slug_global"></b> to confirm</p>
                 <div class="form-group">
                   <input type="hidden" name="confirm_field">
-                  <input type="text" class="form-control" name="confirm_input">
+                  <input type="text" class="form-control" name="confirm_input" autocomplete="off" autofocus>
                 </div>
               </div>
               <div class="modal-footer justify-content-between">

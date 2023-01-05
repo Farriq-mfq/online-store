@@ -70,6 +70,7 @@ class Autoload extends AutoloadConfig
         "Auth"=>APPPATH."Service/AuthService.php",
         "UniqueVisitor"=>APPPATH."Libraries/UniqueVisitor.php",
         "Mail"=>APPPATH."Libraries/Mail.php",
+        "Page"=>APPPATH."Libraries/Page.php",
     ];
 
     /**

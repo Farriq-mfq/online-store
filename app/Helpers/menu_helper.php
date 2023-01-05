@@ -27,9 +27,11 @@ if (!function_exists("printcategories")) {
 
 
 if (!function_exists("printMenu")) {
-    function printMenu()
+    function printMenu($pages = null)
     {
         $html = "";
+
+
         $menus = [
             [
                 "title" => "Home",
@@ -39,42 +41,36 @@ if (!function_exists("printMenu")) {
                 "title" => "Shop",
                 "link" => base_url('/shop')
             ],
-            [
-                "title" => "Pages",
-                "link" => "/",
-                "child" => [
-                    [
-                        "title" => "About us",
-                        "link" => "/",
-                    ],
-                    [
-                        "title" => "Contact",
-                        "link" => "/",
-                    ],
-                ],
-            ],
         ];
 
         foreach ($menus as $menu) {
-            if (isset($menu["child"])) {
-                $child = "";
-                foreach ($menu['child'] as $c) {
-                    $child .= '<li> <a href="' . $c['link'] . '">' . $c['title'] . '</a></li>';
-                }
-                $html .= '<li class="menu-item has-children">
-                            <a href="' . $menu['link'] . '">' . $menu['title'] . '</a>
-                            <ul class="sub-menu">
-                                ' . $child . '
-                            </ul>
-                        </li>';
-            } else {
-
-                $html .= '<li class="menu-item">
+            $html .= '<li class="menu-item">
                 <a href="' . $menu['link'] . '">' . $menu['title'] . '</a>
             </li>';
-            }
+        }
+        if ($pages != null) {
+            $html .= '<li class="menu-item has-children">
+            <a href="#">Pages</a>
+            <ul class="sub-menu">
+                ' . print_pages($pages) . '
+            </ul>
+        </li>';
         }
 
+        return $html;
+    }
+}
+
+
+if (!function_exists("print_pages")) {
+    function print_pages($pages = null)
+    {
+        $html = "";
+        foreach ($pages as $page) {
+            $html .= '<li class="menu-item">
+            <a href="' . base_url($page->path) . '">' . $page->path . '</a>
+        </li>';
+        }
         return $html;
     }
 }

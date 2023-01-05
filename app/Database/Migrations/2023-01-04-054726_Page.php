@@ -14,10 +14,6 @@ class Page extends Migration
                     "type" => "int",
                     "auto_increment" => true
                 ],
-                "page_key" => [
-                    "type" => "varchar",
-                    "constraint" => 255
-                ],
                 "page_title" => [
                     "type" => "varchar",
                     "constraint" => 100

@@ -16,15 +16,13 @@
 						</div>
 						<div class="text">
 							<?= $website ? html_entity_decode($website->support_content) : "" ?>
-							<!-- <p>Free Support 24/7</p>
-							<p class="font-weight-bold number">+01-202-555-0181</p> -->
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="main-navigation flex-lg-right">
 						<ul class="main-menu menu-right ">
-							<?= printMenu() ?>
+							<?= printMenu($pages) ?>
 						</ul>
 					</div>
 				</div>
@@ -110,7 +108,9 @@
 			<div class="row align-items-sm-end align-items-center">
 				<div class="col-md-4 col-7">
 					<a href="index-2.html" class="site-brand">
-						<img src="image/logo.png" alt="">
+						<?php if ($website) : ?>
+							<img src="<?= $website->logo ?>" alt="">
+						<?php endif ?>
 					</a>
 				</div>
 				<div class="col-md-5 order-3 order-md-2">

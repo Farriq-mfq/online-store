@@ -14,7 +14,7 @@ class Page extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["path","content"];
+    protected $allowedFields    = ["page_title", "path", "status", "content"];
 
     // Dates
     protected $useTimestamps = false;
