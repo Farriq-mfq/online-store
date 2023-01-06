@@ -2,7 +2,6 @@
 
 namespace Config;
 
-use App\Controllers\Admin\AuthController;
 use Page;
 
 // Create a new instance of our RouteCollection class.

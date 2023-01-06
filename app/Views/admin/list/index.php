@@ -121,7 +121,9 @@
                         <select name="role" id="role" class="form-control select2">
                             <option value="">Select Role</option>
                             <?php foreach ($routes as $key => $route) : ?>
-                                <option value="<?= $route ?>"><?= $key ?></option>
+                                <?php if (!$key instanceof \Closure && !$route instanceof \Closure) : ?>
+                                    <option value="<?= $route ?>"><?= $key ?></option>
+                                <?php endif ?>
                             <?php endforeach ?>
                         </select>
                     </div>

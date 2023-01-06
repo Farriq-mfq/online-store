@@ -3,7 +3,6 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\Admin\UniqueVisitor;
 use App\Models\Banner;
 use App\Models\Brands;
 use App\Models\Categories;
@@ -11,6 +10,7 @@ use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Slider;
 use App\Models\Tags;
+use App\Models\UniqueVisitor;
 use App\Models\User as ModelsUser;
 
 class HomeController extends BaseController
