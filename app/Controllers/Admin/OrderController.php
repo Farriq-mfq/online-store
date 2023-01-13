@@ -48,7 +48,7 @@ class OrderController extends BaseController
                         alert("Update Status", "success");
                         return redirect()->back();
                     }
-                }else{
+                } else {
                     alert("Payment not yet success", 'error');
                     return redirect()->back();
                 }
@@ -67,8 +67,7 @@ class OrderController extends BaseController
                 $order = $this->order->find(htmlentities($id));
                 if ($order->status === "WAITING") {
                     $payment = $this->payment->get_status($order->midtrans_id);
-                    $pay_cencel = $this->pay_cencel($payment, $order);
-                    if ($pay_cencel) {
+                    if ($payment->transaction_status == "expire") {
                         $cencel = $this->order->update($id, ['is_cencel' => true, 'status' => "REJECT"]);
                         if ($cencel) {
                             $order = $this->order->find($id);
@@ -77,8 +76,19 @@ class OrderController extends BaseController
                             return redirect()->back();
                         }
                     } else {
-                        alert("Cencel Failed", 'error');
-                        return redirect()->back();
+                        $pay_cencel = $this->pay_cencel($payment, $order);
+                        if ($pay_cencel) {
+                            $cencel = $this->order->update($id, ['is_cencel' => true, 'status' => "REJECT"]);
+                            if ($cencel) {
+                                $order = $this->order->find($id);
+                                $this->mail->sendOrderReject($order->order_id);
+                                alert("Cenceled Success", "success");
+                                return redirect()->back();
+                            }
+                        } else {
+                            alert("Cencel Failed", 'error');
+                            return redirect()->back();
+                        }
                     }
                 }
             } catch (\Exception $e) {
