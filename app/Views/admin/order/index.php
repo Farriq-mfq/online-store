@@ -10,7 +10,7 @@
                         <tr>
                             <th>Order Number</th>
                             <th>Status</th>
-                            <th>Payment Status</th>
+                            <!-- <th>Payment Status</th> -->
                             <th>Subtotal</th>
                             <th>Order datetime</th>
                             <th>Actions</th>
@@ -21,32 +21,23 @@
                             <tr>
                                 <td><a href="<?= admin_url('/order/view/' . $order->token) ?>"><?= $order->token ?></a></td>
                                 <td><?= $order->status ?></td>
-                                <td><?= findPayment($order->midtrans_id)->transaction_status ?></td>
                                 <td><?= format_rupiah($order->subtotal) ?></td>
                                 <td><?= $order->created_at ?></td>
                                 <td>
-                                    <?php if ($order->status != "DONE") : ?>
-                                        <?php if (findPayment($order->midtrans_id)->transaction_status == "settlement") : ?>
-                                            <?php if ($order->status == "WAITING") : ?>
-                                                <form action="<?= admin_url('/order/accept/' . $order->order_id) ?>" method="POST" class="d-inline" onsubmit="return confirm('Confirm your action !')">
-                                                    <?= csrf_field() ?>
-                                                    <button class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
-                                                </form>
-                                            <?php endif ?>
-                                            <button id="__add__tracking__number" data-id="<?= $order->order_id ?>" class="btn btn-sm btn-primary"><i class="fas fa-shipping-fast"></i></button>
-                                        <?php else : ?>
-                                            No action
-                                        <?php endif ?>
-                                        <?php if (findPayment($order->midtrans_id)->transaction_status != "cancel") : ?>
-                                            <?php if ($order->status == "WAITING") : ?>
-                                                <form action="<?= admin_url('/order/reject/' . $order->order_id) ?>" method="POST" class="d-inline" onsubmit="return confirm('Confirm your action !')">
-                                                    <?= csrf_field() ?>
-                                                    <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button>
-                                                </form>
-                                            <?php endif ?>
-                                        <?php endif ?>
-                                    <?php else : ?>
-                                        No action
+                                    <?php if ($order->status == "WAITING") : ?>
+                                        <form action="<?= admin_url('/order/accept/' . $order->order_id) ?>" method="POST" class="d-inline" onsubmit="return confirm('Confirm your action !')">
+                                            <?= csrf_field() ?>
+                                            <button class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
+                                        </form>
+                                    <?php endif ?>
+                                    <?php if ($order->status == "PROCESS") : ?>
+                                        <button id="__add__tracking__number" data-id="<?= $order->order_id ?>" class="btn btn-sm btn-primary"><i class="fas fa-shipping-fast"></i></button>
+                                    <?php endif ?>
+                                    <?php if ($order->status == "WAITING") : ?>
+                                        <form action="<?= admin_url('/order/reject/' . $order->order_id) ?>" method="POST" class="d-inline" onsubmit="return confirm('Confirm your action !')">
+                                            <?= csrf_field() ?>
+                                            <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button>
+                                        </form>
                                     <?php endif ?>
                                 </td>
                             </tr>

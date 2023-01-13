@@ -3,8 +3,8 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\Admin\UniqueVisitor;
 use App\Models\Order;
+use App\Models\UniqueVisitor;
 use App\Models\User;
 
 class ReportController extends BaseController

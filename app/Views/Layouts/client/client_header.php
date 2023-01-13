@@ -61,7 +61,6 @@
 						<div class="cart-widget">
 							<div class="login-block">
 								<?php if (auth_user()) : ?>
-
 									<ul class="main-menu">
 										<li class="menu-item has-children">
 											<a href="javascript:void(0)">My Account <i class="fas fa-chevron-down dropdown-arrow"></i></a>
@@ -107,7 +106,7 @@
 		<div class="container">
 			<div class="row align-items-sm-end align-items-center">
 				<div class="col-md-4 col-7">
-					<a href="index-2.html" class="site-brand">
+					<a href="<?= base_url() ?>" class="site-brand">
 						<?php if ($website) : ?>
 							<img src="<?= $website->logo ?>" alt="">
 						<?php endif ?>
@@ -164,7 +163,7 @@
 				<!-- mobile menu navigation start -->
 				<nav class="off-canvas-nav">
 					<ul class="mobile-menu main-mobile-menu">
-						<?= printMenu() ?>
+						<?= printMenu($pages) ?>
 					</ul>
 				</nav>
 				<!-- mobile menu navigation end -->
@@ -182,7 +181,9 @@
 							</ul>
 						</li>
 					</ul>
-				</nav>
+				</nav><?php else : ?>
+				<a href="<?= base_url("/auth") ?>" class="font-weight-bold">Login</a> <br>
+				<span>or</span><br><a href="<?= base_url("/auth") ?>">Register</a>
 			<?php endif ?>
 			<div class="off-canvas-bottom">
 				<div class="contact-list mb--10">
@@ -206,14 +207,16 @@
 	<div class="container d-none d-lg-block">
 		<div class="row align-items-center">
 			<div class="col-lg-4">
-				<a href="index-2.html" class="site-brand">
-					<img src="image/logo.png" alt="">
+				<a href="<?= base_url() ?>" class="site-brand">
+					<?php if ($website) : ?>
+						<img src="<?= $website->logo ?>" alt="">
+					<?php endif ?>
 				</a>
 			</div>
 			<div class="col-lg-8">
 				<div class="main-navigation flex-lg-right">
 					<ul class="main-menu menu-right ">
-						<?= printMenu() ?>
+						<?= printMenu($pages) ?>
 					</ul>
 				</div>
 			</div>

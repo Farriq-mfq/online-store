@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\UserAddress;
 use App\Models\Website;
+use Config\Services;
 use mPDF;
 use Mpdf\Mpdf as MpdfMpdf;
 
@@ -27,7 +28,7 @@ class OrderController extends BaseController
     public function index()
     {
 
-        $data['orders'] = $this->order->orderBy("order_id", "DESC")->findAll();
+        $data['orders'] = $this->order->orderBy("order_id DESC")->findAll();
         return view('admin/order/index', add_data("All order", 'order/index', $data));
     }
     public function accept($id)
@@ -35,14 +36,20 @@ class OrderController extends BaseController
         if ($id) {
             $order = $this->order->with('users')->find($id);
             if ($order) {
-                $update_status_order = $this->order->update($id, ['status' => "PROCESS"]);
-                if ($update_status_order) {
-                    foreach ($order->order_items as $item) {
-                        $product = $this->product->find($item->product_id);
-                        $this->product->update($item->product_id, ['stock' => $product->stock - $item->quantity]);
+                $payment = $this->payment->get_status($order->midtrans_id);
+                if ($payment->transaction_status === "settlement") {
+                    $update_status_order = $this->order->update($id, ['status' => "PROCESS"]);
+                    if ($update_status_order) {
+                        foreach ($order->order_items as $item) {
+                            $product = $this->product->find($item->product_id);
+                            $this->product->update($item->product_id, ['stock' => $product->stock - $item->quantity]);
+                        }
+                        $this->mail->sendOrderProcess($order->order_id);
+                        alert("Update Status", "success");
+                        return redirect()->back();
                     }
-                    $this->mail->sendOrderProcess($order->order_id);
-                    alert("Update Status", "success");
+                }else{
+                    alert("Payment not yet success", 'error');
                     return redirect()->back();
                 }
             } else {

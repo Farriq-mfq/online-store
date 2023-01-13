@@ -22,9 +22,9 @@ class CategoryController extends BaseController
     {
         try {
             $this->categories->delete($id);
-            alert("Success delete Brands", "success");
+            alert("Success delete Categories", "success");
         } catch (\Exception $e) {
-            alert("Failed delete Brands", "error");
+            alert("Failed delete Categories", "error");
         }
         return redirect()->back();
     }
