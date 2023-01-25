@@ -86,19 +86,4 @@ class ProductTags extends BaseController
             alert("Internal Server error", "error");
         }
     }
-    public function is_primary($id)
-    {
-        try {
-            $image = $this->productImages->find($id);
-            if ($this->productImages->update_is_primary($image->product_id)) {
-                $this->productImages->update($id, ["is_primary" => true]);
-                alert("Success Update Primary Images", "success");
-            } else {
-                alert("Failed", "error");
-            }
-            return redirect()->back();
-        } catch (\Exception $e) {
-            alert("Internal Server error", "error");
-        }
-    }
 }

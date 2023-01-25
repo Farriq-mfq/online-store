@@ -228,7 +228,7 @@
                             }, 500);
                         }
                     },
-                    error: () => {
+                    error: (err) => {
                         $.toast({
                             heading: "Information",
                             text: "Error",

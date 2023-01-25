@@ -33,7 +33,7 @@ class AccountController extends BaseController
             $data['downloads'] = $this->order->where('user_id', auth_user_id())->where("status", "SHIPPED")->findAll();
             $data['addresses'] = $this->address->where("user_id", auth_user_id())->with('users')->findAll();
             $data['user'] = $user->find(auth_user_id());
-            $data['payments'] = $this->order->getPaymentStatus();
+            // $data['payments'] = $this->order->getPaymentStatus();
             return view('client/account/index', add_data("Account", "account/index", $data));
         } catch (\Exception $e) {
             session()->setFlashdata("alert_error", "Something went wrong");
