@@ -9,7 +9,8 @@
         "codeigniter4/framework": "^4.0",
         "tatter/relations": "^2.1",
         "midtrans/midtrans-php": "^2.5",
-        "mpdf/mpdf": "8.0.13"
+        "mpdf/mpdf": "8.0.13",
+        "kint-php/kint": "^5.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
